@@ -27,6 +27,94 @@ section{max-width:1180px;margin:auto;padding:75px 20px}.title{text-align:center;
 footer{background:#06142e;color:#cbd5e1;text-align:center;padding:25px 15px}.social{margin-top:8px}
 @media(max-width:850px){.links{display:none}.grid{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,1fr)}.about{grid-template-columns:1fr}.contactgrid{grid-template-columns:1fr}.hero{min-height:560px}}
 @media(max-width:520px){.grid,.products{grid-template-columns:1fr}.heroIn{padding-top:45px}.hero p{font-size:17px}section{padding:55px 15px}}
+/* ===== ORDER SYSTEM ===== */
+.order-btn{
+  display:block;
+  width:100%;
+  margin-top:14px;
+  padding:11px 14px;
+  border:0;
+  border-radius:10px;
+  background:#0873b8;
+  color:#fff;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  text-align:center;
+}
+
+.order-btn:hover{
+  opacity:.9;
+}
+
+.order-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  background:rgba(0,0,0,.65);
+  padding:20px;
+  overflow:auto;
+}
+
+.order-box{
+  max-width:500px;
+  margin:40px auto;
+  background:#fff;
+  border-radius:18px;
+  padding:24px;
+  box-shadow:0 15px 50px rgba(0,0,0,.3);
+}
+
+.order-box h2{
+  margin-top:0;
+  color:#0873b8;
+  text-align:center;
+}
+
+.order-box label{
+  display:block;
+  margin-top:13px;
+  margin-bottom:5px;
+  font-weight:600;
+}
+
+.order-box input,
+.order-box textarea{
+  width:100%;
+  box-sizing:border-box;
+  padding:12px;
+  border:1px solid #ddd;
+  border-radius:9px;
+  font-size:15px;
+}
+
+.order-box textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+.order-submit{
+  width:100%;
+  margin-top:18px;
+  padding:13px;
+  border:0;
+  border-radius:10px;
+  background:#25D366;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+}
+
+.order-close{
+  float:right;
+  border:0;
+  background:#eee;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  font-size:20px;
+       }
 </style>
 </head>
 <body>
@@ -79,5 +167,147 @@ footer{background:#06142e;color:#cbd5e1;text-align:center;padding:25px 15px}.soc
 </div></div>
 
 <footer>© ২০২৬ স্বপ্নচূড়া — সর্বস্বত্ব সংরক্ষিত<div class="social">রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরা</div></footer>
+<!-- ===== ORDER MODAL ===== -->
+
+<div id="orderModal" class="order-modal">
+
+  <div class="order-box">
+
+    <button class="order-close" onclick="closeOrder()">×</button>
+
+    <h2>অর্ডার করুন</h2>
+
+    <form onsubmit="sendOrder(event)">
+
+      <label>পণ্যের নাম</label>
+      <input id="orderProduct" type="text" readonly>
+
+      <label>আপনার নাম *</label>
+      <input id="customerName" type="text" placeholder="আপনার নাম লিখুন" required>
+
+      <label>মোবাইল নম্বর *</label>
+      <input id="customerPhone" type="tel" placeholder="০১XXXXXXXXX" required>
+
+      <label>ঠিকানা *</label>
+      <textarea id="customerAddress" placeholder="আপনার সম্পূর্ণ ঠিকানা লিখুন" required></textarea>
+
+      <label>পরিমাণ</label>
+      <input id="quantity" type="number" value="1" min="1" required>
+
+      <label>অতিরিক্ত মন্তব্য</label>
+      <textarea id="customerNote" placeholder="কোনো বিশেষ নির্দেশনা থাকলে লিখুন"></textarea>
+
+      <button type="submit" class="order-submit">
+        WhatsApp-এ অর্ডার পাঠান
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<script>
+
+function openOrder(productName){
+
+  document.getElementById("orderProduct").value = productName;
+
+  document.getElementById("orderModal").style.display = "block";
+
+}
+
+function closeOrder(){
+
+  document.getElementById("orderModal").style.display = "none";
+
+}
+
+function sendOrder(event){
+
+  event.preventDefault();
+
+  const product =
+    document.getElementById("orderProduct").value;
+
+  const name =
+    document.getElementById("customerName").value;
+
+  const phone =
+    document.getElementById("customerPhone").value;
+
+  const address =
+    document.getElementById("customerAddress").value;
+
+  const quantity =
+    document.getElementById("quantity").value;
+
+  const note =
+    document.getElementById("customerNote").value;
+
+  const message =
+`🛒 নতুন অর্ডার
+
+পণ্য: ${product}
+
+নাম: ${name}
+
+মোবাইল: ${phone}
+
+ঠিকানা: ${address}
+
+পরিমাণ: ${quantity}
+
+মন্তব্য: ${note}
+
+স্বপ্নচূড়া এন্টারপ্রাইজ`;
+
+  const whatsappNumber = "8801735533191";
+
+  const whatsappURL =
+    "https://wa.me/" +
+    whatsappNumber +
+    "?text=" +
+    encodeURIComponent(message);
+
+  window.open(whatsappURL, "_blank");
+
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+
+  const products =
+    document.querySelectorAll(".product");
+
+  products.forEach(function(product){
+
+    const title =
+      product.querySelector("h3");
+
+    if(title){
+
+      const button =
+        document.createElement("button");
+
+      button.className = "order-btn";
+
+      button.innerHTML = "🛒 অর্ডার করুন";
+
+      button.onclick = function(){
+
+        openOrder(title.innerText);
+
+      };
+
+      product.appendChild(button);
+
+    }
+
+  });
+
+});
+
+</script>
 </body>
 </html>
