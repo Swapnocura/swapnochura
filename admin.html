@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="bn">
-
 <head>
 
 <meta charset="utf-8">
@@ -238,10 +237,6 @@ outline:2px solid #2563eb33;
 border-color:#2563eb
 }
 
-/* =========================
-   Login Loading
-========================= */
-
 .login-loading{
 display:none;
 margin-top:10px;
@@ -258,7 +253,8 @@ background:#fef2f2;
 padding:10px;
 border-radius:8px;
 margin-top:10px;
-display:none
+display:none;
+white-space:pre-wrap
 }
 
 .login-success{
@@ -270,9 +266,14 @@ margin-top:10px;
 display:none
 }
 
-/* =========================
-   Orders
-========================= */
+.firebase-status{
+margin-top:10px;
+padding:10px;
+border-radius:8px;
+background:#f8fafc;
+color:#475569;
+font-size:13px
+}
 
 .orders-toolbar{
 display:grid;
@@ -446,8 +447,7 @@ font-size:21px
      LOGIN
 ========================= -->
 
-<div id="login"
-class="container">
+<div id="login" class="container">
 
 <div class="card login">
 
@@ -457,9 +457,7 @@ class="container">
 শুধু অনুমোদিত Admin account ব্যবহার করুন।
 </p>
 
-<label>
-Email
-</label>
+<label>Email</label>
 
 <input
 id="email"
@@ -467,9 +465,7 @@ type="email"
 value="mdrazibulislam240@gmail.com"
 autocomplete="username">
 
-<label>
-Password
-</label>
+<label>Password</label>
 
 <input
 id="password"
@@ -491,7 +487,7 @@ Login
 <div
 id="loginLoading"
 class="login-loading">
-⏳ Login হচ্ছে, অপেক্ষা করুন...
+⏳ প্রস্তুত হচ্ছে...
 </div>
 
 <div
@@ -502,6 +498,12 @@ class="login-error">
 <div
 id="loginSuccess"
 class="login-success">
+</div>
+
+<div
+id="firebaseStatus"
+class="firebase-status">
+⏳ Firebase সংযোগ পরীক্ষা হচ্ছে...
 </div>
 
 <p
@@ -518,9 +520,7 @@ class="small">
      APP
 ========================= -->
 
-<div
-id="app"
-style="display:none">
+<div id="app" style="display:none">
 
 <header>
 
@@ -537,13 +537,7 @@ Logout
 
 </header>
 
-
 <div class="container">
-
-
-<!-- =========================
-     STATS
-========================= -->
 
 <div class="stats">
 
@@ -575,15 +569,9 @@ Stock আছে
 </div>
 
 
-<!-- =========================
-     PRODUCT SECTION
-========================= -->
-
 <div class="card">
 
-<h2>
-📦 Product Management
-</h2>
+<h2>📦 Product Management</h2>
 
 <div class="toolbar">
 
@@ -593,25 +581,15 @@ placeholder="নাম / কোড / ক্যাটাগরি খুঁজু
 
 <select id="status">
 
-<option value="all">
-সব Status
-</option>
-
-<option value="active">
-Active
-</option>
-
-<option value="inactive">
-Inactive
-</option>
+<option value="all">সব Status</option>
+<option value="active">Active</option>
+<option value="inactive">Inactive</option>
 
 </select>
 
 <select id="category">
 
-<option value="all">
-সব Category
-</option>
+<option value="all">সব Category</option>
 
 </select>
 
@@ -651,11 +629,9 @@ type="button">
 <tbody id="body">
 
 <tr>
-
 <td colspan="8">
 Loading...
 </td>
-
 </tr>
 
 </tbody>
@@ -663,20 +639,19 @@ Loading...
 </table>
 
 </div>
+
+
 <!-- =========================
      ORDERS
 ========================= -->
 
 <div class="card">
 
-<h2>
-🧾 Website Orders
-</h2>
+<h2>🧾 Website Orders</h2>
 
 <p class="small">
 ওয়েবসাইট থেকে আসা সকল অর্ডার এখানে দেখা ও পরিচালনা করুন।
 </p>
-
 
 <div class="orders-toolbar">
 
@@ -686,34 +661,16 @@ placeholder="Order Number / নাম / ফোন খুঁজুন">
 
 <select id="orderStatusFilter">
 
-<option value="all">
-সব Order
-</option>
-
-<option value="new">
-নতুন অর্ডার
-</option>
-
-<option value="confirmed">
-Confirmed
-</option>
-
-<option value="processing">
-Processing
-</option>
-
-<option value="delivered">
-Delivered
-</option>
-
-<option value="cancelled">
-Cancelled
-</option>
+<option value="all">সব Order</option>
+<option value="new">নতুন অর্ডার</option>
+<option value="confirmed">Confirmed</option>
+<option value="processing">Processing</option>
+<option value="delivered">Delivered</option>
+<option value="cancelled">Cancelled</option>
 
 </select>
 
 </div>
-
 
 <div id="ordersList">
 
@@ -748,31 +705,23 @@ id="modal">
 
 <div>
 
-<label>
-পণ্যের নাম *
-</label>
+<label>পণ্যের নাম *</label>
 
 <input id="name">
 
 </div>
 
-
 <div>
 
-<label>
-পণ্যের কোড
-</label>
+<label>পণ্যের কোড</label>
 
 <input id="code">
 
 </div>
 
-
 <div>
 
-<label>
-মূল দাম
-</label>
+<label>মূল দাম</label>
 
 <input
 id="original"
@@ -781,12 +730,9 @@ min="0">
 
 </div>
 
-
 <div>
 
-<label>
-বিক্রয় দাম *
-</label>
+<label>বিক্রয় দাম *</label>
 
 <input
 id="sale"
@@ -795,12 +741,9 @@ min="0">
 
 </div>
 
-
 <div>
 
-<label>
-Stock
-</label>
+<label>Stock</label>
 
 <input
 id="stock"
@@ -810,12 +753,9 @@ value="0">
 
 </div>
 
-
 <div>
 
-<label>
-Display order
-</label>
+<label>Display order</label>
 
 <input
 id="order"
@@ -824,12 +764,9 @@ value="0">
 
 </div>
 
-
 <div>
 
-<label>
-Category
-</label>
+<label>Category</label>
 
 <input
 id="cat"
@@ -837,22 +774,14 @@ value="Kitchen and Home Appliances">
 
 </div>
 
-
 <div>
 
-<label>
-Status
-</label>
+<label>Status</label>
 
 <select id="act">
 
-<option value="true">
-Active
-</option>
-
-<option value="false">
-Inactive
-</option>
+<option value="true">Active</option>
+<option value="false">Inactive</option>
 
 </select>
 
@@ -860,36 +789,24 @@ Inactive
 
 </div>
 
-
-<label>
-Description
-</label>
+<label>Description</label>
 
 <textarea id="desc"></textarea>
 
-
-<label>
-Product Image
-</label>
+<label>Product Image</label>
 
 <input
 id="file"
 type="file"
 accept="image/jpeg,image/png,image/webp">
 
-
 <p class="small">
-
 Firebase Storage ছাড়াই ছবি ছোট করে Firestore-এ রাখা হবে।
-ছবি প্রায় 700KB-এর মধ্যে থাকবে।
-
 </p>
-
 
 <img
 id="preview"
 class="preview">
-
 
 <div class="actions">
 
@@ -919,41 +836,11 @@ Cancel
 
 <script type="module">
 
+/* ==================================================
+   FIREBASE + ADMIN PANEL
+================================================== */
 
-/* =========================
-   Firebase
-========================= */
-
-import{
-initializeApp
-}
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
-
-import{
-getAuth,
-onAuthStateChanged,
-signInWithEmailAndPassword,
-signOut
-}
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-
-
-import{
-getFirestore,
-collection,
-getDocs,
-addDoc,
-updateDoc,
-deleteDoc,
-doc,
-serverTimestamp
-}
-from
-"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
+const firebaseVersion="12.1.0";
 
 const firebaseConfig={
 
@@ -980,43 +867,30 @@ measurementId:
 
 };
 
-
 const ADMIN=
 "mdrazibulislam240@gmail.com";
 
 
-const app=
-initializeApp(firebaseConfig);
-
-
-const auth=
-getAuth(app);
-
-
-const db=
-getFirestore(app);
-
+let firebaseApp=null;
+let auth=null;
+let db=null;
 
 let items=[];
-
 let orders=[];
-
 let editId=null;
-
 let imageData=null;
+
+const $=
+id=>document.getElementById(id);
 
 
 /* =========================
-   Helpers
+   Basic Helpers
 ========================= */
 
-const $=
-x=>document.getElementById(x);
+function esc(x){
 
-
-const esc=
-x=>
-String(x??"")
+return String(x??"")
 .replace(/[&<>"']/g,m=>({
 
 "&":"&amp;",
@@ -1027,32 +901,28 @@ String(x??"")
 
 }[m]));
 
+}
+
 
 function toast(x){
 
 $("toast").textContent=x;
 
-$("toast").style.display=
-"block";
+$("toast").style.display="block";
 
 setTimeout(
-()=>
-$("toast").style.display="none",
+()=>$("toast").style.display="none",
 2500
 );
 
 }
-   /* =========================
-   Login
-========================= */
+
 
 function showLoginMessage(message,type="error"){
 
 $("loginError").style.display="none";
 $("loginSuccess").style.display="none";
 $("loginLoading").style.display="none";
-
-$("msg").textContent="";
 
 if(type==="loading"){
 
@@ -1086,10 +956,7 @@ $("loginError").style.display="block";
 
 function firebaseErrorMessage(x){
 
-let code=
-x?.code||
-"";
-
+const code=x?.code||"";
 
 if(code==="auth/invalid-credential")
 return "Email অথবা Password সঠিক নয়।";
@@ -1118,49 +985,111 @@ return "Internet connection সমস্যা হয়েছে।";
 if(code==="auth/operation-not-allowed")
 return "Firebase Authentication-এ Email/Password Login চালু করা নেই।";
 
+if(code==="auth/unauthorized-domain")
+return "এই Website domain Firebase Authentication-এ অনুমোদিত নয়। Firebase → Authentication → Settings → Authorized domains দেখুন।";
+
 return x?.message||
 "Login করা যায়নি। আবার চেষ্টা করুন।";
 
 }
 
 
-/* =========================
-   Auth State
-========================= */
+/* ==================================================
+   FIREBASE INITIALIZE
+================================================== */
 
-onAuthStateChanged(auth,async u=>{
+async function startFirebase(){
 
-if(u){
+try{
+
+$("firebaseStatus").textContent=
+"⏳ Firebase চালু হচ্ছে...";
+
+const appModule=
+await import(
+"https://www.gstatic.com/firebasejs/"+firebaseVersion+"/firebase-app.js"
+);
+
+const authModule=
+await import(
+"https://www.gstatic.com/firebasejs/"+firebaseVersion+"/firebase-auth.js"
+);
+
+const firestoreModule=
+await import(
+"https://www.gstatic.com/firebasejs/"+firebaseVersion+"/firebase-firestore.js"
+);
+
+
+firebaseApp=
+appModule.initializeApp(firebaseConfig);
+
+auth=
+authModule.getAuth(firebaseApp);
+
+db=
+firestoreModule.getFirestore(firebaseApp);
+
+
+window.FB={
+
+appModule,
+authModule,
+firestoreModule
+
+};
+
+
+$("firebaseStatus").textContent=
+"✅ Firebase সংযোগ সফল হয়েছে।";
+
+
+/* Auth state */
+
+authModule.onAuthStateChanged(
+auth,
+async user=>{
+
+if(!user){
+
+$("login").style.display="block";
+$("app").style.display="none";
+
+return;
+
+}
+
 
 if(
-u.email?.toLowerCase()===
+user.email?.toLowerCase()===
 ADMIN.toLowerCase()
 ){
 
-$("login").style.display=
-"none";
-
-$("app").style.display=
-"block";
+$("login").style.display="none";
+$("app").style.display="block";
 
 showLoginMessage(
-"Login সফল হয়েছে",
+"Login সফল হয়েছে।",
 "success"
 );
 
-await load();
+try{
 
+await load();
 await loadOrders();
+
+}catch(x){
+
+console.error(x);
+
+}
 
 }else{
 
-await signOut(auth);
+await authModule.signOut(auth);
 
-$("login").style.display=
-"block";
-
-$("app").style.display=
-"none";
+$("login").style.display="block";
+$("app").style.display="none";
 
 showLoginMessage(
 "এই accountটি Admin হিসেবে অনুমোদিত নয়।"
@@ -1168,47 +1097,64 @@ showLoginMessage(
 
 }
 
-}else{
-
-$("login").style.display=
-"block";
-
-$("app").style.display=
-"none";
-
-}
-
 });
 
 
-/* =========================
-   Login Button
-========================= */
+return true;
+
+}catch(x){
+
+console.error(
+"Firebase initialization error:",
+x
+);
+
+$("firebaseStatus").textContent=
+"❌ Firebase চালু করা যায়নি।";
+
+showLoginMessage(
+"Firebase চালু করা যায়নি। নিচের Error দেখুন:\n"+
+(x?.message||x),
+"error"
+);
+
+$("loginBtn").disabled=true;
+
+return false;
+
+}
+
+}
+
+
+/* ==================================================
+   LOGIN
+================================================== */
 
 $("loginBtn").onclick=
 async()=>{
 
-let e=
+if(!auth){
+
+showLoginMessage(
+"Firebase এখনও প্রস্তুত হয়নি। ২–৩ সেকেন্ড অপেক্ষা করে আবার চেষ্টা করুন।"
+);
+
+return;
+
+}
+
+const email=
 $("email")
 .value
 .trim()
 .toLowerCase();
 
-let p=
-$("password")
-.value;
+const password=
+$("password").value;
 
 
-$("loginError").style.display=
-"none";
-
-$("loginSuccess").style.display=
-"none";
-
-$("msg").textContent="";
-
-
-if(!e){
+if(!email){
 
 showLoginMessage(
 "Admin Email দিন।"
@@ -1221,7 +1167,7 @@ return;
 }
 
 
-if(!p){
+if(!password){
 
 showLoginMessage(
 "Admin Password দিন।"
@@ -1234,7 +1180,7 @@ return;
 }
 
 
-if(e!==ADMIN.toLowerCase()){
+if(email!==ADMIN.toLowerCase()){
 
 showLoginMessage(
 "এই Emailটি অনুমোদিত Admin Email নয়।"
@@ -1245,9 +1191,7 @@ return;
 }
 
 
-$("loginBtn").disabled=
-true;
-
+$("loginBtn").disabled=true;
 
 showLoginMessage(
 "Login হচ্ছে...",
@@ -1257,10 +1201,11 @@ showLoginMessage(
 
 try{
 
-await signInWithEmailAndPassword(
+await window.FB.authModule
+.signInWithEmailAndPassword(
 auth,
-e,
-p
+email,
+password
 );
 
 showLoginMessage(
@@ -1281,27 +1226,21 @@ firebaseErrorMessage(x)
 
 }finally{
 
-$("loginBtn").disabled=
-false;
+$("loginBtn").disabled=false;
 
 }
 
 };
 
 
-/* =========================
-   Enter Key Login
-========================= */
+/* Enter key */
 
 $("password").addEventListener(
 "keydown",
 e=>{
 
-if(e.key==="Enter"){
-
+if(e.key==="Enter")
 $("loginBtn").click();
-
-}
 
 });
 
@@ -1310,38 +1249,29 @@ $("email").addEventListener(
 "keydown",
 e=>{
 
-if(e.key==="Enter"){
-
+if(e.key==="Enter")
 $("loginBtn").click();
-
-}
 
 });
 
 
-/* =========================
-   Logout
-========================= */
+/* Logout */
 
 $("logout").onclick=
 async()=>{
 
 try{
 
-await signOut(auth);
+await window.FB.authModule
+.signOut(auth);
 
 $("password").value="";
-
-showLoginMessage(
-"Logout সফল হয়েছে।",
-"success"
-);
 
 }catch(x){
 
 showLoginMessage(
 "Logout করা যায়নি: "+
-x.message
+(x?.message||x)
 );
 
 }
@@ -1349,15 +1279,21 @@ x.message
 };
 
 
-/* =========================
+/* ==================================================
    PRODUCTS
-========================= */
+================================================== */
 
 async function load(){
 
+const {
+collection,
+getDocs
+}=window.FB.firestoreModule;
+
+
 try{
 
-let s=
+const s=
 await getDocs(
 collection(db,"products")
 );
@@ -1407,19 +1343,21 @@ x=>+x.stock>0
 ).length;
 
 
-let c=
-[...new Set(
+const categories=
+[
+...new Set(
 items
 .map(x=>x.category)
 .filter(Boolean)
-)]
-.sort();
+)
+].sort();
 
 
 $("category").innerHTML=
 '<option value="all">সব Category</option>'+
-c.map(
-x=>'<option value="'+
+categories.map(
+x=>
+'<option value="'+
 esc(x)+
 '">'+
 esc(x)+
@@ -1431,12 +1369,16 @@ render();
 
 }catch(x){
 
+console.error(x);
+
 $("body").innerHTML=
-'<tr><td colspan="8">Products load করা যায়নি। Firestore Rules দেখুন।</td></tr>';
+'<tr><td colspan="8">'+
+'Products load করা যায়নি।'+
+'</td></tr>';
 
 toast(
 "Products: "+
-x.message
+(x?.message||x)
 );
 
 }
@@ -1444,67 +1386,75 @@ x.message
 }
 
 
-/* =========================
-   Product Render
-========================= */
-
 function render(){
 
-let q=
+const q=
 $("search")
 .value
 .toLowerCase();
 
 
-let s=
-$("status")
-.value;
+const status=
+$("status").value;
 
 
-let c=
-$("category")
-.value;
+const category=
+$("category").value;
 
 
-let l=
+const list=
 items.filter(x=>
 
-(!q||
-[x.name,x.code,x.category]
+(
+!q||
+[
+x.name,
+x.code,
+x.category
+]
 .join(" ")
 .toLowerCase()
-.includes(q))
-
-&&
-
-(
-s==="all"||
-(s==="active"?
-x.active===true:
-x.active!==true)
+.includes(q)
 )
 
 &&
 
 (
-c==="all"||
-x.category===c
+status==="all"||
+(
+status==="active"?
+x.active===true:
+x.active!==true
+)
+)
+
+&&
+
+(
+category==="all"||
+x.category===category
 )
 
 );
 
 
+if(!list.length){
+
 $("body").innerHTML=
+'<tr><td colspan="8">কোনো পণ্য নেই।</td></tr>';
 
-l.length?
+return;
 
-l.map(x=>{
+}
 
-let a=
+
+$("body").innerHTML=
+list.map(x=>{
+
+const active=
 x.active===true;
 
-
-let i=
+const image=
 x.imageUrl||
 x.image||
 "logo.png";
@@ -1514,7 +1464,7 @@ return '<tr>'+
 
 '<td>'+
 '<img class="thumb" src="'+
-esc(i)+
+esc(image)+
 '" onerror="this.src=\'logo.png\'">'+
 '</td>'+
 
@@ -1540,9 +1490,9 @@ Number(x.stock||0)+
 '</td>'+
 
 '<td><span class="badge '+
-(a?"on":"off")+
+(active?"on":"off")+
 '">'+
-(a?"Active":"Inactive")+
+(active?"Active":"Inactive")+
 '</span></td>'+
 
 '<td>'+
@@ -1556,13 +1506,13 @@ x.id+
 '\')">Edit</button> '+
 
 '<button class="'+
-(a?"danger":"primary")+
+(active?"danger":"primary")+
 '" onclick="toggleP(\''+
 x.id+
 '\','+
-a+
+active+
 ')">'+
-(a?"Off":"On")+
+(active?"Off":"On")+
 '</button> '+
 
 '<button class="danger" onclick="delP(\''+
@@ -1573,28 +1523,21 @@ x.id+
 
 '</tr>';
 
-}).join("")
-
-:
-
-'<tr><td colspan="8">কোনো পণ্য নেই।</td></tr>';
+}).join("");
 
 }
 
 
-$("search").oninput=
-render;
+$("search").oninput=render;
+$("status").onchange=render;
+$("category").onchange=render;
 
-$("status").onchange=
-render;
 
-$("category").onchange=
-render;
-   /* =========================
+/* ==================================================
    PRODUCT MODAL
-========================= */
+================================================== */
 
-function open(p){
+function openProduct(p){
 
 editId=
 p?.id||null;
@@ -1611,50 +1554,40 @@ p?
 $("name").value=
 p?.name||"";
 
-
 $("code").value=
 p?.code||"";
-
 
 $("original").value=
 p?.originalPrice??
 p?.original||
 "";
 
-
 $("sale").value=
 p?.salePrice??
 p?.sale||
 "";
 
-
 $("stock").value=
 p?.stock??0;
-
 
 $("order").value=
 p?.displayOrder??0;
 
-
 $("cat").value=
 p?.category||
 "Kitchen and Home Appliances";
-
 
 $("act").value=
 p?.active===false?
 "false":
 "true";
 
-
 $("desc").value=
 p?.description||"";
 
-
 $("file").value="";
 
-$("preview").style.display=
-"none";
+$("preview").style.display="none";
 
 
 if(p?.imageUrl||p?.image){
@@ -1676,7 +1609,7 @@ $("modal")
 
 
 $("add").onclick=
-()=>open();
+()=>openProduct();
 
 
 $("cancel").onclick=
@@ -1686,21 +1619,21 @@ $("modal")
 .remove("show");
 
 
-/* =========================
+/* ==================================================
    IMAGE
-========================= */
+================================================== */
 
 $("file").onchange=
 async e=>{
 
-let f=
+const file=
 e.target.files[0];
 
-if(!f)
+if(!file)
 return;
 
 
-if(f.size>8*1024*1024){
+if(file.size>8*1024*1024){
 
 toast(
 "ছবি 8MB-এর বেশি নয়"
@@ -1716,7 +1649,7 @@ return;
 try{
 
 imageData=
-await compress(f);
+await compress(file);
 
 $("preview").src=
 imageData;
@@ -1741,65 +1674,53 @@ toast(
 };
 
 
-function compress(f){
+function compress(file){
 
 return new Promise(
-(res,rej)=>{
+(resolve,reject)=>{
 
-let r=
+const reader=
 new FileReader();
 
 
-r.onload=()=>{
+reader.onload=()=>{
 
-let im=
+const image=
 new Image();
 
 
-im.onload=()=>{
+image.onload=()=>{
 
-let w=
-im.width;
+let w=image.width;
+let h=image.height;
 
-let h=
-im.height;
-
-let m=
+const max=
 Math.max(w,h);
 
 
-if(m>1200){
+if(max>1200){
 
 w=
-Math.round(
-w*1200/m
-);
+Math.round(w*1200/max);
 
 h=
-Math.round(
-h*1200/m
-);
+Math.round(h*1200/max);
 
 }
 
 
-let c=
-document.createElement(
-"canvas"
-);
+const canvas=
+document.createElement("canvas");
+
+canvas.width=w;
+canvas.height=h;
 
 
-c.width=w;
-
-c.height=h;
-
-
-let ctx=
-c.getContext("2d");
-
+const ctx=
+canvas.getContext("2d");
 
 ctx.drawImage(
-im,
+image,
 0,
 0,
 w,
@@ -1807,41 +1728,39 @@ h
 );
 
 
-let q=.82;
+let quality=.82;
 
-let d=
-c.toDataURL(
+let data=
+canvas.toDataURL(
 "image/jpeg",
-q
+quality
 );
 
 
 while(
-d.length*.75>
+data.length*.75>
 700*1024&&
-q>.35
+quality>.35
 ){
 
-q-=.07;
+quality-=.07;
 
-d=
-c.toDataURL(
+data=
+canvas.toDataURL(
 "image/jpeg",
-q
+quality
 );
 
 }
 
 
-if(
-d.length*.75<=700*1024
-){
+if(data.length*.75<=700*1024){
 
-res(d);
+resolve(data);
 
 }else{
 
-rej(
+reject(
 new Error(
 "ছবির আকার কমানো যায়নি"
 )
@@ -1852,50 +1771,61 @@ new Error(
 };
 
 
-im.onerror=()=>rej(
+image.onerror=
+()=>reject(
 new Error("Image load failed")
 );
 
-im.src=
-r.result;
+image.src=
+reader.result;
 
 };
 
 
-r.onerror=()=>rej(
+reader.onerror=
+()=>reject(
 new Error("File read failed")
 );
 
-r.readAsDataURL(f);
+reader.readAsDataURL(file);
 
 });
 
 }
 
 
-/* =========================
+/* ==================================================
    SAVE PRODUCT
-========================= */
+================================================== */
 
 $("save").onclick=
 async()=>{
 
-let n=
+const {
+collection,
+addDoc,
+updateDoc,
+doc,
+serverTimestamp
+}=window.FB.firestoreModule;
+
+
+const name=
 $("name")
 .value
 .trim();
 
 
-let sp=
+const sale=
 Number(
 $("sale").value
 );
 
 
 if(
-!n||
-!Number.isFinite(sp)||
-sp<0
+!name||
+!Number.isFinite(sale)||
+sale<0
 ){
 
 toast(
@@ -1907,36 +1837,29 @@ return;
 }
 
 
-$("save").disabled=
-true;
+$("save").disabled=true;
 
 
 try{
 
-let d={
+const data={
 
-name:n,
+name:name,
 
 code:
 $("code").value.trim(),
 
 originalPrice:
-Number(
-$("original").value
-)||0,
+Number($("original").value)||0,
 
 salePrice:
-sp,
+sale,
 
 stock:
-Number(
-$("stock").value
-)||0,
+Number($("stock").value)||0,
 
 displayOrder:
-Number(
-$("order").value
-)||0,
+Number($("order").value)||0,
 
 category:
 $("cat").value.trim(),
@@ -1955,7 +1878,7 @@ serverTimestamp()
 
 if(imageData){
 
-d.imageUrl=
+data.imageUrl=
 imageData;
 
 }
@@ -1969,7 +1892,7 @@ db,
 "products",
 editId
 ),
-d
+data
 );
 
 toast(
@@ -1978,16 +1901,15 @@ toast(
 
 }else{
 
-d.createdAt=
+data.createdAt=
 serverTimestamp();
-
 
 await addDoc(
 collection(
 db,
 "products"
 ),
-d
+data
 );
 
 toast(
@@ -2001,75 +1923,70 @@ $("modal")
 .classList
 .remove("show");
 
-
 await load();
-
 
 }catch(x){
 
-console.error(
-"Product Save Error:",
-x
-);
+console.error(x);
 
 toast(
 "Save ব্যর্থ: "+
-x.message
+(x?.message||x)
 );
 
 }finally{
 
-$("save").disabled=
-false;
+$("save").disabled=false;
 
 }
 
 };
 
 
-/* =========================
+/* ==================================================
    PRODUCT ACTIONS
-========================= */
+================================================== */
 
 window.editP=
 id=>{
 
-let p=
+const product=
 items.find(
 x=>x.id===id
 );
 
-if(p)
-open(p);
+if(product)
+openProduct(product);
 
 };
 
 
 window.toggleP=
-async(id,a)=>{
+async(id,active)=>{
+
+const {
+updateDoc,
+doc,
+serverTimestamp
+}=window.FB.firestoreModule;
+
 
 try{
 
 await updateDoc(
-doc(
-db,
-"products",
-id
-),
+doc(db,"products",id),
 {
-active:!a,
+active:!active,
 updatedAt:
 serverTimestamp()
 }
 );
 
-
 toast(
-a?
+active?
 "Inactive করা হয়েছে":
 "Active করা হয়েছে"
 );
-
 
 await load();
 
@@ -2077,7 +1994,7 @@ await load();
 
 toast(
 "Status পরিবর্তন ব্যর্থ: "+
-x.message
+(x?.message||x)
 );
 
 }
@@ -2088,16 +2005,22 @@ x.message
 window.delP=
 async id=>{
 
-let p=
+const {
+deleteDoc,
+doc
+}=window.FB.firestoreModule;
+
+
+const product=
 items.find(
 x=>x.id===id
 );
 
 
 if(
-!p||
+!product||
 !confirm(
-'"'+p.name+
+'"'+product.name+
 '" Delete করবেন?'
 )
 )
@@ -2107,27 +2030,20 @@ return;
 try{
 
 await deleteDoc(
-doc(
-db,
-"products",
-id
-)
+doc(db,"products",id)
 );
-
 
 toast(
 "পণ্য Delete হয়েছে"
 );
 
-
 await load();
-
 
 }catch(x){
 
 toast(
 "Delete ব্যর্থ: "+
-x.message
+(x?.message||x)
 );
 
 }
@@ -2136,59 +2052,44 @@ x.message
 
 
 /* ==================================================
-   ORDERS MANAGEMENT
+   ORDERS
 ================================================== */
-
-
-/* Order status labels */
 
 const STATUS_LABELS={
 
-new:
-"নতুন অর্ডার",
-
-confirmed:
-"Confirmed",
-
-processing:
-"Processing",
-
-delivered:
-"Delivered",
-
-cancelled:
-"Cancelled"
+new:"নতুন অর্ডার",
+confirmed:"Confirmed",
+processing:"Processing",
+delivered:"Delivered",
+cancelled:"Cancelled"
 
 };
 
 
-/* =========================
-   Load Orders
-========================= */
-
 async function loadOrders(){
+
+const {
+collection,
+getDocs
+}=window.FB.firestoreModule;
+
 
 try{
 
-let s=
+const snapshot=
 await getDocs(
-collection(
-db,
-"orders"
-)
+collection(db,"orders")
 );
 
 
 orders=
-s.docs.map(
+snapshot.docs.map(
 x=>({
 id:x.id,
 ...x.data()
 })
 );
 
-
-/* newest first */
 
 orders.sort(
 (a,b)=>
@@ -2198,21 +2099,20 @@ getTime(a.createdAt)
 
 
 updateNewOrderCount();
-
 renderOrders();
 
-
 }catch(x){
+
+console.error(x);
 
 $("ordersList").innerHTML=
 '<p style="color:#dc2626">'+
 "Orders load করা যায়নি। "+
-"Firestore Rules পরীক্ষা করুন।"+
-'</p>';
+"</p>";
 
 toast(
 "Orders: "+
-x.message
+(x?.message||x)
 );
 
 }
@@ -2220,47 +2120,33 @@ x.message
 }
 
 
-/* =========================
-   Timestamp Helper
-========================= */
-
 function getTime(t){
 
 if(!t)
 return 0;
 
-
 if(
-typeof t.toMillis===
-"function"
+typeof t.toMillis==="function"
 )
 return t.toMillis();
-
 
 if(
 typeof t==="string"
 )
 return Date.parse(t)||0;
 
-
 return 0;
 
 }
 
 
-/* =========================
-   Date Format
-========================= */
-
 function formatDate(t){
 
-let ms=
+const ms=
 getTime(t);
-
 
 if(!ms)
 return "সময় পাওয়া যায়নি";
-
 
 return new Date(ms)
 .toLocaleString(
@@ -2277,111 +2163,88 @@ minute:"2-digit"
 }
 
 
-/* =========================
-   New Order Count
-========================= */
-
 function updateNewOrderCount(){
 
 $("newOrderCount")
 .textContent=
 orders.filter(
 x=>
-(x.status||"new")===
-"new"
+(x.status||"new")==="new"
 ).length;
 
 }
 
 
-/* =========================
-   Status CSS
-========================= */
-
-function statusClass(s){
+function statusClass(status){
 
 return {
 
-new:
-"status-new",
+new:"status-new",
+confirmed:"status-confirmed",
+processing:"status-processing",
+delivered:"status-delivered",
+cancelled:"status-cancelled"
 
-confirmed:
-"status-confirmed",
-
-processing:
-"status-processing",
-
-delivered:
-"status-delivered",
-
-cancelled:
-"status-cancelled"
-
-}[s]||
+}[status]||
 "status-new";
 
 }
-   /* =========================
-   Render Orders
-========================= */
+
 
 function renderOrders(){
 
-let q=
+const q=
 $("orderSearch")
 .value
 .toLowerCase()
 .trim();
 
 
-let filter=
+const filter=
 $("orderStatusFilter")
 .value;
 
 
-let list=
-orders.filter(o=>{
+const list=
+orders.filter(order=>{
 
-let number=
+const number=
 String(
-o.orderNumber||""
+order.orderNumber||""
 )
 .toLowerCase();
 
+const customer=
+order.customer||{};
 
-let name=
+const name=
 String(
-o.customerName||
-o.customer?.name||
+order.customerName||
+customer.name||
 ""
 )
 .toLowerCase();
 
-
-let phone=
+const phone=
 String(
-o.customerPhone||
-o.customer?.phone||
+order.customerPhone||
+customer.phone||
 ""
 )
 .toLowerCase();
 
-
-let matchSearch=
+const matchSearch=
 !q||
 number.includes(q)||
 name.includes(q)||
 phone.includes(q);
 
+const status=
+order.status||"new";
 
-let status=
-o.status||"new";
-
-
-let matchStatus=
+const matchStatus=
 filter==="all"||
 status===filter;
-
 
 return matchSearch&&matchStatus;
 
@@ -2401,127 +2264,121 @@ return;
 
 
 $("ordersList").innerHTML=
-list.map(
-renderOrder
-).join("");
+list.map(renderOrder).join("");
 
 }
 
 
-/* =========================
-   Render One Order
-========================= */
+function renderOrder(order){
 
-function renderOrder(o){
+const status=
+order.status||"new";
 
-let status=
-o.status||"new";
-
-
-let label=
-o.statusLabel||
+const label=
+order.statusLabel||
 STATUS_LABELS[status]||
 status;
 
+const customer=
+order.customer||{};
 
-let customer=
-o.customer||{};
-
-
-let name=
-o.customerName||
+const name=
+order.customerName||
 customer.name||
 "—";
 
-
-let phone=
-o.customerPhone||
+const phone=
+order.customerPhone||
 customer.phone||
 "—";
 
-
-let address=
-o.customerAddress||
+const address=
+order.customerAddress||
 customer.address||
 "—";
 
-
-let note=
-o.customerNote||
+const note=
+order.customerNote||
 customer.note||
 "";
 
 
-let products=
-Array.isArray(o.items)?
-o.items:
+const products=
+Array.isArray(order.items)?
+order.items:
 
-Array.isArray(o.products)?
-o.products:
+Array.isArray(order.products)?
+order.products:
 [];
 
 
-let subtotal=
+/*
+  Website order structure:
+  saleTotal = product sale total
+  originalTotal = original price total
+*/
+
+const subtotal=
 Number(
-o.subtotal??
-o.originalTotal??
+order.saleTotal??
+order.subtotal??
+order.originalTotal??
 0
 );
 
 
-let discount=
+const discount=
 Number(
-o.discountTotal||
+order.discountTotal||
 0
 );
 
 
-let delivery=
+const delivery=
 Number(
-o.deliveryCharge||
+order.deliveryCharge||
 0
 );
 
 
-let grand=
+const grand=
 Number(
-o.grandTotal||
+order.grandTotal||
 (
 subtotal+
-delivery-
-discount
+delivery
 )
 );
 
 
-let productsHTML=
+const productsHTML=
 products.length?
 
-products.map(p=>{
+products.map(product=>{
 
-let pname=
-p.name||
-p.productName||
+const pname=
+product.name||
+product.productName||
 "পণ্য";
 
-
-let qty=
+const qty=
 Number(
-p.qty||
-p.quantity||
+product.qty||
+product.quantity||
 1
 );
 
-
-let price=
+const price=
 Number(
-p.salePrice||
-p.price||
+product.salePrice||
+product.price||
 0
 );
 
-
-let total=
+const total=
+Number(
+product.lineTotal
+)||
 price*qty;
 
 
@@ -2559,13 +2416,13 @@ ${esc(pname)}
 '<p class="small">পণ্যের তথ্য পাওয়া যায়নি।</p>';
 
 
-let tracking=
-Array.isArray(o.tracking)?
-o.tracking:
+const tracking=
+Array.isArray(order.tracking)?
+order.tracking:
 [];
 
 
-let trackingHTML=
+const trackingHTML=
 tracking.length?
 
 tracking.map(t=>`
@@ -2607,20 +2464,17 @@ return `
 <div class="order-number">
 
 Order #${esc(
-o.orderNumber||
-o.id
+order.orderNumber||
+order.id
 )}
 
 </div>
 
 <div class="small">
-
-${formatDate(o.createdAt)}
-
+${formatDate(order.createdAt)}
 </div>
 
 </div>
-
 
 <div>
 
@@ -2752,7 +2606,7 @@ Grand Total
 
 <select
 class="status-select"
-data-order-id="${o.id}"
+data-order-id="${order.id}"
 onchange="changeOrderStatus(this)">
 
 <option value="new"
@@ -2795,7 +2649,6 @@ ${trackingHTML}
 
 </div>
 
-
 </div>
 
 `;
@@ -2803,22 +2656,28 @@ ${trackingHTML}
 }
 
 
-/* =========================
-   Change Order Status
-========================= */
+/* ==================================================
+   CHANGE ORDER STATUS
+================================================== */
 
 window.changeOrderStatus=
 async select=>{
 
-let orderId=
+const {
+updateDoc,
+doc,
+serverTimestamp
+}=window.FB.firestoreModule;
+
+
+const orderId=
 select.dataset.orderId;
 
-
-let newStatus=
+const newStatus=
 select.value;
 
 
-let order=
+const order=
 orders.find(
 x=>x.id===orderId
 );
@@ -2828,7 +2687,7 @@ if(!order)
 return;
 
 
-let oldStatus=
+const oldStatus=
 order.status||"new";
 
 
@@ -2836,59 +2695,44 @@ if(oldStatus===newStatus)
 return;
 
 
-let newLabel=
+const newLabel=
 STATUS_LABELS[newStatus]||
 newStatus;
 
 
-let tracking=
-Array.isArray(
-order.tracking
-)?
-
-[
-...order.tracking
-]:
-
+const tracking=
+Array.isArray(order.tracking)
+?
+[...order.tracking]
+:
 [];
 
 
 tracking.push({
 
-status:
-newStatus,
+status:newStatus,
 
-label:
-newLabel,
+label:newLabel,
 
-at:
-new Date().toISOString()
+at:new Date().toISOString()
 
 });
 
 
 try{
 
-select.disabled=
-true;
+select.disabled=true;
 
 
 await updateDoc(
-doc(
-db,
-"orders",
-orderId
-),
+doc(db,"orders",orderId),
 {
 
-status:
-newStatus,
+status:newStatus,
 
-statusLabel:
-newLabel,
+statusLabel:newLabel,
 
-tracking:
-tracking,
+tracking:tracking,
 
 updatedAt:
 serverTimestamp()
@@ -2896,13 +2740,6 @@ serverTimestamp()
 }
 );
 
-
-toast(
-"Order Status আপডেট হয়েছে"
-);
-
-
-/* Local update */
 
 order.status=
 newStatus;
@@ -2914,8 +2751,12 @@ order.tracking=
 tracking;
 
 
-updateNewOrderCount();
+toast(
+"Order Status আপডেট হয়েছে"
+);
 
+
+updateNewOrderCount();
 renderOrders();
 
 
@@ -2923,7 +2764,7 @@ renderOrders();
 
 toast(
 "Status Update ব্যর্থ: "+
-x.message
+(x?.message||x)
 );
 
 select.value=
@@ -2931,47 +2772,48 @@ oldStatus;
 
 }finally{
 
-select.disabled=
-false;
+select.disabled=false;
 
 }
 
 };
 
 
-/* =========================
-   Order Search / Filter
-========================= */
-
 $("orderSearch").oninput=
 renderOrders;
 
-
 $("orderStatusFilter").onchange=
 renderOrders;
-   /* =========================
-   Auto Refresh Orders
-========================= */
+
+
+/* ==================================================
+   AUTO REFRESH
+================================================== */
 
 setInterval(
 ()=>{
 
 if(
+auth&&
 $("app").style.display!=="none"
-)
+){
+
 loadOrders();
+
+}
 
 },
 30000
 );
 
 
-/* =========================
-   Initial
-========================= */
+/* ==================================================
+   START
+================================================== */
+
+startFirebase();
 
 </script>
 
 </body>
-
 </html>
