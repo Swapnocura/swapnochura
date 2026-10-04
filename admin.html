@@ -1,0 +1,4292 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#073b8f">
+
+<title>স্বপ্নচূড়া Admin Panel</title>
+
+<link rel="icon" href="logo.png">
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore-compat.js"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  padding:0;
+  background:#f4f6fb;
+  color:#172033;
+  font-family:Arial,"Noto Sans Bengali",sans-serif;
+}
+
+body{
+  min-height:100vh;
+}
+
+header{
+  background:linear-gradient(135deg,#073b8f,#1262d6);
+  color:#fff;
+  padding:16px 20px;
+  box-shadow:0 3px 14px #0002;
+  position:sticky;
+  top:0;
+  z-index:20;
+}
+
+.header-inner{
+  max-width:1200px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+
+header h1{
+  font-size:22px;
+  margin:0;
+}
+
+.container{
+  max-width:1200px;
+  margin:22px auto;
+  padding:0 14px;
+}
+
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 5px 25px #17203312;
+  margin-bottom:18px;
+}
+
+.login{
+  max-width:620px;
+  margin:70px auto;
+}
+
+.login h2{
+  text-align:center;
+  font-size:30px;
+  margin:0 0 10px;
+}
+
+.small{
+  color:#687386;
+  font-size:14px;
+  line-height:1.6;
+}
+
+label{
+  display:block;
+  font-weight:700;
+  margin:14px 0 7px;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  border:1px solid #d2d7e0;
+  border-radius:11px;
+  padding:12px 13px;
+  font-size:16px;
+  background:#fff;
+  outline:none;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  border-color:#2871e8;
+  box-shadow:0 0 0 3px #2871e822;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:11px 16px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.55;
+  cursor:not-allowed;
+}
+
+.primary{
+  background:#2869df;
+  color:#fff;
+}
+
+.success{
+  background:#159447;
+  color:#fff;
+}
+
+.danger{
+  background:#d9363e;
+  color:#fff;
+}
+
+.secondary{
+  background:#eef2f8;
+  color:#26344d;
+}
+
+.warning{
+  background:#f2a900;
+  color:#fff;
+}
+
+.actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:15px;
+}
+
+#loginError{
+  color:#c62828;
+  background:#fff0f0;
+  border-radius:10px;
+  padding:10px;
+  margin-top:12px;
+  display:none;
+}
+
+#loginSuccess{
+  color:#147a3f;
+  background:#effbf4;
+  border-radius:10px;
+  padding:10px;
+  margin-top:12px;
+  display:none;
+}
+
+#firebaseStatus{
+  margin-top:16px;
+  padding:11px 13px;
+  border-radius:12px;
+  background:#f5f7fa;
+  color:#596579;
+}
+
+.status-ok{
+  background:#effbf4!important;
+  color:#147a3f!important;
+}
+
+.status-bad{
+  background:#fff0f0!important;
+  color:#b4232e!important;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.topbar h2{
+  margin:0;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:18px 0;
+}
+
+.stat{
+  background:#fff;
+  border-radius:15px;
+  padding:17px;
+  box-shadow:0 3px 15px #1720330d;
+}
+
+.stat b{
+  display:block;
+  font-size:27px;
+  margin-top:4px;
+}
+
+.section-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:14px;
+}
+
+.section-title h2{
+  margin:0;
+  font-size:20px;
+}
+
+.toolbar{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.toolbar input,
+.toolbar select{
+  width:auto;
+  min-width:180px;
+}
+
+.table-wrap{
+  overflow:auto;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:850px;
+}
+
+th,
+td{
+  border-bottom:1px solid #e7eaf0;
+  padding:11px 9px;
+  text-align:left;
+  vertical-align:middle;
+}
+
+th{
+  background:#f7f8fb;
+  position:sticky;
+  top:0;
+  z-index:1;
+}
+
+.product-img{
+  width:58px;
+  height:58px;
+  object-fit:contain;
+  border-radius:9px;
+  background:#f7f7f7;
+  border:1px solid #e5e7eb;
+}
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:12px;
+  font-weight:700;
+}
+
+.badge-on{
+  background:#e8f7ee;
+  color:#157a3e;
+}
+
+.badge-off{
+  background:#f1f3f6;
+  color:#687386;
+}
+
+.order-status{
+  border-radius:8px;
+  padding:7px 9px;
+  font-weight:700;
+}
+
+.modal-backdrop{
+  position:fixed;
+  inset:0;
+  background:#0008;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:15px;
+  z-index:50;
+}
+
+.modal-backdrop.show{
+  display:flex;
+}
+
+.modal{
+  background:#fff;
+  width:min(720px,100%);
+  max-height:92vh;
+  overflow:auto;
+  border-radius:18px;
+  padding:20px;
+}
+
+.modal h2{
+  margin-top:0;
+}
+
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.form-grid .full{
+  grid-column:1/-1;
+}
+
+.preview{
+  max-width:180px;
+  max-height:160px;
+  object-fit:contain;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:5px;
+  margin-top:8px;
+}
+
+.image-upload-box{
+  border:1px dashed #b8c2d1;
+  border-radius:13px;
+  padding:13px;
+  background:#f8faff;
+}
+
+.image-upload-buttons{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin-top:10px;
+}
+
+.image-status{
+  margin-top:10px;
+  padding:9px 11px;
+  border-radius:9px;
+  background:#f1f3f6;
+  color:#596579;
+  font-size:13px;
+}
+
+.image-status.success-status{
+  background:#effbf4;
+  color:#147a3f;
+}
+
+.image-status.error-status{
+  background:#fff0f0;
+  color:#b4232e;
+}
+
+.order-items{
+  background:#f7f8fb;
+  border-radius:10px;
+  padding:10px;
+  margin-top:8px;
+}
+
+.order-item{
+  padding:7px 0;
+  border-bottom:1px solid #e4e7ed;
+}
+
+.order-item:last-child{
+  border-bottom:0;
+}
+
+.empty{
+  padding:30px;
+  text-align:center;
+  color:#6b7280;
+}
+
+.toast{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:100;
+  background:#172033;
+  color:#fff;
+  padding:13px 16px;
+  border-radius:11px;
+  box-shadow:0 6px 25px #0003;
+  display:none;
+  max-width:360px;
+}
+
+.toast.show{
+  display:block;
+}
+
+.order-card{
+  border:1px solid #e5e8ef;
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:12px;
+}
+
+.order-head{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.order-head b{
+  font-size:17px;
+}
+
+.customer{
+  line-height:1.7;
+}
+
+hr{
+  border:0;
+  border-top:1px solid #e6e9ef;
+  margin:18px 0;
+}
+
+@media(max-width:800px){
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid .full{
+    grid-column:auto;
+  }
+
+  .login{
+    margin:35px auto;
+  }
+
+}
+
+@media(max-width:520px){
+
+  header{
+    padding:13px 12px;
+  }
+
+  header h1{
+    font-size:18px;
+  }
+
+  .container{
+    padding:0 10px;
+    margin:15px auto;
+  }
+
+  .card{
+    padding:15px;
+    border-radius:15px;
+  }
+
+  .stats{
+    gap:8px;
+  }
+
+  .stat{
+    padding:13px;
+  }
+
+  .stat b{
+    font-size:23px;
+  }
+
+  .toolbar input,
+  .toolbar select{
+    width:100%;
+    min-width:0;
+  }
+
+  .login h2{
+    font-size:25px;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header id="appHeader" style="display:none">
+
+  <div class="header-inner">
+
+    <h1>🔐 স্বপ্নচূড়া Admin Panel</h1>
+
+    <button class="secondary" id="logoutBtn">
+      Logout
+    </button>
+
+  </div>
+
+</header>
+
+
+<div id="loginScreen" class="container">
+
+  <div class="card login">
+
+    <h2>
+      🔐 স্বপ্নচূড়া Admin Panel
+    </h2>
+
+    <p class="small">
+      শুধু অনুমোদিত Admin account ব্যবহার করুন।
+    </p>
+
+    <label for="email">
+      Email
+    </label>
+
+    <input
+      id="email"
+      type="email"
+      value="mdrazibulislam240@gmail.com"
+      autocomplete="username"
+    >
+
+    <label for="password">
+      Password
+    </label>
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Admin password"
+      autocomplete="current-password"
+    >
+
+    <div class="actions">
+
+      <button
+        class="primary"
+        id="loginBtn"
+      >
+        Login
+      </button>
+
+    </div>
+
+    <div id="loginError"></div>
+
+    <div id="loginSuccess"></div>
+
+    <div id="firebaseStatus">
+      ⏳ Firebase সংযোগ পরীক্ষা হচ্ছে...
+    </div>
+
+  </div>
+
+</div>
+
+
+<div id="adminApp" class="container" style="display:none">
+
+  <div class="card">
+
+    <div class="topbar">
+
+      <div>
+
+        <h2>
+          স্বপ্নচূড়া Dashboard
+        </h2>
+
+        <div class="small">
+          Products ও Orders এখান থেকে পরিচালনা করুন।
+        </div>
+
+      </div>
+
+      <div
+        class="actions"
+        style="margin-top:0"
+      >
+
+        <button
+          class="primary"
+          id="newProductBtn"
+        >
+          ＋ নতুন Product
+        </button>
+
+        <button
+          class="secondary"
+          id="refreshBtn"
+        >
+          ↻ Refresh
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="stats">
+
+    <div class="stat">
+
+      মোট Product
+
+      <b id="statProducts">
+        0
+      </b>
+
+    </div>
+
+    <div class="stat">
+
+      Active Product
+
+      <b id="statActive">
+        0
+      </b>
+
+    </div>
+
+    <div class="stat">
+
+      মোট Order
+
+      <b id="statOrders">
+        0
+      </b>
+
+    </div>
+
+    <div class="stat">
+
+      নতুন Order
+
+      <b id="statNewOrders">
+        0
+      </b>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="section-title">
+
+      <h2>
+        📦 Product Management
+      </h2>
+
+    </div>
+
+    <div class="toolbar">
+
+      <input
+        id="productSearch"
+        type="search"
+        placeholder="Product নাম / Code দিয়ে খুঁজুন"
+      >
+
+      <select id="productFilter">
+
+        <option value="all">
+          সব Product
+        </option>
+
+        <option value="active">
+          শুধু Active
+        </option>
+
+        <option value="inactive">
+          শুধু Inactive
+        </option>
+
+      </select>
+
+    </div>
+
+    <div class="table-wrap">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>ছবি</th>
+
+            <th>Product</th>
+
+            <th>Code</th>
+
+            <th>Original</th>
+
+            <th>Sale</th>
+
+            <th>Stock</th>
+
+            <th>Order</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="productTable">
+
+          <tr>
+
+            <td
+              colspan="9"
+              class="empty"
+            >
+              Product লোড হচ্ছে...
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <div class="section-title">
+
+      <h2>
+        🛒 Customer Orders
+      </h2>
+
+      <button
+        class="secondary"
+        id="refreshOrdersBtn"
+      >
+        ↻ Orders Refresh
+      </button>
+
+    </div>
+
+    <div class="toolbar">
+
+      <input
+        id="orderSearch"
+        type="search"
+        placeholder="Order ID / নাম / ফোন দিয়ে খুঁজুন"
+      >
+
+      <select id="orderFilter">
+
+        <option value="all">
+          সব Status
+        </option>
+
+        <option value="new">
+          New Order
+        </option>
+
+        <option value="confirmed">
+          Confirmed
+        </option>
+
+        <option value="processing">
+          Processing
+        </option>
+
+        <option value="delivered">
+          Delivered
+        </option>
+
+        <option value="cancelled">
+          Cancelled
+        </option>
+
+      </select>
+
+    </div>
+
+    <div id="ordersList">
+
+      <div class="empty">
+        Order লোড হচ্ছে...
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ================= PRODUCT MODAL ================= -->
+
+<div
+  class="modal-backdrop"
+  id="productModal"
+>
+
+  <div class="modal">
+
+    <h2 id="modalTitle">
+      নতুন Product
+    </h2>
+
+    <div class="form-grid">
+
+      <div>
+
+        <label>
+          Product Name *
+        </label>
+
+        <input
+          id="pName"
+          type="text"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Product Code
+        </label>
+
+        <input
+          id="pCode"
+          type="text"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Original Price
+        </label>
+
+        <input
+          id="pOriginal"
+          type="number"
+          min="0"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Sale Price *
+        </label>
+
+        <input
+          id="pSale"
+          type="number"
+          min="0"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Stock
+        </label>
+
+        <input
+          id="pStock"
+          type="number"
+          min="0"
+          value="0"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Display Order
+        </label>
+
+        <input
+          id="pOrder"
+          type="number"
+          value="0"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Category
+        </label>
+
+        <input
+          id="pCat"
+          type="text"
+          placeholder="যেমন: Kettle, Blender"
+        >
+
+      </div>
+
+
+      <div>
+
+        <label>
+          Active
+        </label>
+
+        <select id="pActive">
+
+          <option value="true">
+            Active
+          </option>
+
+          <option value="false">
+            Inactive
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- ================= NEW IMAGE SYSTEM ================= -->
+
+      <div class="full">
+
+        <label>
+          Product Image *
+        </label>
+
+        <div class="image-upload-box">
+
+          <input
+            id="pImageFile"
+            type="file"
+            accept="image/jpeg,image/png,image/webp,image/jpg"
+          >
+
+          <div class="small" style="margin-top:7px">
+
+            📌 সর্বোচ্চ Image Size: 700 KB
+
+            <br>
+
+            বড় ছবি হলে সিস্টেম নিজে থেকে Resize/Compress করবে।
+
+          </div>
+
+
+          <div class="image-upload-buttons">
+
+            <button
+              type="button"
+              class="success"
+              id="uploadImageBtn"
+            >
+              ⬆️ Upload Image
+            </button>
+
+            <button
+              type="button"
+              class="secondary"
+              id="clearImageBtn"
+            >
+              ✕ ছবি পরিবর্তন করুন
+            </button>
+
+          </div>
+
+
+          <div
+            id="imageStatus"
+            class="image-status"
+          >
+            📷 একটি ছবি নির্বাচন করুন।
+          </div>
+
+
+          <img
+            id="imagePreview"
+            class="preview"
+            style="display:none"
+            alt="Preview"
+          >
+
+
+          <!-- এখানে Final Image Data রাখা হবে -->
+          <input
+            id="pImage"
+            type="hidden"
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="full">
+
+        <label>
+          Description
+        </label>
+
+        <textarea
+          id="pDesc"
+          placeholder="Product description"
+        ></textarea>
+
+      </div>
+
+    </div>
+
+
+    <div class="actions">
+
+      <button
+        class="primary"
+        id="saveProductBtn"
+      >
+        Save Product
+      </button>
+
+      <button
+        class="secondary"
+        id="cancelProductBtn"
+      >
+        Cancel
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<script>
+
+/* =========================================
+   FIREBASE CONFIG
+========================================= */
+
+const firebaseConfig = {
+
+  apiKey:
+    "AIzaSyD0n0aftfePcUB2YxGKxCl9Gl94FRu3558",
+
+  authDomain:
+    "swapnochura-e90b8.firebaseapp.com",
+
+  projectId:
+    "swapnochura-e90b8",
+
+  storageBucket:
+    "swapnochura-e90b8.firebasestorage.app",
+
+  messagingSenderId:
+    "1065728831941",
+
+  appId:
+    "1:1065728831941:web:367c37eb72c13cc723dbac",
+
+  measurementId:
+    "G-8ZG18K4CPT"
+
+};
+
+
+const ADMIN_EMAIL =
+  "mdrazibulislam240@gmail.com";
+
+
+/* =========================================
+   IMAGE SETTINGS
+========================================= */
+
+/*
+  Final image data প্রায় 680 KB-এর মধ্যে রাখছি।
+  এতে Firestore document-এর অন্যান্য data-এর
+  জন্যও কিছু জায়গা থাকবে।
+*/
+
+const MAX_IMAGE_KB = 680;
+
+const MAX_IMAGE_BYTES =
+  MAX_IMAGE_KB * 1024;
+
+const START_IMAGE_QUALITY = 0.82;
+
+const MIN_IMAGE_QUALITY = 0.35;
+
+const START_MAX_WIDTH = 1400;
+
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let auth = null;
+
+let db = null;
+
+let allProducts = [];
+
+let allOrders = [];
+
+let editingProductId = null;
+
+let selectedImageFile = null;
+
+let uploadedImageData = "";
+
+let currentPreviewObjectUrl = null;
+
+
+const $ = id =>
+  document.getElementById(id);
+
+
+/* =========================================
+   TOAST
+========================================= */
+
+function showToast(message){
+
+  const el = $("toast");
+
+  el.textContent = message;
+
+  el.classList.add("show");
+
+  clearTimeout(window.__toastTimer);
+
+  window.__toastTimer =
+    setTimeout(
+      () => el.classList.remove("show"),
+      2800
+    );
+
+}
+
+
+/* =========================================
+   FIREBASE STATUS
+========================================= */
+
+function setFirebaseStatus(
+  message,
+  type=""
+){
+
+  const el =
+    $("firebaseStatus");
+
+  el.textContent =
+    message;
+
+  el.className = "";
+
+  if(type === "ok"){
+
+    el.classList.add(
+      "status-ok"
+    );
+
+  }
+
+  if(type === "bad"){
+
+    el.classList.add(
+      "status-bad"
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   LOGIN MESSAGE
+========================================= */
+
+function showLoginError(message){
+
+  const el =
+    $("loginError");
+
+  el.textContent =
+    message;
+
+  el.style.display =
+    "block";
+
+  $("loginSuccess")
+    .style.display =
+    "none";
+
+}
+
+
+function showLoginSuccess(message){
+
+  const el =
+    $("loginSuccess");
+
+  el.textContent =
+    message;
+
+  el.style.display =
+    "block";
+
+  $("loginError")
+    .style.display =
+    "none";
+
+}
+
+
+function hideLoginMessages(){
+
+  $("loginError")
+    .style.display =
+    "none";
+
+  $("loginSuccess")
+    .style.display =
+    "none";
+
+}
+
+
+/* =========================================
+   START FIREBASE
+========================================= */
+
+function startFirebase(){
+
+  try{
+
+    if(!window.firebase){
+
+      throw new Error(
+        "Firebase library load হয়নি। Internet connection পরীক্ষা করুন।"
+      );
+
+    }
+
+    if(!firebase.apps.length){
+
+      firebase.initializeApp(
+        firebaseConfig
+      );
+
+    }
+
+    auth =
+      firebase.auth();
+
+    db =
+      firebase.firestore();
+
+
+    setFirebaseStatus(
+      "✅ Firebase সংযোগ সফল হয়েছে। এখন Admin password দিয়ে Login করুন।",
+      "ok"
+    );
+
+
+    auth.onAuthStateChanged(
+      async user => {
+
+        if(user){
+
+          const email =
+            (user.email || "")
+            .toLowerCase();
+
+
+          if(
+            email ===
+            ADMIN_EMAIL.toLowerCase()
+          ){
+
+            $("loginScreen")
+              .style.display =
+              "none";
+
+
+            $("adminApp")
+              .style.display =
+              "block";
+
+
+            $("appHeader")
+              .style.display =
+              "block";
+
+
+            hideLoginMessages();
+
+
+            await loadProducts();
+
+            await loadOrders();
+
+          }
+
+          else{
+
+            await auth.signOut();
+
+
+            $("loginScreen")
+              .style.display =
+              "block";
+
+
+            $("adminApp")
+              .style.display =
+              "none";
+
+
+            $("appHeader")
+              .style.display =
+              "none";
+
+
+            showLoginError(
+              "এই Email Admin হিসেবে অনুমোদিত নয়।"
+            );
+
+          }
+
+        }
+
+        else{
+
+          $("loginScreen")
+            .style.display =
+            "block";
+
+
+          $("adminApp")
+            .style.display =
+            "none";
+
+
+          $("appHeader")
+            .style.display =
+            "none";
+
+        }
+
+      }
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+
+    setFirebaseStatus(
+      "❌ Firebase চালু করা যায়নি: " +
+      (error.message || error),
+      "bad"
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   LOGIN
+========================================= */
+
+$("loginBtn")
+.addEventListener(
+  "click",
+  async () => {
+
+    hideLoginMessages();
+
+
+    if(!auth){
+
+      showLoginError(
+        "Firebase এখনো প্রস্তুত হয়নি। ২–৩ সেকেন্ড অপেক্ষা করে আবার চেষ্টা করুন।"
+      );
+
+      return;
+
+    }
+
+
+    const email =
+      $("email")
+      .value
+      .trim();
+
+
+    const password =
+      $("password")
+      .value;
+
+
+    if(!email || !password){
+
+      showLoginError(
+        "Email এবং Password দুটোই দিন।"
+      );
+
+      return;
+
+    }
+
+
+    const btn =
+      $("loginBtn");
+
+
+    btn.disabled =
+      true;
+
+    btn.textContent =
+      "Login হচ্ছে...";
+
+
+    try{
+
+      await auth
+        .signInWithEmailAndPassword(
+          email,
+          password
+        );
+
+
+      showLoginSuccess(
+        "✅ Login সফল হচ্ছে..."
+      );
+
+    }
+
+    catch(error){
+
+      console.error(
+        "LOGIN ERROR:",
+        error
+      );
+
+
+      let msg =
+        error.message ||
+        "Login ব্যর্থ হয়েছে।";
+
+
+      if(
+        error.code ===
+        "auth/invalid-credential"
+      ){
+
+        msg =
+          "❌ Email অথবা Password সঠিক নয়।";
+
+      }
+
+      else if(
+        error.code ===
+        "auth/wrong-password"
+      ){
+
+        msg =
+          "❌ Password সঠিক নয়।";
+
+      }
+
+      else if(
+        error.code ===
+        "auth/user-not-found"
+      ){
+
+        msg =
+          "❌ এই Email দিয়ে Firebase Authentication-এ User পাওয়া যায়নি।";
+
+      }
+
+      else if(
+        error.code ===
+        "auth/unauthorized-domain"
+      ){
+
+        msg =
+          "❌ GitHub Pages domain Firebase Authentication-এ Authorized করা হয়নি। Firebase Console → Authentication → Settings → Authorized domains-এ swapnochura.github.io যোগ করুন।";
+
+      }
+
+      else if(
+        error.code ===
+        "auth/network-request-failed"
+      ){
+
+        msg =
+          "❌ Internet/Firebase network connection সমস্যা হয়েছে।";
+
+      }
+
+      else if(
+        error.code ===
+        "auth/too-many-requests"
+      ){
+
+        msg =
+          "❌ অনেকবার ভুল Login হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।";
+
+      }
+
+
+      showLoginError(msg);
+
+    }
+
+    finally{
+
+      btn.disabled =
+        false;
+
+      btn.textContent =
+        "Login";
+
+    }
+
+  }
+);
+
+
+/* Enter চাপলেও Login */
+
+$("password")
+.addEventListener(
+  "keydown",
+  e => {
+
+    if(e.key === "Enter"){
+
+      $("loginBtn").click();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+$("logoutBtn")
+.addEventListener(
+  "click",
+  async () => {
+
+    try{
+
+      await auth.signOut();
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   LOAD PRODUCTS
+========================================= */
+
+async function loadProducts(){
+
+  if(!db)
+    return;
+
+
+  $("productTable")
+    .innerHTML =
+    '<tr><td colspan="9" class="empty">Product লোড হচ্ছে...</td></tr>';
+
+
+  try{
+
+    const snap =
+      await db
+      .collection("products")
+      .get();
+
+
+    allProducts =
+      snap.docs.map(
+        doc => ({
+          id:doc.id,
+          ...doc.data()
+        })
+      );
+
+
+    allProducts.sort(
+      (a,b) =>
+        Number(
+          a.displayOrder ??
+          a.order ??
+          0
+        )
+        -
+        Number(
+          b.displayOrder ??
+          b.order ??
+          0
+        )
+    );
+
+
+    renderProducts();
+
+    updateStats();
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+
+    $("productTable")
+      .innerHTML =
+      '<tr><td colspan="9" class="empty">❌ Product লোড করা যায়নি: ' +
+      escapeHtml(error.message) +
+      '</td></tr>';
+
+
+    showToast(
+      "Product লোড করতে সমস্যা হয়েছে"
+    );
+
+  }
+
+}
+
+
+/* =========================================
+   RENDER PRODUCTS
+========================================= */
+
+function renderProducts(){
+
+  const search =
+    $("productSearch")
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  const filter =
+    $("productFilter")
+    .value;
+
+
+  const list =
+    allProducts.filter(
+      p => {
+
+        const text =
+          [
+            p.name,
+            p.productName,
+            p.code,
+            p.productCode,
+            p.category,
+            p.cat
+          ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+
+        const active =
+          p.active !== false;
+
+
+        return (
+
+          !search ||
+          text.includes(search)
+
+        )
+        &&
+        (
+
+          filter === "all" ||
+
+          (
+            filter === "active" &&
+            active
+          ) ||
+
+          (
+            filter === "inactive" &&
+            !active
+          )
+
+        );
+
+      }
+    );
+
+
+  if(!list.length){
+
+    $("productTable")
+      .innerHTML =
+      '<tr><td colspan="9" class="empty">কোনো Product পাওয়া যায়নি।</td></tr>';
+
+    return;
+
+  }
+
+
+  $("productTable")
+    .innerHTML =
+    list
+    .map(
+      p => {
+
+        const name =
+          p.name ??
+          p.productName ??
+          "Unnamed Product";
+
+
+        const code =
+          p.code ??
+          p.productCode ??
+          "";
+
+
+        const original =
+          Number(
+            p.originalPrice ??
+            p.original ??
+            0
+          );
+
+
+        const sale =
+          Number(
+            p.salePrice ??
+            p.sale ??
+            0
+          );
+
+
+        const stock =
+          Number(
+            p.stock ??
+            0
+          );
+
+
+        const displayOrder =
+          Number(
+            p.displayOrder ??
+            p.order ??
+            0
+          );
+
+
+        const active =
+          p.active !== false;
+
+
+        const image =
+          p.image ??
+          p.imageUrl ??
+          p.img ??
+          "";
+
+
+        return `
+
+        <tr>
+
+          <td>
+
+            ${
+              image
+
+              ?
+
+              `<img
+                class="product-img"
+                src="${escapeAttr(image)}"
+                onerror="this.style.opacity='.3'"
+                alt=""
+              >`
+
+              :
+
+              "—"
+            }
+
+          </td>
+
+
+          <td>
+
+            <b>
+              ${escapeHtml(name)}
+            </b>
+
+          </td>
+
+
+          <td>
+            ${escapeHtml(code)}
+          </td>
+
+
+          <td>
+            ৳${formatNumber(original)}
+          </td>
+
+
+          <td>
+            <b>
+              ৳${formatNumber(sale)}
+            </b>
+          </td>
+
+
+          <td>
+            ${formatNumber(stock)}
+          </td>
+
+
+          <td>
+            ${formatNumber(displayOrder)}
+          </td>
+
+
+          <td>
+
+            ${
+              active
+
+              ?
+
+              '<span class="badge badge-on">Active</span>'
+
+              :
+
+              '<span class="badge badge-off">Inactive</span>'
+            }
+
+          </td>
+
+
+          <td>
+
+            <div
+              class="actions"
+              style="margin-top:0"
+            >
+
+              <button
+                class="secondary"
+                onclick="editProduct('${p.id}')"
+              >
+                Edit
+              </button>
+
+
+              <button
+                class="${active ? "warning" : "success"}"
+                onclick="toggleProduct('${p.id}',${active})"
+              >
+                ${active ? "Hide" : "Show"}
+              </button>
+
+
+              <button
+                class="danger"
+                onclick="deleteProduct('${p.id}')"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* =========================================
+   UPDATE STATS
+========================================= */
+
+function updateStats(){
+
+  $("statProducts")
+    .textContent =
+    allProducts.length;
+
+
+  $("statActive")
+    .textContent =
+    allProducts
+    .filter(
+      p => p.active !== false
+    )
+    .length;
+
+
+  $("statOrders")
+    .textContent =
+    allOrders.length;
+
+
+  $("statNewOrders")
+    .textContent =
+    allOrders
+    .filter(
+      o =>
+        (o.status || "new")
+        === "new"
+    )
+    .length;
+
+}
+
+
+/* =========================================
+   PRODUCT SEARCH
+========================================= */
+
+$("productSearch")
+.addEventListener(
+  "input",
+  renderProducts
+);
+
+
+$("productFilter")
+.addEventListener(
+  "change",
+  renderProducts
+);
+
+
+/* =========================================
+   IMAGE HELPERS
+========================================= */
+
+function setImageStatus(
+  message,
+  type=""
+){
+
+  const el =
+    $("imageStatus");
+
+  el.textContent =
+    message;
+
+  el.className =
+    "image-status";
+
+
+  if(type === "success"){
+
+    el.classList.add(
+      "success-status"
+    );
+
+  }
+
+
+  if(type === "error"){
+
+    el.classList.add(
+      "error-status"
+    );
+
+  }
+
+}
+
+
+/*
+  পুরোনো object URL পরিষ্কার করা
+*/
+
+function revokePreviewObjectUrl(){
+
+  if(currentPreviewObjectUrl){
+
+    URL.revokeObjectURL(
+      currentPreviewObjectUrl
+    );
+
+    currentPreviewObjectUrl =
+      null;
+
+  }
+
+}
+
+
+/*
+  Preview URL দেখানো
+*/
+
+function showImagePreview(
+  src
+){
+
+  const img =
+    $("imagePreview");
+
+
+  if(!src){
+
+    img.removeAttribute(
+      "src"
+    );
+
+    img.style.display =
+      "none";
+
+    return;
+
+  }
+
+
+  img.src =
+    src;
+
+  img.style.display =
+    "block";
+
+}
+
+
+/*
+  Canvas থেকে JPEG/WebP তৈরি
+*/
+
+function canvasToDataURL(
+  canvas,
+  quality
+){
+
+  /*
+    WebP সাধারণত ছোট হয়।
+    Browser support না থাকলে JPEG ব্যবহার হবে।
+  */
+
+  let dataUrl =
+    canvas.toDataURL(
+      "image/webp",
+      quality
+    );
+
+
+  /*
+    কিছু browser WebP support না করলে
+    data URL image/png হয়ে যেতে পারে।
+  */
+
+  if(
+    !dataUrl.startsWith(
+      "data:image/webp"
+    )
+  ){
+
+    dataUrl =
+      canvas.toDataURL(
+        "image/jpeg",
+        quality
+      );
+
+  }
+
+
+  return dataUrl;
+
+}
+
+
+/*
+  Image file থেকে HTML Image বানানো
+*/
+
+function loadImageFile(
+  file
+){
+
+  return new Promise(
+    (resolve,reject) => {
+
+      const url =
+        URL.createObjectURL(
+          file
+        );
+
+
+      const img =
+        new Image();
+
+
+      img.onload =
+        () => {
+
+          URL.revokeObjectURL(
+            url
+          );
+
+          resolve(img);
+
+        };
+
+
+      img.onerror =
+        () => {
+
+          URL.revokeObjectURL(
+            url
+          );
+
+          reject(
+            new Error(
+              "ছবিটি পড়া যায়নি।"
+            )
+          );
+
+        };
+
+
+      img.src =
+        url;
+
+    }
+  );
+
+}
+
+
+/*
+  ছবিকে সর্বোচ্চ নির্ধারিত size-এর মধ্যে
+  আনার চেষ্টা।
+
+  Final Data URL-টি Firestore-এ যাবে।
+*/
+
+async function compressImageToLimit(
+  file
+){
+
+  if(
+    !file ||
+    !file.type.startsWith("image/")
+  ){
+
+    throw new Error(
+      "শুধু Image file নির্বাচন করুন।"
+    );
+
+  }
+
+
+  const img =
+    await loadImageFile(
+      file
+    );
+
+
+  let width =
+    img.naturalWidth ||
+    img.width;
+
+
+  let height =
+    img.naturalHeight ||
+    img.height;
+
+
+  /*
+    প্রথমে বড় ছবি resize করা হবে।
+  */
+
+  const maxInitial =
+    START_MAX_WIDTH;
+
+
+  if(
+    width > maxInitial ||
+    height > maxInitial
+  ){
+
+    const ratio =
+      Math.min(
+        maxInitial / width,
+        maxInitial / height
+      );
+
+
+    width =
+      Math.max(
+        1,
+        Math.round(
+          width * ratio
+        )
+      );
+
+
+    height =
+      Math.max(
+        1,
+        Math.round(
+          height * ratio
+        )
+      );
+
+  }
+
+
+  const canvas =
+    document.createElement(
+      "canvas"
+    );
+
+
+  canvas.width =
+    width;
+
+  canvas.height =
+    height;
+
+
+  const ctx =
+    canvas.getContext(
+      "2d"
+    );
+
+
+  /*
+    সাদা background দেওয়া হচ্ছে।
+    PNG transparent image হলে JPEG-এ
+    transparent অংশ কালো না হয়ে সাদা থাকবে।
+  */
+
+  ctx.fillStyle =
+    "#ffffff";
+
+  ctx.fillRect(
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  ctx.drawImage(
+    img,
+    0,
+    0,
+    width,
+    height
+  );
+
+
+  /*
+    প্রথমে ভালো quality
+  */
+
+  let quality =
+    START_IMAGE_QUALITY;
+
+
+  let dataUrl =
+    canvasToDataURL(
+      canvas,
+      quality
+    );
+
+
+  /*
+    Size বেশি হলে quality কমানো হবে।
+  */
+
+  while(
+    dataUrl.length >
+    MAX_IMAGE_BYTES &&
+    quality >
+    MIN_IMAGE_QUALITY
+  ){
+
+    quality -=
+      0.07;
+
+
+    dataUrl =
+      canvasToDataURL(
+        canvas,
+        quality
+      );
+
+  }
+
+
+  /*
+    Quality কমিয়েও বড় হলে dimension
+    আরও ছোট করা হবে।
+  */
+
+  let attempts =
+    0;
+
+
+  while(
+    dataUrl.length >
+    MAX_IMAGE_BYTES &&
+    attempts < 8
+  ){
+
+    attempts++;
+
+
+    width =
+      Math.max(
+        400,
+        Math.round(
+          width * 0.85
+        )
+      );
+
+
+    height =
+      Math.max(
+        400,
+        Math.round(
+          height * 0.85
+        )
+      );
+
+
+    canvas.width =
+      width;
+
+    canvas.height =
+      height;
+
+
+    ctx.fillStyle =
+      "#ffffff";
+
+    ctx.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    ctx.drawImage(
+      img,
+      0,
+      0,
+      width,
+      height
+    );
+
+
+    quality =
+      Math.max(
+        0.45,
+        quality
+      );
+
+
+    dataUrl =
+      canvasToDataURL(
+        canvas,
+        quality
+      );
+
+  }
+
+
+  if(
+    dataUrl.length >
+    MAX_IMAGE_BYTES
+  ){
+
+    throw new Error(
+      "ছবিটি 700 KB-এর মধ্যে আনা সম্ভব হয়নি। আরও ছোট ছবি নির্বাচন করুন।"
+    );
+
+  }
+
+
+  return {
+
+    dataUrl:dataUrl,
+
+    width:width,
+
+    height:height,
+
+    bytes:dataUrl.length,
+
+    quality:quality
+
+  };
+
+}
+
+
+/*
+  Data URL-এর আনুমানিক KB
+*/
+
+function dataUrlKB(
+  dataUrl
+){
+
+  if(!dataUrl)
+    return 0;
+
+
+  return (
+    dataUrl.length / 1024
+  );
+
+}
+
+
+/* =========================================
+   IMAGE SELECT
+========================================= */
+
+$("pImageFile")
+.addEventListener(
+  "change",
+  async e => {
+
+    const file =
+      e.target.files?.[0];
+
+
+    /*
+      পুরোনো uploaded data reset
+      করা হবে কারণ নতুন ছবি নির্বাচন হয়েছে।
+    */
+
+    selectedImageFile =
+      file || null;
+
+    uploadedImageData =
+      "";
+
+
+    $("pImage")
+      .value =
+      "";
+
+
+    if(!file){
+
+      setImageStatus(
+        "📷 একটি ছবি নির্বাচন করুন।"
+      );
+
+      showImagePreview("");
+
+      return;
+
+    }
+
+
+    /*
+      Type check
+    */
+
+    if(
+      !file.type.startsWith(
+        "image/"
+      )
+    ){
+
+      e.target.value =
+        "";
+
+      selectedImageFile =
+        null;
+
+      setImageStatus(
+        "❌ শুধু Image file নির্বাচন করুন।",
+        "error"
+      );
+
+      showImagePreview("");
+
+      return;
+
+    }
+
+
+    /*
+      File size information
+    */
+
+    const originalKB =
+      file.size / 1024;
+
+
+    setImageStatus(
+      `⏳ ছবি প্রস্তুত হচ্ছে... (${originalKB.toFixed(0)} KB)`
+    );
+
+
+    /*
+      আগে original preview
+    */
+
+    revokePreviewObjectUrl();
+
+
+    currentPreviewObjectUrl =
+      URL.createObjectURL(
+        file
+      );
+
+
+    showImagePreview(
+      currentPreviewObjectUrl
+    );
+
+
+    try{
+
+      /*
+        এখানে image compress করা হবে,
+        কিন্তু Firestore-এ এখনো save হবে না।
+      */
+
+      const result =
+        await compressImageToLimit(
+          file
+        );
+
+
+      uploadedImageData =
+        result.dataUrl;
+
+
+      $("pImage")
+        .value =
+        result.dataUrl;
+
+
+      showImagePreview(
+        result.dataUrl
+      );
+
+
+      setImageStatus(
+        `✅ ছবি প্রস্তুত হয়েছে — ${dataUrlKB(result.dataUrl).toFixed(0)} KB। এখন "Upload Image" চাপুন।`,
+        "success"
+      );
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+
+      selectedImageFile =
+        null;
+
+      uploadedImageData =
+        "";
+
+
+      $("pImage")
+        .value =
+        "";
+
+
+      setImageStatus(
+        "❌ " +
+        error.message,
+        "error"
+      );
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   UPLOAD IMAGE BUTTON
+========================================= */
+
+$("uploadImageBtn")
+.addEventListener(
+  "click",
+  async () => {
+
+    const file =
+      $("pImageFile")
+      .files?.[0];
+
+
+    if(!file){
+
+      alert(
+        "প্রথমে একটি ছবি নির্বাচন করুন।"
+      );
+
+      return;
+
+    }
+
+
+    const btn =
+      $("uploadImageBtn");
+
+
+    btn.disabled =
+      true;
+
+    btn.textContent =
+      "⏳ Upload হচ্ছে...";
+
+
+    setImageStatus(
+      "⏳ ছবি Upload/প্রস্তুত হচ্ছে..."
+    );
+
+
+    try{
+
+      /*
+        যদি আগেই prepare করা data থাকে,
+        সেটাই ব্যবহার হবে।
+
+        না থাকলে আবার compress হবে।
+      */
+
+      let dataUrl =
+        uploadedImageData;
+
+
+      if(!dataUrl){
+
+        const result =
+          await compressImageToLimit(
+            file
+          );
+
+
+        dataUrl =
+          result.dataUrl;
+
+      }
+
+
+      /*
+        Final safety check
+      */
+
+      if(
+        dataUrl.length >
+        MAX_IMAGE_BYTES
+      ){
+
+        throw new Error(
+          "ছবির final size 700 KB-এর বেশি হয়ে গেছে।"
+        );
+
+      }
+
+
+      $("pImage")
+        .value =
+        dataUrl;
+
+
+      uploadedImageData =
+        dataUrl;
+
+
+      showImagePreview(
+        dataUrl
+      );
+
+
+      setImageStatus(
+        `✅ Upload সম্পন্ন — ${dataUrlKB(dataUrl).toFixed(0)} KB। এখন Save Product চাপুন।`,
+        "success"
+      );
+
+
+      showToast(
+        "✅ Image Upload প্রস্তুত হয়েছে"
+      );
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+
+      setImageStatus(
+        "❌ Image Upload ব্যর্থ: " +
+        error.message,
+        "error"
+      );
+
+
+      alert(
+        "Image Upload করা যায়নি:\n" +
+        error.message
+      );
+
+    }
+
+    finally{
+
+      btn.disabled =
+        false;
+
+      btn.textContent =
+        "⬆️ Upload Image";
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   CLEAR / CHANGE IMAGE
+========================================= */
+
+$("clearImageBtn")
+.addEventListener(
+  "click",
+  () => {
+
+    $("pImageFile")
+      .value =
+      "";
+
+
+    selectedImageFile =
+      null;
+
+
+    uploadedImageData =
+      "";
+
+
+    /*
+      যদি edit mode হয় এবং পুরোনো ছবি থাকে,
+      সেটা আবার দেখানো হবে।
+    */
+
+    const oldImage =
+      $("pImage")
+      .value
+      .trim();
+
+
+    if(
+      editingProductId &&
+      oldImage &&
+      oldImage.startsWith(
+        "data:image/"
+      )
+    ){
+
+      showImagePreview(
+        oldImage
+      );
+
+      setImageStatus(
+        "বর্তমান ছবিটি রাখা হয়েছে। নতুন ছবি দিতে চাইলে আবার Select Image করুন।"
+      );
+
+    }
+
+    else{
+
+      $("pImage")
+        .value =
+        editingProductId
+        ?
+        $("pImage").value
+        :
+        "";
+
+
+      if(
+        editingProductId &&
+        $("pImage").value
+      ){
+
+        showImagePreview(
+          $("pImage").value
+        );
+
+        setImageStatus(
+          "বর্তমান Product-এর ছবি রাখা হয়েছে।"
+        );
+
+      }
+
+      else{
+
+        showImagePreview("");
+
+        setImageStatus(
+          "📷 একটি নতুন ছবি নির্বাচন করুন।"
+        );
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   PRODUCT MODAL
+========================================= */
+
+function openProductModal(
+  product = null
+){
+
+  editingProductId =
+    product
+    ?
+    product.id
+    :
+    null;
+
+
+  /*
+    Image state reset
+  */
+
+  selectedImageFile =
+    null;
+
+  uploadedImageData =
+    "";
+
+
+  revokePreviewObjectUrl();
+
+
+  $("pImageFile")
+    .value =
+    "";
+
+
+  $("modalTitle")
+    .textContent =
+    product
+    ?
+    "Product Edit করুন"
+    :
+    "নতুন Product";
+
+
+  $("pName").value =
+    product?.name ??
+    product?.productName ??
+    "";
+
+
+  $("pCode").value =
+    product?.code ??
+    product?.productCode ??
+    "";
+
+
+  $("pOriginal").value =
+    product?.originalPrice ??
+    product?.original ??
+    "";
+
+
+  $("pSale").value =
+    product?.salePrice ??
+    product?.sale ??
+    "";
+
+
+  $("pStock").value =
+    product?.stock ??
+    0;
+
+
+  $("pOrder").value =
+    product?.displayOrder ??
+    product?.order ??
+    0;
+
+
+  $("pCat").value =
+    product?.category ??
+    product?.cat ??
+    "";
+
+
+  $("pActive").value =
+    product?.active === false
+    ?
+    "false"
+    :
+    "true";
+
+
+  const existingImage =
+    product?.image ??
+    product?.imageUrl ??
+    product?.img ??
+    "";
+
+
+  $("pImage").value =
+    existingImage;
+
+
+  $("pDesc").value =
+    product?.description ??
+    product?.desc ??
+    "";
+
+
+  if(existingImage){
+
+    showImagePreview(
+      existingImage
+    );
+
+
+    setImageStatus(
+      "বর্তমান Product-এর ছবি রাখা হয়েছে। নতুন ছবি দিতে চাইলে Select Image করুন।"
+    );
+
+  }
+
+  else{
+
+    showImagePreview("");
+
+    setImageStatus(
+      "📷 একটি নতুন ছবি নির্বাচন করুন।"
+    );
+
+  }
+
+
+  $("productModal")
+    .classList
+    .add("show");
+
+}
+
+
+function closeProductModal(){
+
+  $("productModal")
+    .classList
+    .remove("show");
+
+
+  editingProductId =
+    null;
+
+
+  selectedImageFile =
+    null;
+
+
+  uploadedImageData =
+    "";
+
+
+  revokePreviewObjectUrl();
+
+
+  $("pImageFile")
+    .value =
+    "";
+
+}
+
+
+$("newProductBtn")
+.addEventListener(
+  "click",
+  () => openProductModal()
+);
+
+
+$("cancelProductBtn")
+.addEventListener(
+  "click",
+  closeProductModal
+);
+
+
+/* =========================================
+   SAVE PRODUCT
+========================================= */
+
+$("saveProductBtn")
+.addEventListener(
+  "click",
+  async () => {
+
+    if(!db)
+      return;
+
+
+    const name =
+      $("pName")
+      .value
+      .trim();
+
+
+    const sale =
+      Number(
+        $("pSale").value
+      );
+
+
+    if(!name){
+
+      alert(
+        "Product Name দিন।"
+      );
+
+      return;
+
+    }
+
+
+    if(!sale || sale < 0){
+
+      alert(
+        "Sale Price দিন।"
+      );
+
+      return;
+
+    }
+
+
+    /*
+      Image must exist
+    */
+
+    let imageData =
+      $("pImage")
+      .value
+      .trim();
+
+
+    /*
+      নতুন ছবি select করা থাকলে,
+      কিন্তু Upload button চাপা না হলেও
+      Save করার সময় auto-prepare হবে।
+    */
+
+    if(
+      selectedImageFile &&
+      !uploadedImageData
+    ){
+
+      try{
+
+        setImageStatus(
+          "⏳ Save করার আগে ছবি প্রস্তুত হচ্ছে..."
+        );
+
+
+        const result =
+          await compressImageToLimit(
+            selectedImageFile
+          );
+
+
+        uploadedImageData =
+          result.dataUrl;
+
+
+        imageData =
+          result.dataUrl;
+
+
+        $("pImage")
+          .value =
+          result.dataUrl;
+
+
+        showImagePreview(
+          result.dataUrl
+        );
+
+      }
+
+      catch(error){
+
+        alert(
+          "Image প্রস্তুত করা যায়নি:\n" +
+          error.message
+        );
+
+        return;
+
+      }
+
+    }
+
+
+    if(!imageData){
+
+      alert(
+        "Product Image নির্বাচন করুন।"
+      );
+
+      return;
+
+    }
+
+
+    /*
+      Final 700 KB check
+    */
+
+    if(
+      imageData.startsWith(
+        "data:image/"
+      ) &&
+      imageData.length >
+      MAX_IMAGE_BYTES
+    ){
+
+      alert(
+        "Product Image 700 KB-এর বেশি। অন্য ছবি নির্বাচন করুন।"
+      );
+
+      return;
+
+    }
+
+
+    const data = {
+
+      name:name,
+
+      code:
+        $("pCode")
+        .value
+        .trim(),
+
+      originalPrice:
+        Number(
+          $("pOriginal").value
+        ) || 0,
+
+      salePrice:
+        sale,
+
+      stock:
+        Number(
+          $("pStock").value
+        ) || 0,
+
+      displayOrder:
+        Number(
+          $("pOrder").value
+        ) || 0,
+
+      category:
+        $("pCat")
+        .value
+        .trim(),
+
+      active:
+        $("pActive").value
+        === "true",
+
+      /*
+        Image এখানে Firestore-এ যাবে।
+      */
+
+      image:
+        imageData,
+
+      description:
+        $("pDesc")
+        .value
+        .trim(),
+
+      updatedAt:
+        firebase
+        .firestore
+        .FieldValue
+        .serverTimestamp()
+
+    };
+
+
+    const btn =
+      $("saveProductBtn");
+
+
+    btn.disabled =
+      true;
+
+    btn.textContent =
+      "Saving...";
+
+
+    try{
+
+      if(editingProductId){
+
+        await db
+          .collection("products")
+          .doc(editingProductId)
+          .update(data);
+
+
+        showToast(
+          "✅ Product Update হয়েছে"
+        );
+
+      }
+
+      else{
+
+        data.createdAt =
+          firebase
+          .firestore
+          .FieldValue
+          .serverTimestamp();
+
+
+        await db
+          .collection("products")
+          .add(data);
+
+
+        showToast(
+          "✅ নতুন Product যোগ হয়েছে"
+        );
+
+      }
+
+
+      closeProductModal();
+
+      await loadProducts();
+
+    }
+
+    catch(error){
+
+      console.error(error);
+
+      alert(
+        "Product save করা যায়নি:\n" +
+        error.message
+      );
+
+    }
+
+    finally{
+
+      btn.disabled =
+        false;
+
+      btn.textContent =
+        "Save Product";
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   EDIT PRODUCT
+========================================= */
+
+window.editProduct =
+  function(id){
+
+    const product =
+      allProducts.find(
+        x => x.id === id
+      );
+
+
+    if(product){
+
+      openProductModal(
+        product
+      );
+
+    }
+
+  };
+
+
+/* =========================================
+   TOGGLE PRODUCT
+========================================= */
+
+window.toggleProduct =
+  async function(
+    id,
+    current
+  ){
+
+    try{
+
+      await db
+        .collection("products")
+        .doc(id)
+        .update({
+
+          active:
+            !current,
+
+          updatedAt:
+            firebase
+            .firestore
+            .FieldValue
+            .serverTimestamp()
+
+        });
+
+
+      await loadProducts();
+
+
+      showToast(
+        current
+        ?
+        "Product Hide করা হয়েছে"
+        :
+        "Product Active করা হয়েছে"
+      );
+
+    }
+
+    catch(error){
+
+      alert(
+        "Status পরিবর্তন করা যায়নি:\n" +
+        error.message
+      );
+
+    }
+
+  };
+
+
+/* =========================================
+   DELETE PRODUCT
+========================================= */
+
+window.deleteProduct =
+  async function(id){
+
+    const product =
+      allProducts.find(
+        x => x.id === id
+      );
+
+
+    const name =
+      product?.name ||
+      product?.productName ||
+      "এই Product";
+
+
+    if(
+      !confirm(
+        `"${name}" Delete করতে চান?`
+      )
+    ){
+
+      return;
+
+    }
+
+
+    try{
+
+      await db
+        .collection("products")
+        .doc(id)
+        .delete();
+
+
+      await loadProducts();
+
+
+      showToast(
+        "🗑️ Product Delete হয়েছে"
+      );
+
+    }
+
+    catch(error){
+
+      alert(
+        "Product Delete করা যায়নি:\n" +
+        error.message
+      );
+
+    }
+
+  };
+
+
+/* =========================================
+   LOAD ORDERS
+========================================= */
+
+async function loadOrders(){
+
+  if(!db)
+    return;
+
+
+  $("ordersList")
+    .innerHTML =
+    '<div class="empty">Order লোড হচ্ছে...</div>';
+
+
+  try{
+
+    const snap =
+      await db
+      .collection("orders")
+      .get();
+
+
+    allOrders =
+      snap.docs.map(
+        doc => ({
+          id:doc.id,
+          ...doc.data()
+        })
+      );
+
+
+    allOrders.sort(
+      (a,b) =>
+        getTime(b.createdAt)
+        -
+        getTime(a.createdAt)
+    );
+
+
+    renderOrders();
+
+    updateStats();
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+
+    $("ordersList")
+      .innerHTML =
+      '<div class="empty">❌ Order লোড করা যায়নি: ' +
+      escapeHtml(error.message) +
+      '</div>';
+
+  }
+
+}
+
+
+/* =========================================
+   RENDER ORDERS
+========================================= */
+
+function renderOrders(){
+
+  const search =
+    $("orderSearch")
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  const filter =
+    $("orderFilter")
+    .value;
+
+
+  const list =
+    allOrders.filter(
+      order => {
+
+        const status =
+          order.status ||
+          "new";
+
+
+        const customer =
+          order.customer ||
+          {};
+
+
+        const text =
+          [
+
+            order.id,
+
+            order.orderId,
+
+            order.name,
+
+            order.phone,
+
+            order.address,
+
+            customer.name,
+
+            customer.phone,
+
+            customer.address
+
+          ]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase();
+
+
+        return (
+
+          (
+            !search ||
+            text.includes(search)
+          )
+
+          &&
+
+          (
+            filter === "all" ||
+            status === filter
+          )
+
+        );
+
+      }
+    );
+
+
+  if(!list.length){
+
+    $("ordersList")
+      .innerHTML =
+      '<div class="empty">কোনো Order পাওয়া যায়নি।</div>';
+
+    return;
+
+  }
+
+
+  $("ordersList")
+    .innerHTML =
+    list
+    .map(
+      order => {
+
+        const customer =
+          order.customer ||
+          {};
+
+
+        const name =
+          order.name ||
+          customer.name ||
+          "Customer";
+
+
+        const phone =
+          order.phone ||
+          customer.phone ||
+          "";
+
+
+        const address =
+          order.address ||
+          customer.address ||
+          "";
+
+
+        const status =
+          order.status ||
+          "new";
+
+
+        const items =
+          Array.isArray(
+            order.items
+          )
+          ?
+          order.items
+          :
+          [];
+
+
+        const subtotal =
+          Number(
+            order.saleTotal ??
+            order.subtotal ??
+            order.originalTotal ??
+            0
+          );
+
+
+        const delivery =
+          Number(
+            order.deliveryCharge ??
+            order.delivery ??
+            160
+          );
+
+
+        const total =
+          Number(
+            order.total ??
+            (
+              subtotal +
+              delivery
+            )
+          );
+
+
+        const date =
+          formatDate(
+            order.createdAt
+          );
+
+
+        return `
+
+        <div class="order-card">
+
+          <div class="order-head">
+
+            <div>
+
+              <b>
+                Order #${escapeHtml(
+                  order.orderId ||
+                  order.id
+                )}
+              </b>
+
+              <div class="small">
+                ${escapeHtml(date)}
+              </div>
+
+            </div>
+
+
+            <select
+              class="order-status"
+              onchange="changeOrderStatus('${order.id}',this.value)"
+            >
+
+              ${statusOption(
+                "new",
+                status,
+                "New Order"
+              )}
+
+              ${statusOption(
+                "confirmed",
+                status,
+                "Confirmed"
+              )}
+
+              ${statusOption(
+                "processing",
+                status,
+                "Processing"
+              )}
+
+              ${statusOption(
+                "delivered",
+                status,
+                "Delivered"
+              )}
+
+              ${statusOption(
+                "cancelled",
+                status,
+                "Cancelled"
+              )}
+
+            </select>
+
+          </div>
+
+
+          <hr>
+
+
+          <div class="customer">
+
+            <b>
+              👤 ${escapeHtml(name)}
+            </b>
+
+            <br>
+
+            📞 ${escapeHtml(phone)}
+
+            <br>
+
+            📍 ${escapeHtml(address)}
+
+          </div>
+
+
+          <div class="order-items">
+
+            <b>
+              Products
+            </b>
+
+
+            ${
+              items.length
+
+              ?
+
+              items
+              .map(
+                item => {
+
+                  const itemName =
+                    item.name ||
+                    item.productName ||
+                    "Product";
+
+
+                  const qty =
+                    Number(
+                      item.qty ||
+                      item.quantity ||
+                      1
+                    );
+
+
+                  const price =
+                    Number(
+                      item.salePrice ??
+                      item.price ??
+                      0
+                    );
+
+
+                  return `
+
+                  <div class="order-item">
+
+                    ${escapeHtml(itemName)}
+
+                    × ${qty}
+
+                    —
+
+                    ৳${formatNumber(
+                      price * qty
+                    )}
+
+                  </div>
+
+                  `;
+
+                }
+              )
+              .join("")
+
+              :
+
+              '<div class="small">Product details পাওয়া যায়নি।</div>'
+            }
+
+          </div>
+
+
+          <div
+            style="
+              margin-top:10px;
+              line-height:1.8
+            "
+          >
+
+            <div>
+              পণ্য মূল্য:
+              <b>
+                ৳${formatNumber(subtotal)}
+              </b>
+            </div>
+
+
+            <div>
+              Delivery:
+              <b>
+                ৳${formatNumber(delivery)}
+              </b>
+            </div>
+
+
+            <div
+              style="font-size:18px"
+            >
+
+              মোট:
+              <b>
+                ৳${formatNumber(total)}
+              </b>
+
+            </div>
+
+          </div>
+
+
+        </div>
+
+        `;
+
+      }
+    )
+    .join("");
+
+}
+
+
+/* =========================================
+   ORDER STATUS
+========================================= */
+
+function statusOption(
+  value,
+  current,
+  label
+){
+
+  return `
+
+    <option
+      value="${value}"
+      ${value === current ? "selected" : ""}
+    >
+      ${label}
+    </option>
+
+  `;
+
+}
+
+
+window.changeOrderStatus =
+  async function(
+    id,
+    status
+  ){
+
+    try{
+
+      await db
+        .collection("orders")
+        .doc(id)
+        .update({
+
+          status:status,
+
+          updatedAt:
+            firebase
+            .firestore
+            .FieldValue
+            .serverTimestamp()
+
+        });
+
+
+      const item =
+        allOrders.find(
+          o => o.id === id
+        );
+
+
+      if(item){
+
+        item.status =
+          status;
+
+      }
+
+
+      renderOrders();
+
+      updateStats();
+
+
+      showToast(
+        "✅ Order status Update হয়েছে"
+      );
+
+    }
+
+    catch(error){
+
+      alert(
+        "Order status পরিবর্তন করা যায়নি:\n" +
+        error.message
+      );
+
+    }
+
+  };
+
+
+/* =========================================
+   ORDER SEARCH
+========================================= */
+
+$("orderSearch")
+.addEventListener(
+  "input",
+  renderOrders
+);
+
+
+$("orderFilter")
+.addEventListener(
+  "change",
+  renderOrders
+);
+
+
+/* =========================================
+   REFRESH ORDERS
+========================================= */
+
+$("refreshOrdersBtn")
+.addEventListener(
+  "click",
+  async () => {
+
+    await loadOrders();
+
+    showToast(
+      "Orders Refresh হয়েছে"
+    );
+
+  }
+);
+
+
+/* =========================================
+   REFRESH EVERYTHING
+========================================= */
+
+$("refreshBtn")
+.addEventListener(
+  "click",
+  async () => {
+
+    await loadProducts();
+
+    await loadOrders();
+
+    showToast(
+      "ডাটা Refresh হয়েছে"
+    );
+
+  }
+);
+
+
+/* =========================================
+   HELPERS
+========================================= */
+
+function formatNumber(value){
+
+  return Number(
+    value || 0
+  )
+  .toLocaleString(
+    "en-US"
+  );
+
+}
+
+
+function escapeHtml(value){
+
+  return String(
+    value ?? ""
+  )
+  .replaceAll(
+    "&",
+    "&amp;"
+  )
+  .replaceAll(
+    "<",
+    "&lt;"
+  )
+  .replaceAll(
+    ">",
+    "&gt;"
+  )
+  .replaceAll(
+    '"',
+    "&quot;"
+  )
+  .replaceAll(
+    "'",
+    "&#039;"
+  );
+
+}
+
+
+function escapeAttr(value){
+
+  return escapeHtml(value);
+
+}
+
+
+function getTime(value){
+
+  if(!value)
+    return 0;
+
+
+  if(
+    typeof value.toDate ===
+    "function"
+  ){
+
+    return value
+      .toDate()
+      .getTime();
+
+  }
+
+
+  if(value.seconds){
+
+    return value.seconds *
+      1000;
+
+  }
+
+
+  const t =
+    new Date(value)
+    .getTime();
+
+
+  return isNaN(t)
+    ?
+    0
+    :
+    t;
+
+}
+
+
+function formatDate(value){
+
+  const t =
+    getTime(value);
+
+
+  if(!t){
+
+    return "তারিখ পাওয়া যায়নি";
+
+  }
+
+
+  return new Intl.DateTimeFormat(
+    "bn-BD",
+    {
+      year:"numeric",
+      month:"short",
+      day:"numeric",
+      hour:"numeric",
+      minute:"2-digit"
+    }
+  )
+  .format(
+    new Date(t)
+  );
+
+}
+
+
+/* =========================================
+   CLOSE MODAL
+========================================= */
+
+$("productModal")
+.addEventListener(
+  "click",
+  e => {
+
+    if(
+      e.target ===
+      $("productModal")
+    ){
+
+      closeProductModal();
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   START FIREBASE
+========================================= */
+
+startFirebase();
+
+
+/* =========================================
+   AUTO REFRESH ORDERS
+========================================= */
+
+setInterval(
+  async () => {
+
+    if(
+
+      auth &&
+
+      auth.currentUser &&
+
+      auth.currentUser.email
+      ?.toLowerCase()
+      ===
+      ADMIN_EMAIL.toLowerCase()
+
+    ){
+
+      await loadOrders();
+
+    }
+
+  },
+  30000
+);
+
+</script>
+
+</body>
+</html>
