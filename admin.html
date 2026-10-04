@@ -64,6 +64,11 @@ font-weight:700;
 cursor:pointer
 }
 
+button:disabled{
+opacity:.6;
+cursor:not-allowed
+}
+
 .primary{
 background:#2563eb;
 color:white
@@ -209,6 +214,62 @@ border-radius:9px;
 z-index:2000
 }
 
+input,
+select,
+textarea{
+width:100%;
+padding:10px;
+border:1px solid #d1d5db;
+border-radius:8px;
+font-family:inherit;
+font-size:15px;
+margin:5px 0 12px
+}
+
+textarea{
+min-height:90px;
+resize:vertical
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+outline:2px solid #2563eb33;
+border-color:#2563eb
+}
+
+/* =========================
+   Login Loading
+========================= */
+
+.login-loading{
+display:none;
+margin-top:10px;
+padding:10px;
+border-radius:8px;
+background:#eff6ff;
+color:#1d4ed8;
+font-weight:700
+}
+
+.login-error{
+color:#dc2626;
+background:#fef2f2;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+display:none
+}
+
+.login-success{
+color:#166534;
+background:#f0fdf4;
+padding:10px;
+border-radius:8px;
+margin-top:10px;
+display:none
+}
+
 /* =========================
    Orders
 ========================= */
@@ -341,7 +402,9 @@ margin:5px 0
 padding:9px;
 border:1px solid #d1d5db;
 border-radius:8px;
-font-weight:700
+font-weight:700;
+width:auto;
+margin:0
 }
 
 @media(max-width:700px){
@@ -352,6 +415,23 @@ font-weight:700
 .orders-toolbar,
 .order-info{
 grid-template-columns:1fr
+}
+
+header{
+gap:10px;
+flex-wrap:wrap
+}
+
+.container{
+padding:10px
+}
+
+.login{
+margin:30px auto
+}
+
+.stat b{
+font-size:21px
 }
 
 }
@@ -377,28 +457,51 @@ class="container">
 শুধু অনুমোদিত Admin account ব্যবহার করুন।
 </p>
 
-<label>Email</label>
+<label>
+Email
+</label>
 
 <input
 id="email"
 type="email"
-value="mdrazibulislam240@gmail.com">
+value="mdrazibulislam240@gmail.com"
+autocomplete="username">
 
-<label>Password</label>
+<label>
+Password
+</label>
 
 <input
 id="password"
 type="password"
-placeholder="Admin password">
+placeholder="Admin password"
+autocomplete="current-password">
 
 <div class="actions">
 
 <button
 class="primary"
-id="loginBtn">
+id="loginBtn"
+type="button">
 Login
 </button>
 
+</div>
+
+<div
+id="loginLoading"
+class="login-loading">
+⏳ Login হচ্ছে, অপেক্ষা করুন...
+</div>
+
+<div
+id="loginError"
+class="login-error">
+</div>
+
+<div
+id="loginSuccess"
+class="login-success">
 </div>
 
 <p
@@ -427,7 +530,8 @@ style="display:none">
 
 <button
 class="secondary"
-id="logout">
+id="logout"
+type="button">
 Logout
 </button>
 
@@ -513,7 +617,8 @@ Inactive
 
 <button
 class="primary"
-id="add">
+id="add"
+type="button">
 ＋ নতুন পণ্য
 </button>
 
@@ -558,8 +663,6 @@ Loading...
 </table>
 
 </div>
-
-
 <!-- =========================
      ORDERS
 ========================= -->
@@ -792,13 +895,15 @@ class="preview">
 
 <button
 class="primary"
-id="save">
+id="save"
+type="button">
 Save Product
 </button>
 
 <button
 class="secondary"
-id="cancel">
+id="cancel"
+type="button">
 Cancel
 </button>
 
@@ -937,55 +1042,217 @@ $("toast").style.display="none",
 );
 
 }
-
-
-/* =========================
+   /* =========================
    Login
 ========================= */
 
-onAuthStateChanged(auth,u=>{
+function showLoginMessage(message,type="error"){
 
-if(u&&u.email===ADMIN){
+$("loginError").style.display="none";
+$("loginSuccess").style.display="none";
+$("loginLoading").style.display="none";
 
-$("login").style.display="none";
+$("msg").textContent="";
 
-$("app").style.display="block";
+if(type==="loading"){
 
-load();
+$("loginLoading").textContent=
+"⏳ "+message;
 
-loadOrders();
+$("loginLoading").style.display="block";
+
+}
+
+else if(type==="success"){
+
+$("loginSuccess").textContent=
+"✅ "+message;
+
+$("loginSuccess").style.display="block";
+
+}
+
+else{
+
+$("loginError").textContent=
+"❌ "+message;
+
+$("loginError").style.display="block";
+
+}
+
+}
+
+
+function firebaseErrorMessage(x){
+
+let code=
+x?.code||
+"";
+
+
+if(code==="auth/invalid-credential")
+return "Email অথবা Password সঠিক নয়।";
+
+if(code==="auth/invalid-login-credentials")
+return "Email অথবা Password সঠিক নয়।";
+
+if(code==="auth/wrong-password")
+return "Password সঠিক নয়।";
+
+if(code==="auth/user-not-found")
+return "এই Email দিয়ে কোনো Admin account পাওয়া যায়নি।";
+
+if(code==="auth/invalid-email")
+return "Email address সঠিক নয়।";
+
+if(code==="auth/user-disabled")
+return "এই Admin accountটি Disabled করা হয়েছে।";
+
+if(code==="auth/too-many-requests")
+return "অনেকবার Login চেষ্টা করা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।";
+
+if(code==="auth/network-request-failed")
+return "Internet connection সমস্যা হয়েছে।";
+
+if(code==="auth/operation-not-allowed")
+return "Firebase Authentication-এ Email/Password Login চালু করা নেই।";
+
+return x?.message||
+"Login করা যায়নি। আবার চেষ্টা করুন।";
+
+}
+
+
+/* =========================
+   Auth State
+========================= */
+
+onAuthStateChanged(auth,async u=>{
+
+if(u){
+
+if(
+u.email?.toLowerCase()===
+ADMIN.toLowerCase()
+){
+
+$("login").style.display=
+"none";
+
+$("app").style.display=
+"block";
+
+showLoginMessage(
+"Login সফল হয়েছে",
+"success"
+);
+
+await load();
+
+await loadOrders();
 
 }else{
 
-$("login").style.display="block";
+await signOut(auth);
 
-$("app").style.display="none";
+$("login").style.display=
+"block";
 
-if(u)
-signOut(auth);
+$("app").style.display=
+"none";
+
+showLoginMessage(
+"এই accountটি Admin হিসেবে অনুমোদিত নয়।"
+);
+
+}
+
+}else{
+
+$("login").style.display=
+"block";
+
+$("app").style.display=
+"none";
 
 }
 
 });
 
 
-$("loginBtn").onclick=async()=>{
+/* =========================
+   Login Button
+========================= */
+
+$("loginBtn").onclick=
+async()=>{
 
 let e=
-$("email").value.trim();
+$("email")
+.value
+.trim()
+.toLowerCase();
 
 let p=
-$("password").value;
+$("password")
+.value;
 
 
-if(e!==ADMIN){
+$("loginError").style.display=
+"none";
 
-$("msg").textContent=
-"এই account অনুমোদিত নয়।";
+$("loginSuccess").style.display=
+"none";
+
+$("msg").textContent="";
+
+
+if(!e){
+
+showLoginMessage(
+"Admin Email দিন।"
+);
+
+$("email").focus();
 
 return;
 
 }
+
+
+if(!p){
+
+showLoginMessage(
+"Admin Password দিন।"
+);
+
+$("password").focus();
+
+return;
+
+}
+
+
+if(e!==ADMIN.toLowerCase()){
+
+showLoginMessage(
+"এই Emailটি অনুমোদিত Admin Email নয়।"
+);
+
+return;
+
+}
+
+
+$("loginBtn").disabled=
+true;
+
+
+showLoginMessage(
+"Login হচ্ছে...",
+"loading"
+);
 
 
 try{
@@ -996,20 +1263,90 @@ e,
 p
 );
 
-$("msg").textContent="";
+showLoginMessage(
+"Login সফল হয়েছে। Dashboard খোলা হচ্ছে...",
+"success"
+);
 
 }catch(x){
 
-$("msg").textContent=
-"Login ব্যর্থ: "+x.message;
+console.error(
+"Admin Login Error:",
+x
+);
+
+showLoginMessage(
+firebaseErrorMessage(x)
+);
+
+}finally{
+
+$("loginBtn").disabled=
+false;
 
 }
 
 };
 
 
+/* =========================
+   Enter Key Login
+========================= */
+
+$("password").addEventListener(
+"keydown",
+e=>{
+
+if(e.key==="Enter"){
+
+$("loginBtn").click();
+
+}
+
+});
+
+
+$("email").addEventListener(
+"keydown",
+e=>{
+
+if(e.key==="Enter"){
+
+$("loginBtn").click();
+
+}
+
+});
+
+
+/* =========================
+   Logout
+========================= */
+
 $("logout").onclick=
-()=>signOut(auth);
+async()=>{
+
+try{
+
+await signOut(auth);
+
+$("password").value="";
+
+showLoginMessage(
+"Logout সফল হয়েছে।",
+"success"
+);
+
+}catch(x){
+
+showLoginMessage(
+"Logout করা যায়নি: "+
+x.message
+);
+
+}
+
+};
 
 
 /* =========================
@@ -1082,7 +1419,11 @@ items
 $("category").innerHTML=
 '<option value="all">সব Category</option>'+
 c.map(
-x=>'<option>'+esc(x)+'</option>'
+x=>'<option value="'+
+esc(x)+
+'">'+
+esc(x)+
+'</option>'
 ).join("");
 
 
@@ -1093,12 +1434,19 @@ render();
 $("body").innerHTML=
 '<tr><td colspan="8">Products load করা যায়নি। Firestore Rules দেখুন।</td></tr>';
 
-toast(x.message);
+toast(
+"Products: "+
+x.message
+);
 
 }
 
 }
 
+
+/* =========================
+   Product Render
+========================= */
 
 function render(){
 
@@ -1109,11 +1457,13 @@ $("search")
 
 
 let s=
-$("status").value;
+$("status")
+.value;
 
 
 let c=
-$("category").value;
+$("category")
+.value;
 
 
 let l=
@@ -1232,14 +1582,15 @@ x.id+
 }
 
 
-$("search").oninput=render;
+$("search").oninput=
+render;
 
-$("status").onchange=render;
+$("status").onchange=
+render;
 
-$("category").onchange=render;
-
-
-/* =========================
+$("category").onchange=
+render;
+   /* =========================
    PRODUCT MODAL
 ========================= */
 
@@ -1355,6 +1706,8 @@ toast(
 "ছবি 8MB-এর বেশি নয়"
 );
 
+$("file").value="";
+
 return;
 
 }
@@ -1376,6 +1729,8 @@ toast(
 );
 
 }catch(x){
+
+imageData=null;
 
 toast(
 "ছবি প্রস্তুত করা যায়নি"
@@ -1439,8 +1794,11 @@ c.width=w;
 c.height=h;
 
 
-c.getContext("2d")
-.drawImage(
+let ctx=
+c.getContext("2d");
+
+
+ctx.drawImage(
 im,
 0,
 0,
@@ -1475,14 +1833,28 @@ q
 }
 
 
-d.length*.75<=700*1024?
-res(d):
-rej();
+if(
+d.length*.75<=700*1024
+){
+
+res(d);
+
+}else{
+
+rej(
+new Error(
+"ছবির আকার কমানো যায়নি"
+)
+);
+
+}
 
 };
 
 
-im.onerror=rej;
+im.onerror=()=>rej(
+new Error("Image load failed")
+);
 
 im.src=
 r.result;
@@ -1490,7 +1862,9 @@ r.result;
 };
 
 
-r.onerror=rej;
+r.onerror=()=>rej(
+new Error("File read failed")
+);
 
 r.readAsDataURL(f);
 
@@ -1579,9 +1953,12 @@ serverTimestamp()
 };
 
 
-if(imageData)
+if(imageData){
+
 d.imageUrl=
 imageData;
+
+}
 
 
 if(editId){
@@ -1629,6 +2006,11 @@ await load();
 
 
 }catch(x){
+
+console.error(
+"Product Save Error:",
+x
+);
 
 toast(
 "Save ব্যর্থ: "+
@@ -1689,11 +2071,12 @@ a?
 );
 
 
-load();
+await load();
 
 }catch(x){
 
 toast(
+"Status পরিবর্তন ব্যর্থ: "+
 x.message
 );
 
@@ -1737,7 +2120,7 @@ toast(
 );
 
 
-load();
+await load();
 
 
 }catch(x){
@@ -1846,6 +2229,7 @@ function getTime(t){
 if(!t)
 return 0;
 
+
 if(
 typeof t.toMillis===
 "function"
@@ -1937,9 +2321,7 @@ cancelled:
 "status-new";
 
 }
-
-
-/* =========================
+   /* =========================
    Render Orders
 ========================= */
 
@@ -2085,7 +2467,9 @@ o.subtotal??
 o.originalTotal??
 0
 );
-  let discount=
+
+
+let discount=
 Number(
 o.discountTotal||
 0
@@ -2565,9 +2949,7 @@ renderOrders;
 
 $("orderStatusFilter").onchange=
 renderOrders;
-
-
-/* =========================
+   /* =========================
    Auto Refresh Orders
 ========================= */
 
