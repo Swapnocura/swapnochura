@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+  <link rel="manifest" href="/swapnochura/manifest.webmanifest">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>স্বপ্নচূড়া | ইলেকট্রনিক্স, গৃহস্থালি পণ্য ও ফার্নিচার</title>
@@ -313,5 +314,14 @@ window.openCart=openCart;window.closeCart=closeCart;window.addToCart=addToCart;w
 
 loadProducts();
 </script>
+  <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/swapnochura/sw.js")
+      .then(() => console.log("স্বপ্নচূড়া App Ready"))
+      .catch(error => console.error("PWA Service Worker Error:", error));
+  });
+}
+  </script>
 </body>
 </html>
