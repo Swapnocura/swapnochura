@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
+
 <link rel="manifest" href="/swapnochura/manifest.webmanifest">
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
 <title>স্বপ্নচূড়া | ইলেকট্রনিক্স, গৃহস্থালি পণ্য ও ফার্নিচার</title>
 
-<meta name="description" content="স্বপ্নচূড়া — রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরায় ইলেকট্রনিক্স, গৃহস্থালি পণ্য, রান্নাঘরের অ্যাপ্লায়েন্স ও ফার্নিচারের দোকান।">
+<meta name="description"
+content="স্বপ্নচূড়া — রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরায় ইলেকট্রনিক্স, গৃহস্থালি পণ্য, রান্নাঘরের অ্যাপ্লায়েন্স ও ফার্নিচারের দোকান।">
 
-<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="robots"
+content="index, follow, max-image-preview:large">
 
-<link rel="canonical" href="https://swapnochura.github.io/swapnochura/">
+<link rel="canonical"
+href="https://swapnochura.github.io/swapnochura/">
 
 <meta name="theme-color" content="#073b8f">
 
@@ -20,13 +27,24 @@
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="bn_BD">
-<meta property="og:title" content="স্বপ্নচূড়া | ইলেকট্রনিক্স, গৃহস্থালি পণ্য ও ফার্নিচার">
-<meta property="og:description" content="রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরায় স্বপ্নচূড়া — ইলেকট্রনিক্স, গৃহস্থালি পণ্য ও ফার্নিচারের শপিং ঠিকানা।">
-<meta property="og:url" content="https://swapnochura.github.io/swapnochura/">
-<meta property="og:site_name" content="স্বপ্নচূড়া">
-<meta property="og:image" content="https://swapnochura.github.io/swapnochura/logo.png">
+<meta property="og:title"
+content="স্বপ্নচূড়া | ইলেকট্রনিক্স, গৃহস্থালি পণ্য ও ফার্নিচার">
+
+<meta property="og:description"
+content="রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরায় স্বপ্নচূড়া — ইলেকট্রনিক্স, গৃহস্থালি পণ্য ও ফার্নিচারের শপিং ঠিকানা।">
+
+<meta property="og:url"
+content="https://swapnochura.github.io/swapnochura/">
+
+<meta property="og:site_name"
+content="স্বপ্নচূড়া">
+
+<meta property="og:image"
+content="https://swapnochura.github.io/swapnochura/logo.png">
+
 
 <style>
+
 :root{
   --blue:#073b8f;
   --blue2:#0a5bc4;
@@ -40,9 +58,13 @@
   --shadow:0 12px 35px rgba(4,25,60,.12)
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box
+}
 
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth
+}
 
 body{
   margin:0;
@@ -52,11 +74,23 @@ body{
   line-height:1.65
 }
 
-body.cart-open{overflow:hidden}
+/* IMPORTANT CART FIX */
 
-a{text-decoration:none;color:inherit}
+body.cart-open{
+  overflow:hidden
+}
 
-button,input,textarea,select{font:inherit}
+a{
+  text-decoration:none;
+  color:inherit
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit
+}
 
 .top{
   background:var(--blue);
@@ -108,7 +142,9 @@ nav{
   align-items:center
 }
 
-.links a:hover{color:var(--red)}
+.links a:hover{
+  color:var(--red)
+}
 
 .cart-trigger{
   border:0;
@@ -151,7 +187,11 @@ nav{
 .hero{
   min-height:650px;
   background:
-    linear-gradient(90deg,rgba(4,18,45,.83),rgba(4,18,45,.28)),
+    linear-gradient(
+      90deg,
+      rgba(4,18,45,.83),
+      rgba(4,18,45,.28)
+    ),
     url("storefront.png") center/cover;
   display:flex;
   align-items:center
@@ -225,7 +265,9 @@ section{
   margin:0 0 8px
 }
 
-.title p{color:var(--muted)}
+.title p{
+  color:var(--muted)
+}
 
 .grid{
   display:grid;
@@ -241,7 +283,9 @@ section{
   border:1px solid var(--border)
 }
 
-.icon{font-size:38px}
+.icon{
+  font-size:38px
+}
 
 .card h3{
   margin:10px 0 4px;
@@ -390,7 +434,9 @@ section{
   border-radius:18px
 }
 
-.contactcard h3{margin-top:0}
+.contactcard h3{
+  margin-top:0
+}
 
 .cta{
   text-align:center;
@@ -412,7 +458,14 @@ footer{
   padding:25px 15px
 }
 
-.social{margin-top:8px}
+.social{
+  margin-top:8px
+}
+
+
+/* =========================
+   CART
+========================= */
 
 .cart-overlay{
   display:none;
@@ -422,26 +475,52 @@ footer{
   z-index:1000
 }
 
-.cart-overlay.show{display:block}
+.cart-overlay.show{
+  display:block
+}
+
+/* FIXED CART SCROLL */
 
 .cart-panel{
   position:absolute;
   right:0;
   top:0;
-  height:100%;
+
   width:min(520px,100%);
+
+  height:100dvh;
+  max-height:100dvh;
+
   background:#fff;
+
   display:flex;
   flex-direction:column;
-  box-shadow:-12px 0 40px rgba(0,0,0,.2)
+
+  box-shadow:-12px 0 40px rgba(0,0,0,.2);
+
+  overflow-y:auto;
+  overflow-x:hidden;
+
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch
 }
 
 .cart-head{
   display:flex;
   align-items:center;
   justify-content:space-between;
+
   padding:17px 20px;
-  border-bottom:1px solid var(--border)
+
+  border-bottom:1px solid var(--border);
+
+  flex:0 0 auto;
+
+  position:sticky;
+  top:0;
+  z-index:5;
+
+  background:#fff
 }
 
 .cart-head h2{
@@ -459,10 +538,23 @@ footer{
   cursor:pointer
 }
 
+/*
+  Product list gets its own limited scroll.
+  Checkout remains reachable below it.
+*/
+
 .cart-items{
   padding:16px 20px;
-  overflow:auto;
-  flex:1
+
+  overflow-y:auto;
+  overflow-x:hidden;
+
+  flex:0 0 auto;
+
+  max-height:42vh;
+  min-height:80px;
+
+  -webkit-overflow-scrolling:touch
 }
 
 .empty-cart{
@@ -503,7 +595,8 @@ footer{
   display:flex;
   align-items:center;
   gap:7px;
-  margin-top:7px
+  margin-top:7px;
+  flex-wrap:wrap
 }
 
 .qty button{
@@ -540,7 +633,9 @@ footer{
 .cart-summary{
   padding:16px 20px;
   border-top:1px solid var(--border);
-  background:#fbfcfe
+  background:#fbfcfe;
+
+  flex:0 0 auto
 }
 
 .summary-row{
@@ -563,9 +658,17 @@ footer{
   border-top:1px dashed #d6dde8
 }
 
+
+/* CHECKOUT */
+
 .checkout{
   padding:0 20px 20px;
-  background:#fbfcfe
+  background:#fbfcfe;
+
+  flex:0 0 auto;
+
+  padding-bottom:
+    calc(20px + env(safe-area-inset-bottom))
 }
 
 .checkout h3{
@@ -587,6 +690,7 @@ footer{
   min-height:75px;
   resize:vertical
 }
+
 
 /* FIXED DELIVERY */
 
@@ -617,7 +721,9 @@ footer{
   margin-top:12px;
   font-weight:900;
   cursor:pointer;
-  font-size:16px
+  font-size:16px;
+
+  min-height:50px
 }
 
 .order-btn:disabled{
@@ -636,8 +742,7 @@ footer{
   cursor:pointer;
   margin-top:8px
 }
-
-/* PRODUCT SHARE */
+  /* PRODUCT SHARE */
 
 .detail-share{
   width:100%;
@@ -850,6 +955,7 @@ footer{
   color:#fff
 }
 
+
 /* ORDER SUCCESS */
 
 .order-success{
@@ -878,39 +984,110 @@ footer{
   margin:12px 0
 }
 
+
+/* RESPONSIVE */
+
 @media(max-width:1100px){
-  .links{gap:12px}
-  .products{grid-template-columns:repeat(3,1fr)}
+
+  .links{
+    gap:12px
+  }
+
+  .products{
+    grid-template-columns:repeat(3,1fr)
+  }
+
 }
 
 @media(max-width:850px){
-  .links{display:none}
-  .grid{grid-template-columns:repeat(2,1fr)}
-  .products{grid-template-columns:repeat(2,1fr)}
-  .about{grid-template-columns:1fr}
-  .contactgrid{grid-template-columns:1fr}
-  .hero{min-height:560px}
-  .website-share{font-size:13px;padding:9px 10px}
+
+  .links{
+    display:none
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+  .products{
+    grid-template-columns:repeat(2,1fr)
+  }
+
+  .about{
+    grid-template-columns:1fr
+  }
+
+  .contactgrid{
+    grid-template-columns:1fr
+  }
+
+  .hero{
+    min-height:560px
+  }
+
+  .website-share{
+    font-size:13px;
+    padding:9px 10px
+  }
+
 }
 
 @media(max-width:700px){
-  .product-detail-overlay{padding:0}
+
+  .product-detail-overlay{
+    padding:0
+  }
+
   .product-detail-modal{
     max-height:100vh;
     border-radius:0
   }
-  .detail-grid{grid-template-columns:1fr}
+
+  .detail-grid{
+    grid-template-columns:1fr
+  }
+
   .detail-image-wrap{
     min-height:300px;
     padding:20px
   }
-  .detail-image{max-height:330px}
-  .detail-info{padding:26px 20px 30px}
-  .detail-info h2{font-size:26px}
-  .detail-sale{font-size:29px}
+
+  .detail-image{
+    max-height:330px
+  }
+
+  .detail-info{
+    padding:26px 20px 30px
+  }
+
+  .detail-info h2{
+    font-size:26px
+  }
+
+  .detail-sale{
+    font-size:29px
+  }
+
+  .detail-actions{
+    grid-template-columns:1fr
+  }
+
+  /* MOBILE CART */
+
+  .cart-panel{
+    width:100%;
+    height:100dvh;
+    max-height:100dvh
+  }
+
+  .cart-items{
+    max-height:38vh
+  }
+
 }
 
 @media(max-width:600px){
+
   .navin{
     padding:9px 10px
   }
@@ -933,21 +1110,31 @@ footer{
     padding:8px 9px;
     font-size:13px
   }
+
 }
 
 @media(max-width:520px){
+
   .grid,
   .products{
     grid-template-columns:1fr
   }
 
-  .heroIn{padding-top:45px}
+  .heroIn{
+    padding-top:45px
+  }
 
-  .hero p{font-size:17px}
+  .hero p{
+    font-size:17px
+  }
 
-  section{padding:55px 15px}
+  section{
+    padding:55px 15px
+  }
 
-  .product-img{height:250px}
+  .product-img{
+    height:250px
+  }
 
   .cart-item{
     grid-template-columns:60px 1fr auto
@@ -958,9 +1145,13 @@ footer{
     height:60px
   }
 
-  .navin{padding:10px 8px}
+  .navin{
+    padding:10px 8px
+  }
 
-  .brand{font-size:18px}
+  .brand{
+    font-size:18px
+  }
 
   .brandlogo{
     width:38px;
@@ -976,258 +1167,455 @@ footer{
     font-size:12px;
     padding:8px 7px
   }
+
+  .checkout{
+    padding-left:15px;
+    padding-right:15px
+  }
+
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="top">
-📞 ০১৭৩৫-৫৩৩১৯১ &nbsp; | &nbsp; 📍 রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরা
+📞 ০১৭৩৫-৫৩৩১৯১
+&nbsp; | &nbsp;
+📍 রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরা
 </div>
 
 <nav>
+
 <div class="navin">
 
-<a class="brand" href="#home" aria-label="স্বপ্নচূড়া হোম">
-<img class="brandlogo" src="logo.png" alt="স্বপ্নচূড়া লোগো">
+<a class="brand"
+href="#home"
+aria-label="স্বপ্নচূড়া হোম">
+
+<img
+class="brandlogo"
+src="logo.png"
+alt="স্বপ্নচূড়া লোগো">
+
 <span>স্বপ্নচূড়া</span>
+
 </a>
 
 <div class="links">
+
 <a href="#home">হোম</a>
 <a href="#products">পণ্য</a>
 <a href="#about">আমাদের সম্পর্কে</a>
 <a href="#contact">যোগাযোগ</a>
 
-<button class="website-share" type="button" onclick="shareWebsite()">
+<button
+class="website-share"
+type="button"
+onclick="shareWebsite()">
+
 🔗 ওয়েবসাইট শেয়ার
+
 </button>
+
 </div>
 
-<button class="website-share" type="button" onclick="shareWebsite()">
+<button
+class="website-share"
+type="button"
+onclick="shareWebsite()">
+
 🔗 শেয়ার
+
 </button>
 
-<button class="cart-trigger" type="button" onclick="openCart()">
-🛒 কার্ট <span id="cartCount" class="cart-count">০</span>
+<button
+class="cart-trigger"
+type="button"
+onclick="openCart()">
+
+🛒 কার্ট
+<span id="cartCount"
+class="cart-count">০</span>
+
 </button>
 
 </div>
+
 </nav>
 
+
 <header id="home" class="hero">
+
 <div class="heroIn">
 
-<span class="badge">আপনার ঘরের স্বপ্ন পূরণের ঠিকানা</span>
+<span class="badge">
+আপনার ঘরের স্বপ্ন পূরণের ঠিকানা
+</span>
 
 <h1>স্বপ্নচূড়া</h1>
 
 <p>
-ইলেকট্রনিক্স, গৃহস্থালি পণ্য ও ফার্নিচার—আপনার প্রয়োজনীয় পণ্য এক ছাদের নিচে।
+ইলেকট্রনিক্স, গৃহস্থালি পণ্য ও ফার্নিচার—
+আপনার প্রয়োজনীয় পণ্য এক ছাদের নিচে।
 </p>
 
 <div class="btns">
-<a class="btn primary" href="#products">পণ্য দেখুন</a>
-<a class="btn secondary" href="tel:+8801735533191">📞 এখনই যোগাযোগ</a>
+
+<a
+class="btn primary"
+href="#products">
+
+পণ্য দেখুন
+
+</a>
+
+<a
+class="btn secondary"
+href="tel:+8801735533191">
+
+📞 এখনই যোগাযোগ
+
+</a>
+
 </div>
 
 </div>
+
 </header>
+
 
 <section id="products">
 
 <div class="title">
+
 <h2>আমাদের পণ্য</h2>
-<p>Firestore থেকে পণ্যের নাম, দাম, স্টক ও ছবি স্বয়ংক্রিয়ভাবে আসবে</p>
+
+<p>
+Firestore থেকে পণ্যের নাম, দাম, স্টক ও ছবি স্বয়ংক্রিয়ভাবে আসবে
+</p>
+
 </div>
+
 
 <div class="grid">
 
 <div class="card">
+
 <div class="icon">📺</div>
+
 <h3>টিভি</h3>
-<p>বিভিন্ন ধরনের আধুনিক টেলিভিশন।</p>
+
+<p>
+বিভিন্ন ধরনের আধুনিক টেলিভিশন।
+</p>
+
 </div>
 
+
 <div class="card">
+
 <div class="icon">🧊</div>
+
 <h3>ফ্রিজ</h3>
-<p>পরিবারের প্রয়োজন অনুযায়ী ফ্রিজ ও রেফ্রিজারেটর।</p>
+
+<p>
+পরিবারের প্রয়োজন অনুযায়ী ফ্রিজ ও রেফ্রিজারেটর।
+</p>
+
 </div>
 
+
 <div class="card">
+
 <div class="icon">📱</div>
+
 <h3>মোবাইল</h3>
-<p>স্মার্টফোন ও প্রয়োজনীয় মোবাইল পণ্য।</p>
+
+<p>
+স্মার্টফোন ও প্রয়োজনীয় মোবাইল পণ্য।
+</p>
+
 </div>
+
 
 <div class="card">
+
 <div class="icon">⚡</div>
+
 <h3>ইলেকট্রিক চুলা</h3>
-<p>দৈনন্দিন রান্নার জন্য আধুনিক সমাধান।</p>
+
+<p>
+দৈনন্দিন রান্নার জন্য আধুনিক সমাধান।
+</p>
+
 </div>
 
 </div>
+
 
 <div style="height:28px"></div>
 
-<div class="products" id="productGrid"></div>
+<div
+class="products"
+id="productGrid">
+</div>
 
 </section>
+
 
 <section id="about">
 
 <div class="title">
+
 <h2>আমাদের সম্পর্কে</h2>
-<p>স্বপ্নচূড়া — রতনপুর বাজারে আপনার পরিচিত শপিং ঠিকানা</p>
+
+<p>
+স্বপ্নচূড়া — রতনপুর বাজারে আপনার পরিচিত শপিং ঠিকানা
+</p>
+
 </div>
+
 
 <div class="about">
 
-<img src="storefront.png"
+<img
+src="storefront.png"
 alt="স্বপ্নচূড়া রতনপুর বাজার শোরুম"
 loading="lazy">
+
 
 <div class="aboutbox">
 
 <h2>এক ছাদের নিচে অনেক কিছু</h2>
 
 <p>
-স্বপ্নচূড়ায় ইলেকট্রনিক্স, রান্নাঘরের অ্যাপ্লায়েন্স, প্লাস্টিক পণ্য ও ফার্নিচারের সমাহার রয়েছে।
-আমরা চাই আপনি সহজে প্রয়োজনীয় পণ্য খুঁজে পান এবং সুন্দরভাবে কেনাকাটা করতে পারেন।
+স্বপ্নচূড়ায় ইলেকট্রনিক্স, রান্নাঘরের অ্যাপ্লায়েন্স,
+প্লাস্টিক পণ্য ও ফার্নিচারের সমাহার রয়েছে।
+আমরা চাই আপনি সহজে প্রয়োজনীয় পণ্য খুঁজে পান
+এবং সুন্দরভাবে কেনাকাটা করতে পারেন।
 </p>
 
 <p>
+
 <strong>ঠিকানা:</strong>
 রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরা
+
 </p>
 
 <p>
+
 <strong>মোবাইল:</strong>
 ০১৭৩৫-৫৩৩১৯১
+
 </p>
 
 </div>
-</div>
-</section>
 
+</div>
+
+</section>
 <div id="contact" class="contact">
 
 <div class="contactin">
 
 <div class="title">
+
 <h2>যোগাযোগ করুন</h2>
-<p style="color:#dbeafe">স্বপ্নচূড়ায় আপনাকে স্বাগতম</p>
+
+<p style="color:#dbeafe">
+স্বপ্নচূড়ায় আপনাকে স্বাগতম
+</p>
+
 </div>
+
 
 <div class="contactgrid">
 
 <div class="contactcard">
+
 <h3>📍 ঠিকানা</h3>
-<p>রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরা</p>
+
+<p>
+রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরা
+</p>
+
 </div>
 
+
 <div class="contactcard">
+
 <h3>📞 ফোন</h3>
-<p>০১৭৩৫-৫৩৩১৯১</p>
+
+<p>
+০১৭৩৫-৫৩৩১৯১
+</p>
+
 </div>
+
 
 <div class="contactcard">
+
 <h3>🕘 দোকান</h3>
-<p>প্রতিদিন — আপনার সুবিধামতো সময়ে</p>
+
+<p>
+প্রতিদিন — আপনার সুবিধামতো সময়ে
+</p>
+
 </div>
 
 </div>
+
 
 <div class="cta">
+
 <a href="tel:+8801735533191">
+
 📞 ০১৭৩৫-৫৩৩১৯১ নম্বরে কল করুন
+
 </a>
+
 </div>
 
 </div>
+
 </div>
+
 
 <footer>
+
 © ২০২৬ স্বপ্নচূড়া — সর্বস্বত্ব সংরক্ষিত
+
 <div class="social">
+
 রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরা
+
 </div>
+
 </footer>
 
 
 <!-- PRODUCT DETAIL -->
 
-<div id="productDetailOverlay"
+<div
+id="productDetailOverlay"
 class="product-detail-overlay"
 onclick="detailOverlayClose(event)">
 
-<div class="product-detail-modal"
+<div
+class="product-detail-modal"
 role="dialog"
 aria-modal="true"
 aria-label="পণ্যের বিস্তারিত">
 
-<button class="detail-close"
+<button
+class="detail-close"
 type="button"
 onclick="closeProductDetail()"
-aria-label="বন্ধ করুন">×</button>
+aria-label="বন্ধ করুন">
+
+×
+</button>
 
 <div id="productDetailContent"></div>
 
 </div>
+
 </div>
 
 
 <!-- CART -->
 
-<div id="cartOverlay"
+<div
+id="cartOverlay"
 class="cart-overlay"
 onclick="overlayClose(event)">
 
-<aside class="cart-panel" aria-label="Shopping Cart">
+<aside
+class="cart-panel"
+aria-label="Shopping Cart">
+
 
 <div class="cart-head">
 
 <h2>🛒 আপনার কার্ট</h2>
 
-<button class="close-cart"
+<button
+class="close-cart"
 type="button"
 onclick="closeCart()"
-aria-label="কার্ট বন্ধ করুন">×</button>
+aria-label="কার্ট বন্ধ করুন">
+
+×
+
+</button>
 
 </div>
 
-<div id="cartItems" class="cart-items"></div>
+
+<div
+id="cartItems"
+class="cart-items">
+</div>
+
 
 <div class="cart-summary">
 
 <div class="summary-row">
+
 <span>মূল দাম</span>
-<strong id="cartOriginal">৳০</strong>
+
+<strong id="cartOriginal">
+৳০
+</strong>
+
 </div>
+
 
 <div class="summary-row summary-discount">
+
 <span>মোট ডিসকাউন্ট</span>
-<strong id="cartDiscount">− ৳০</strong>
+
+<strong id="cartDiscount">
+− ৳০
+</strong>
+
 </div>
+
 
 <div class="summary-row">
+
 <span>ডেলিভারি চার্জ</span>
-<strong id="deliveryCharge">৳১৬০</strong>
+
+<strong id="deliveryCharge">
+৳১৬০
+</strong>
+
 </div>
+
 
 <div class="summary-row summary-total">
+
 <span>সর্বমোট</span>
-<strong id="cartTotal">৳০</strong>
-</div>
+
+<strong id="cartTotal">
+৳০
+</strong>
 
 </div>
 
+</div>
+
+
+<!-- CHECKOUT -->
 
 <div class="checkout">
 
-<h3>অর্ডারের তথ্য</h3>
+<h3>
+অর্ডারের তথ্য
+</h3>
+
 
 <input
 id="customerName"
@@ -1235,20 +1623,25 @@ type="text"
 placeholder="আপনার নাম *"
 autocomplete="name">
 
+
 <input
 id="customerPhone"
 type="tel"
 placeholder="মোবাইল নম্বর *"
 autocomplete="tel">
 
+
 <textarea
 id="customerAddress"
 placeholder="সম্পূর্ণ ঠিকানা *"
-autocomplete="street-address"></textarea>
+autocomplete="street-address">
+</textarea>
+
 
 <textarea
 id="customerNote"
-placeholder="অতিরিক্ত মন্তব্য (ঐচ্ছিক)"></textarea>
+placeholder="অতিরিক্ত মন্তব্য (ঐচ্ছিক)">
+</textarea>
 
 
 <div class="fixed-delivery">
@@ -1261,26 +1654,58 @@ placeholder="অতিরিক্ত মন্তব্য (ঐচ্ছিক)
 
 </div>
 
-<button class="order-btn" id="orderSubmitBtn" type="button" onclick="submitOrder()">
-  ✅ অর্ডার নিশ্চিত করুন
+
+<button
+class="order-btn"
+id="orderSubmitBtn"
+type="button"
+onclick="submitOrder()">
+
+✅ অর্ডার নিশ্চিত করুন
+
 </button>
 
-<button class="clear-btn" type="button" onclick="clearCart()">
-  কার্ট খালি করুন
+
+<button
+class="clear-btn"
+type="button"
+onclick="clearCart()">
+
+কার্ট খালি করুন
+
 </button>
 
-<div id="orderSuccess" class="order-success"></div>
+
+<div
+id="orderSuccess"
+class="order-success">
+</div>
 
 </div>
+
 </aside>
+
 </div>
 
-<div id="toast" class="toast">
-  কার্টে যোগ করা হয়েছে
+
+<div
+id="toast"
+class="toast">
+
+কার্টে যোগ করা হয়েছে
+
 </div>
+
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+import {
+  initializeApp
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+
+
 import {
   getFirestore,
   collection,
@@ -1289,351 +1714,718 @@ import {
   where,
   addDoc,
   serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+}
+from
+"https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD0n0aftfePcUB2YxGKxCl9Gl94FRu3558",
-  authDomain: "swapnochura-e90b8.firebaseapp.com",
-  projectId: "swapnochura-e90b8",
-  storageBucket: "swapnochura-e90b8.firebasestorage.app",
-  messagingSenderId: "1065728831941",
-  appId: "1:1065728831941:web:367c37eb72c13cc723dbac",
-  measurementId: "G-8ZG18K4CPT"
+
+  apiKey:
+  "AIzaSyD0n0aftfePcUB2YxGKxCl9Gl94FRu3558",
+
+  authDomain:
+  "swapnochura-e90b8.firebaseapp.com",
+
+  projectId:
+  "swapnochura-e90b8",
+
+  storageBucket:
+  "swapnochura-e90b8.firebasestorage.app",
+
+  messagingSenderId:
+  "1065728831941",
+
+  appId:
+  "1:1065728831941:web:367c37eb72c13cc723dbac",
+
+  measurementId:
+  "G-8ZG18K4CPT"
+
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+
+const app =
+initializeApp(firebaseConfig);
+
+const db =
+getFirestore(app);
+
 
 /* =========================
    স্বপ্নচূড়া অর্ডার সিস্টেম
-   ========================= */
+========================= */
 
-const DELIVERY_CHARGE = 160;
+const DELIVERY_CHARGE =
+160;
 
 let products = [];
-let cart = JSON.parse(localStorage.getItem("swapnochuraCart") || "[]");
-let detailProductId = null;
-let detailQty = 1;
+
+let cart =
+JSON.parse(
+  localStorage.getItem(
+    "swapnochuraCart"
+  ) || "[]"
+);
+
+let detailProductId =
+null;
+
+let detailQty =
+1;
+
 
 /* =========================
    সাধারণ ফাংশন
-   ========================= */
+========================= */
 
-function bnNumber(value) {
-  return Number(value || 0).toLocaleString("bn-BD");
+function bnNumber(value){
+
+  return Number(
+    value || 0
+  ).toLocaleString("bn-BD");
+
 }
 
-function money(value) {
-  return "৳" + bnNumber(value);
+
+function money(value){
+
+  return "৳" +
+    bnNumber(value);
+
 }
 
-function discountPercent(p) {
-  const original = Number(p.originalPrice ?? p.original ?? 0);
-  const sale = Number(p.salePrice ?? p.sale ?? 0);
+
+function discountPercent(p){
+
+  const original =
+    Number(
+      p.originalPrice ??
+      p.original ??
+      0
+    );
+
+  const sale =
+    Number(
+      p.salePrice ??
+      p.sale ??
+      0
+    );
 
   return original > 0
-    ? Math.round(((original - sale) / original) * 1000) / 10
+
+    ? Math.round(
+        (
+          (original - sale) /
+          original
+        ) * 1000
+      ) / 10
+
     : 0;
+
 }
 
-function productById(id) {
-  return products.find(p => p.id === id);
+
+function productById(id){
+
+  return products.find(
+    p => p.id === id
+  );
+
 }
 
-function productImage(p) {
-  return p.imageUrl || p.image || "logo.png";
+
+function productImage(p){
+
+  return p.imageUrl ||
+         p.image ||
+         "logo.png";
+
 }
 
-function productStock(p) {
-  if (typeof p.active === "boolean" && !p.active) return false;
 
-  if (typeof p.stock === "number") {
+function productStock(p){
+
+  if(
+    typeof p.active === "boolean" &&
+    !p.active
+  ){
+    return false;
+  }
+
+  if(
+    typeof p.stock === "number"
+  ){
     return p.stock > 0;
   }
 
   return Boolean(p.stock);
+
 }
+
 
 /* =========================
    পণ্য লোড
-   ========================= */
+========================= */
 
-async function loadProducts() {
-  const grid = document.getElementById("productGrid");
+async function loadProducts(){
+
+  const grid =
+    document.getElementById(
+      "productGrid"
+    );
+
 
   grid.innerHTML = `
-    <div style="grid-column:1/-1;text-align:center;padding:40px">
+
+    <div
+      style="
+        grid-column:1/-1;
+        text-align:center;
+        padding:40px
+      ">
+
       পণ্য লোড হচ্ছে...
+
     </div>
+
   `;
 
-  try {
-    const q = query(
-      collection(db, "products"),
-      where("active", "==", true)
+
+  try{
+
+    const q =
+      query(
+        collection(
+          db,
+          "products"
+        ),
+
+        where(
+          "active",
+          "==",
+          true
+        )
+      );
+
+
+    const snap =
+      await getDocs(q);
+
+
+    products =
+      snap.docs.map(
+        doc => ({
+
+          id:doc.id,
+
+          ...doc.data()
+
+        })
+      );
+
+
+    products.sort(
+      (a,b) =>
+
+        (
+          Number(
+            a.displayOrder ??
+            999999
+          )
+
+          -
+
+          Number(
+            b.displayOrder ??
+            999999
+          )
+
+        )
+
+        ||
+
+        String(
+          a.name || ""
+        ).localeCompare(
+          String(
+            b.name || ""
+          )
+        )
     );
 
-    const snap = await getDocs(q);
-
-    products = snap.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-
-    products.sort((a, b) =>
-      (Number(a.displayOrder ?? 999999) -
-       Number(b.displayOrder ?? 999999)) ||
-      String(a.name || "").localeCompare(String(b.name || ""))
-    );
 
     renderProducts();
+
     renderCart();
 
-    /* শেয়ার করা Product Link থেকে সরাসরি Product খুলবে */
-    const sharedProductId =
-      new URLSearchParams(window.location.search).get("product");
 
-    if (sharedProductId && productById(sharedProductId)) {
-      setTimeout(() => {
-        openProductDetail(sharedProductId);
-      }, 400);
+    /* শেয়ার করা Product Link */
+
+    const sharedProductId =
+      new URLSearchParams(
+        window.location.search
+      ).get(
+        "product"
+      );
+
+
+    if(
+      sharedProductId &&
+      productById(
+        sharedProductId
+      )
+    ){
+
+      setTimeout(
+        () => {
+
+          openProductDetail(
+            sharedProductId
+          );
+
+        },
+        400
+      );
+
     }
 
-  } catch (error) {
+
+  }catch(error){
+
     console.error(error);
 
+
     grid.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:40px;color:#e21d2f">
-        পণ্য লোড করা যাচ্ছে না। Firebase Firestore Rules পরীক্ষা করুন।
+
+      <div
+        style="
+          grid-column:1/-1;
+          text-align:center;
+          padding:40px;
+          color:#e21d2f
+        ">
+
+        পণ্য লোড করা যাচ্ছে না।
+        Firebase Firestore Rules পরীক্ষা করুন।
+
       </div>
+
     `;
+
   }
+
 }
+
 
 /* =========================
    Product Render
-   ========================= */
+========================= */
 
-function renderProducts() {
-  const grid = document.getElementById("productGrid");
+function renderProducts(){
 
-  if (!products.length) {
+  const grid =
+    document.getElementById(
+      "productGrid"
+    );
+
+
+  if(!products.length){
+
     grid.innerHTML = `
-      <div style="grid-column:1/-1;text-align:center;padding:40px">
+
+      <div
+        style="
+          grid-column:1/-1;
+          text-align:center;
+          padding:40px
+        ">
+
         এখন কোনো পণ্য পাওয়া যায়নি।
+
       </div>
+
     `;
+
     return;
+
   }
 
-  grid.innerHTML = products.map(p => {
 
-    const original = Number(
-      p.originalPrice ?? p.original ?? 0
-    );
+  grid.innerHTML =
+    products.map(
+      p => {
 
-    const sale = Number(
-      p.salePrice ?? p.sale ?? 0
-    );
+        const original =
+          Number(
+            p.originalPrice ??
+            p.original ??
+            0
+          );
 
-    const stock = productStock(p);
-    const discount = discountPercent(p);
 
-    return `
-      <article
-        class="product"
-        onclick="openProductDetail('${p.id}')"
-      >
+        const sale =
+          Number(
+            p.salePrice ??
+            p.sale ??
+            0
+          );
 
-        <img
-          class="product-img"
-          src="${productImage(p)}"
-          alt="${p.name || "পণ্য"}"
-          loading="lazy"
-        >
 
-        <div class="product-body">
+        const stock =
+          productStock(p);
 
-          <h3>${p.name || ""}</h3>
 
-          ${
-            p.code
-              ? `<div class="code">Code: ${p.code}</div>`
-              : ""
-          }
+        const discount =
+          discountPercent(p);
 
-          <div class="price-row">
 
-            <span class="old-price">
-              মূল দাম: ${money(original)}
-            </span>
+        return `
 
-            <span class="discount">
-              ${bnNumber(discount)}% ছাড়
-            </span>
-
-          </div>
-
-          <div class="sale-price">
-            এখন: ${money(sale)}
-          </div>
-
-          <div class="stock">
-            ● স্টক: ${stock ? "আছে" : "নেই"}
-          </div>
-
-          <button
-            class="add-cart"
-            type="button"
-            onclick="event.stopPropagation(); addToCart('${p.id}')"
-            ${stock ? "" : "disabled"}
+          <article
+            class="product"
+            onclick="
+              openProductDetail('${p.id}')
+            "
           >
-            🛒 ${stock ? "কার্টে যোগ করুন" : "স্টক নেই"}
-          </button>
 
-        </div>
+            <img
+              class="product-img"
+              src="${productImage(p)}"
+              alt="${p.name || "পণ্য"}"
+              loading="lazy"
+            >
 
-      </article>
-    `;
 
-  }).join("");
+            <div class="product-body">
+
+              <h3>
+                ${p.name || ""}
+              </h3>
+
+
+              ${
+                p.code
+
+                ?
+
+                `<div class="code">
+                  Code: ${p.code}
+                </div>`
+
+                :
+
+                ""
+              }
+
+
+              <div class="price-row">
+
+                <span class="old-price">
+                  মূল দাম: ${money(original)}
+                </span>
+
+
+                <span class="discount">
+                  ${bnNumber(discount)}% ছাড়
+                </span>
+
+              </div>
+
+
+              <div class="sale-price">
+
+                এখন:
+                ${money(sale)}
+
+              </div>
+
+
+              <div class="stock">
+
+                ● স্টক:
+                ${stock ? "আছে" : "নেই"}
+
+              </div>
+
+
+              <button
+                class="add-cart"
+                type="button"
+
+                onclick="
+                  event.stopPropagation();
+                  addToCart('${p.id}')
+                "
+
+                ${stock ? "" : "disabled"}
+              >
+
+                🛒
+                ${stock
+                  ? "কার্টে যোগ করুন"
+                  : "স্টক নেই"}
+
+              </button>
+
+            </div>
+
+          </article>
+
+        `;
+
+      }
+    ).join("");
+
 }
+
 
 /* =========================
    Cart
-   ========================= */
+========================= */
 
-function saveCart() {
+function saveCart(){
+
   localStorage.setItem(
     "swapnochuraCart",
     JSON.stringify(cart)
   );
+
 }
 
-function addToCart(id) {
 
-  const p = productById(id);
+function addToCart(id){
 
-  if (!p || !productStock(p)) return;
+  const p =
+    productById(id);
 
-  const item = cart.find(x => x.id === id);
 
-  if (item) {
-    item.qty += 1;
-  } else {
-    cart.push({
-      id: id,
-      qty: 1
-    });
+  if(
+    !p ||
+    !productStock(p)
+  ){
+    return;
   }
 
+
+  const item =
+    cart.find(
+      x => x.id === id
+    );
+
+
+  if(item){
+
+    item.qty += 1;
+
+  }else{
+
+    cart.push({
+
+      id:id,
+
+      qty:1
+
+    });
+
+  }
+
+
   saveCart();
+
   renderCart();
 
-  showToast("🛒 কার্টে যোগ করা হয়েছে");
+  showToast(
+    "🛒 কার্টে যোগ করা হয়েছে"
+  );
+
 }
 
-function changeQty(id, delta) {
 
-  const item = cart.find(x => x.id === id);
+function changeQty(
+  id,
+  delta
+){
 
-  if (!item) return;
+  const item =
+    cart.find(
+      x => x.id === id
+    );
+
+
+  if(!item) return;
+
 
   item.qty += delta;
 
-  if (item.qty <= 0) {
-    cart = cart.filter(x => x.id !== id);
+
+  if(
+    item.qty <= 0
+  ){
+
+    cart =
+      cart.filter(
+        x => x.id !== id
+      );
+
   }
 
-  saveCart();
-  renderCart();
-}
-
-function removeItem(id) {
-
-  cart = cart.filter(x => x.id !== id);
 
   saveCart();
+
   renderCart();
+
 }
 
-function clearCart() {
 
-  if (!cart.length) return;
+function removeItem(id){
+
+  cart =
+    cart.filter(
+      x => x.id !== id
+    );
+
+
+  saveCart();
+
+  renderCart();
+
+}
+
+
+function clearCart(){
+
+  if(!cart.length)
+    return;
+
 
   cart = [];
 
   saveCart();
+
   renderCart();
 
-  showToast("কার্ট খালি করা হয়েছে");
+  showToast(
+    "কার্ট খালি করা হয়েছে"
+  );
+
 }
 
-function cartTotals() {
+
+function cartTotals(){
 
   let original = 0;
+
   let sale = 0;
+
   let count = 0;
 
-  cart.forEach(item => {
 
-    const p = productById(item.id);
+  cart.forEach(
+    item => {
 
-    if (!p) return;
+      const p =
+        productById(
+          item.id
+        );
 
-    const o = Number(
-      p.originalPrice ?? p.original ?? 0
-    );
 
-    const s = Number(
-      p.salePrice ?? p.sale ?? 0
-    );
+      if(!p) return;
 
-    original += o * item.qty;
-    sale += s * item.qty;
-    count += item.qty;
 
-  });
+      const o =
+        Number(
+          p.originalPrice ??
+          p.original ??
+          0
+        );
+
+
+      const s =
+        Number(
+          p.salePrice ??
+          p.sale ??
+          0
+        );
+
+
+      original +=
+        o * item.qty;
+
+
+      sale +=
+        s * item.qty;
+
+
+      count +=
+        item.qty;
+
+    }
+  );
+
 
   return {
+
     original,
+
     sale,
-    discount: original - sale,
+
+    discount:
+      original - sale,
+
     count
+
   };
+
 }
+
 
 /* =========================
    বাংলাদেশজুড়ে Flat Delivery
-   ========================= */
+========================= */
 
-function getDeliveryCharge() {
+function getDeliveryCharge(){
 
   return cart.length
     ? DELIVERY_CHARGE
     : 0;
+
 }
-
-/* =========================
+  /* =========================
    Product Details
-   ========================= */
+========================= */
 
-function openProductDetail(id) {
+function openProductDetail(id){
 
-  const p = productById(id);
+  const p =
+    productById(id);
 
-  if (!p) return;
 
-  detailProductId = id;
-  detailQty = 1;
+  if(!p) return;
 
-  const original = Number(
-    p.originalPrice ?? p.original ?? 0
-  );
 
-  const sale = Number(
-    p.salePrice ?? p.sale ?? 0
-  );
+  detailProductId =
+    id;
+
+  detailQty =
+    1;
+
+
+  const original =
+    Number(
+      p.originalPrice ??
+      p.original ??
+      0
+    );
+
+
+  const sale =
+    Number(
+      p.salePrice ??
+      p.sale ??
+      0
+    );
+
 
   document.getElementById(
     "productDetailContent"
@@ -1651,43 +2443,61 @@ function openProductDetail(id) {
 
       </div>
 
+
       <div class="detail-info">
 
         <div class="detail-category">
           Kitchen and Home Appliances
         </div>
 
+
         <h2>
           ${p.name || ""}
         </h2>
 
+
         ${
           p.code
-            ? `<div class="detail-code">
-                Product Code: ${p.code}
-              </div>`
-            : ""
+
+          ?
+
+          `<div class="detail-code">
+            Product Code: ${p.code}
+          </div>`
+
+          :
+
+          ""
         }
+
 
         <div class="detail-old">
           মূল দাম: ${money(original)}
         </div>
 
+
         <div class="detail-sale">
           ${money(sale)}
         </div>
+
 
         <div class="detail-discount">
           ${bnNumber(discountPercent(p))}% ছাড়
         </div>
 
+
         <div class="detail-stock">
-          ● ${productStock(p) ? "In stock" : "স্টক নেই"}
+          ●
+          ${productStock(p)
+            ? "In stock"
+            : "স্টক নেই"}
         </div>
+
 
         <div class="detail-label">
           Quantity
         </div>
+
 
         <div class="detail-qty">
 
@@ -1698,9 +2508,11 @@ function openProductDetail(id) {
             −
           </button>
 
+
           <span id="detailQty">
             ১
           </span>
+
 
           <button
             type="button"
@@ -1710,6 +2522,7 @@ function openProductDetail(id) {
           </button>
 
         </div>
+
 
         <div class="detail-actions">
 
@@ -1721,6 +2534,7 @@ function openProductDetail(id) {
             🛒 Add to Cart
           </button>
 
+
           <button
             class="detail-buy"
             type="button"
@@ -1728,6 +2542,7 @@ function openProductDetail(id) {
           >
             ⚡ Buy Now
           </button>
+
 
           <button
             class="detail-share"
@@ -1745,147 +2560,260 @@ function openProductDetail(id) {
 
   `;
 
+
   document
-    .getElementById("productDetailOverlay")
+    .getElementById(
+      "productDetailOverlay"
+    )
     .classList.add("show");
 
-  document.body.classList.add("cart-open");
-}
 
-function changeDetailQty(delta) {
-
-  detailQty = Math.max(
-    1,
-    detailQty + delta
+  document.body.classList.add(
+    "cart-open"
   );
 
-  const el =
-    document.getElementById("detailQty");
-
-  if (el) {
-    el.textContent =
-      bnNumber(detailQty);
-  }
 }
 
-function closeProductDetail() {
+
+function changeDetailQty(delta){
+
+  detailQty =
+    Math.max(
+      1,
+      detailQty + delta
+    );
+
+
+  const el =
+    document.getElementById(
+      "detailQty"
+    );
+
+
+  if(el){
+
+    el.textContent =
+      bnNumber(
+        detailQty
+      );
+
+  }
+
+}
+
+
+function closeProductDetail(){
 
   document
-    .getElementById("productDetailOverlay")
-    .classList.remove("show");
+    .getElementById(
+      "productDetailOverlay"
+    )
+    .classList.remove(
+      "show"
+    );
 
-  document.body.classList.remove("cart-open");
 
-  detailProductId = null;
-  detailQty = 1;
+  document.body.classList.remove(
+    "cart-open"
+  );
+
+
+  detailProductId =
+    null;
+
+  detailQty =
+    1;
+
 }
 
-function detailOverlayClose(event) {
 
-  if (
+function detailOverlayClose(event){
+
+  if(
     event.target.id ===
     "productDetailOverlay"
-  ) {
+  ){
+
     closeProductDetail();
+
   }
+
 }
 
-function detailAddToCart() {
 
-  if (!detailProductId) return;
+function detailAddToCart(){
+
+  if(!detailProductId)
+    return;
+
 
   const p =
-    productById(detailProductId);
+    productById(
+      detailProductId
+    );
 
-  if (!p || !productStock(p)) return;
+
+  if(
+    !p ||
+    !productStock(p)
+  ){
+    return;
+  }
+
 
   const item =
     cart.find(
-      x => x.id === detailProductId
+      x =>
+        x.id ===
+        detailProductId
     );
 
-  if (item) {
-    item.qty += detailQty;
-  } else {
+
+  if(item){
+
+    item.qty +=
+      detailQty;
+
+  }else{
+
     cart.push({
-      id: detailProductId,
-      qty: detailQty
+
+      id:
+        detailProductId,
+
+      qty:
+        detailQty
+
     });
+
   }
 
+
   saveCart();
+
   renderCart();
 
-  showToast("🛒 কার্টে যোগ করা হয়েছে");
+  showToast(
+    "🛒 কার্টে যোগ করা হয়েছে"
+  );
+
 
   closeProductDetail();
+
 }
 
-function detailBuyNow() {
 
-  if (!detailProductId) return;
+function detailBuyNow(){
+
+  if(!detailProductId)
+    return;
+
 
   const p =
-    productById(detailProductId);
+    productById(
+      detailProductId
+    );
 
-  if (!p || !productStock(p)) return;
+
+  if(
+    !p ||
+    !productStock(p)
+  ){
+    return;
+  }
+
 
   const item =
     cart.find(
-      x => x.id === detailProductId
+      x =>
+        x.id ===
+        detailProductId
     );
 
-  if (item) {
-    item.qty += detailQty;
-  } else {
+
+  if(item){
+
+    item.qty +=
+      detailQty;
+
+  }else{
+
     cart.push({
-      id: detailProductId,
-      qty: detailQty
+
+      id:
+        detailProductId,
+
+      qty:
+        detailQty
+
     });
+
   }
 
+
   saveCart();
+
   renderCart();
 
   closeProductDetail();
 
   openCart();
+
 }
+
 
 /* =========================
    Cart Render
-   ========================= */
+========================= */
 
-function renderCart() {
+function renderCart(){
 
   const box =
-    document.getElementById("cartItems");
+    document.getElementById(
+      "cartItems"
+    );
+
 
   const totals =
     cartTotals();
 
+
   const deliveryCharge =
     getDeliveryCharge();
+
 
   document.getElementById(
     "cartCount"
   ).textContent =
-    bnNumber(totals.count);
+    bnNumber(
+      totals.count
+    );
+
 
   document.getElementById(
     "cartOriginal"
   ).textContent =
-    money(totals.original);
+    money(
+      totals.original
+    );
+
 
   document.getElementById(
     "cartDiscount"
   ).textContent =
-    "− " + money(totals.discount);
+    "− " +
+    money(
+      totals.discount
+    );
+
 
   document.getElementById(
     "deliveryCharge"
   ).textContent =
-    money(deliveryCharge);
+    money(
+      deliveryCharge
+    );
+
 
   document.getElementById(
     "cartTotal"
@@ -1895,9 +2823,11 @@ function renderCart() {
       deliveryCharge
     );
 
-  if (!cart.length) {
+
+  if(!cart.length){
 
     box.innerHTML = `
+
       <div class="empty-cart">
 
         🛒<br>
@@ -1913,167 +2843,244 @@ function renderCart() {
         চাপুন।
 
       </div>
+
     `;
 
     return;
+
   }
 
+
   box.innerHTML =
-    cart.map(item => {
+    cart.map(
+      item => {
 
-      const p =
-        productById(item.id);
+        const p =
+          productById(
+            item.id
+          );
 
-      if (!p) return "";
 
-      const sale =
-        Number(
-          p.salePrice ??
-          p.sale ??
-          0
-        );
+        if(!p) return "";
 
-      const lineTotal =
-        sale * item.qty;
 
-      return `
+        const sale =
+          Number(
+            p.salePrice ??
+            p.sale ??
+            0
+          );
 
-        <div class="cart-item">
 
-          <img
-            src="${productImage(p)}"
-            alt="${p.name || "পণ্য"}"
-          >
+        const lineTotal =
+          sale *
+          item.qty;
 
-          <div>
 
-            <h4>
-              ${p.name || ""}
-            </h4>
+        return `
 
-            ${
-              p.code
-                ? `<div class="cart-meta">
-                    Code: ${p.code}
-                  </div>`
-                : ""
-            }
+          <div class="cart-item">
 
-            <div class="cart-meta">
-              ${money(sale)}
-              ×
-              ${bnNumber(item.qty)}
-            </div>
+            <img
+              src="${productImage(p)}"
+              alt="${p.name || "পণ্য"}"
+            >
 
-            <div class="qty">
 
-              <button
-                type="button"
-                onclick="changeQty('${p.id}',-1)"
-              >
-                −
-              </button>
+            <div>
 
-              <span>
+              <h4>
+                ${p.name || ""}
+              </h4>
+
+
+              ${
+                p.code
+
+                ?
+
+                `<div class="cart-meta">
+                  Code: ${p.code}
+                </div>`
+
+                :
+
+                ""
+              }
+
+
+              <div class="cart-meta">
+
+                ${money(sale)}
+                ×
                 ${bnNumber(item.qty)}
-              </span>
 
-              <button
-                type="button"
-                onclick="changeQty('${p.id}',1)"
-              >
-                +
-              </button>
+              </div>
 
-              <button
-                class="remove-item"
-                type="button"
-                onclick="removeItem('${p.id}')"
-              >
-                বাদ দিন
-              </button>
+
+              <div class="qty">
+
+                <button
+                  type="button"
+                  onclick="
+                    changeQty('${p.id}',-1)
+                  "
+                >
+                  −
+                </button>
+
+
+                <span>
+                  ${bnNumber(item.qty)}
+                </span>
+
+
+                <button
+                  type="button"
+                  onclick="
+                    changeQty('${p.id}',1)
+                  "
+                >
+                  +
+                </button>
+
+
+                <button
+                  class="remove-item"
+                  type="button"
+                  onclick="
+                    removeItem('${p.id}')
+                  "
+                >
+                  বাদ দিন
+                </button>
+
+              </div>
+
+            </div>
+
+
+            <div class="item-total">
+
+              ${money(lineTotal)}
 
             </div>
 
           </div>
 
-          <div class="item-total">
-            ${money(lineTotal)}
-          </div>
+        `;
 
-        </div>
+      }
+    ).join("");
 
-      `;
-
-    }).join("");
 }
+
 
 /* =========================
    Cart Open / Close
-   ========================= */
+========================= */
 
-function openCart() {
-
-  document
-    .getElementById("cartOverlay")
-    .classList.add("show");
-
-  document.body.classList.add("cart-open");
-}
-
-function closeCart() {
+function openCart(){
 
   document
-    .getElementById("cartOverlay")
-    .classList.remove("show");
+    .getElementById(
+      "cartOverlay"
+    )
+    .classList.add(
+      "show"
+    );
 
-  document.body.classList.remove("cart-open");
+
+  document.body.classList.add(
+    "cart-open"
+  );
+
 }
 
-function overlayClose(event) {
 
-  if (
+function closeCart(){
+
+  document
+    .getElementById(
+      "cartOverlay"
+    )
+    .classList.remove(
+      "show"
+    );
+
+
+  document.body.classList.remove(
+    "cart-open"
+  );
+
+}
+
+
+function overlayClose(event){
+
+  if(
     event.target.id ===
     "cartOverlay"
-  ) {
+  ){
+
     closeCart();
+
   }
+
 }
+
 
 /* =========================
    Toast
-   ========================= */
+========================= */
 
-function showToast(text) {
+function showToast(text){
 
   const toast =
-    document.getElementById("toast");
+    document.getElementById(
+      "toast"
+    );
 
-  toast.textContent = text;
 
-  toast.classList.add("show");
+  toast.textContent =
+    text;
+
+
+  toast.classList.add(
+    "show"
+  );
+
 
   clearTimeout(
     window.__toastTimer
   );
 
+
   window.__toastTimer =
-    setTimeout(() => {
+    setTimeout(
+      () => {
 
-      toast.classList.remove("show");
+        toast.classList.remove(
+          "show"
+        );
 
-    }, 1800);
+      },
+      1800
+    );
+
 }
+
 
 /* =========================
    Website Share
-   ========================= */
+========================= */
 
-async function shareWebsite() {
+async function shareWebsite(){
 
   const url =
     window.location.origin +
     window.location.pathname;
+
 
   const shareData = {
 
@@ -2083,75 +3090,99 @@ async function shareWebsite() {
     text:
       "স্বপ্নচূড়া — রতনপুর বাজার, কালিগঞ্জ, সাতক্ষীরা। আমাদের পণ্যগুলো দেখুন।",
 
-    url: url
+    url:
+      url
 
   };
 
-  try {
 
-    if (
+  try{
+
+    if(
       navigator.share &&
       /Android|iPhone|iPad|iPod/i.test(
         navigator.userAgent
       )
-    ) {
+    ){
 
       await navigator.share(
         shareData
       );
 
       return;
+
     }
+
 
     await copyShareLink(
       url,
       "ওয়েবসাইটের লিংক কপি হয়েছে"
     );
 
-  } catch (error) {
 
-    if (
+  }catch(error){
+
+    if(
       error &&
-      error.name === "AbortError"
-    ) {
+      error.name ===
+      "AbortError"
+    ){
+
       return;
+
     }
 
+
     console.error(error);
+
 
     showToast(
       "শেয়ার করা যায়নি"
     );
+
   }
+
 }
+
 
 /* =========================
    Product Share
-   ========================= */
+========================= */
 
-async function shareProduct() {
+async function shareProduct(){
 
-  if (!detailProductId) return;
+  if(!detailProductId)
+    return;
+
 
   const p =
-    productById(detailProductId);
+    productById(
+      detailProductId
+    );
 
-  if (!p) return;
+
+  if(!p) return;
+
 
   const url =
     new URL(
       window.location.href
     );
 
+
   url.searchParams.set(
     "product",
     detailProductId
   );
 
-  url.hash = "products";
+
+  url.hash =
+    "products";
+
 
   const shareUrl =
     url.toString();
+
 
   const shareData = {
 
@@ -2166,125 +3197,191 @@ async function shareProduct() {
 
   };
 
-  try {
 
-    if (
+  try{
+
+    if(
       navigator.share &&
       /Android|iPhone|iPad|iPod/i.test(
         navigator.userAgent
       )
-    ) {
+    ){
 
       await navigator.share(
         shareData
       );
 
       return;
+
     }
+
 
     await copyShareLink(
       shareUrl,
       "পণ্যের শেয়ার লিংক কপি হয়েছে"
     );
 
-  } catch (error) {
 
-    if (
+  }catch(error){
+
+    if(
       error &&
-      error.name === "AbortError"
-    ) {
+      error.name ===
+      "AbortError"
+    ){
+
       return;
+
     }
 
+
     console.error(error);
+
 
     showToast(
       "শেয়ার করা যায়নি"
     );
+
   }
+
 }
+
 
 /* =========================
    Link Copy
-   ========================= */
+========================= */
 
 async function copyShareLink(
   url,
   successText
-) {
+){
 
-  try {
+  try{
 
     await navigator.clipboard.writeText(
       url
     );
 
-    showToast(successText);
 
-  } catch (error) {
+    showToast(
+      successText
+    );
+
+
+  }catch(error){
 
     const temp =
-      document.createElement("input");
+      document.createElement(
+        "input"
+      );
 
-    temp.value = url;
+
+    temp.value =
+      url;
+
 
     document.body.appendChild(
       temp
     );
 
+
     temp.select();
+
 
     document.execCommand(
       "copy"
     );
 
+
     temp.remove();
 
-    showToast(successText);
+
+    showToast(
+      successText
+    );
+
   }
+
 }
+
 
 /* =========================
    Order Number
-   ========================= */
+========================= */
 
-function generateOrderNumber() {
+function generateOrderNumber(){
 
-  const d = new Date();
+  const d =
+    new Date();
 
-  const pad = n =>
-    String(n).padStart(2, "0");
+
+  const pad =
+    n =>
+      String(n)
+      .padStart(
+        2,
+        "0"
+      );
+
 
   return (
+
     "SW-" +
+
     d.getFullYear() +
-    pad(d.getMonth() + 1) +
-    pad(d.getDate()) +
+
+    pad(
+      d.getMonth()+1
+    ) +
+
+    pad(
+      d.getDate()
+    ) +
+
     "-" +
-    pad(d.getHours()) +
-    pad(d.getMinutes()) +
-    pad(d.getSeconds()) +
+
+    pad(
+      d.getHours()
+    ) +
+
+    pad(
+      d.getMinutes()
+    ) +
+
+    pad(
+      d.getSeconds()
+    ) +
+
     "-" +
+
     Math.floor(
-      100 + Math.random() * 900
+      100 +
+      Math.random() *
+      900
     )
+
   );
+
 }
+
 
 /* =========================
    Order Success
-   ========================= */
+========================= */
 
 function showOrderSuccess(
   orderNumber
-) {
+){
 
   const box =
     document.getElementById(
       "orderSuccess"
     );
 
-  if (!box) return;
+
+  if(!box)
+    return;
+
 
   box.innerHTML = `
 
@@ -2308,28 +3405,37 @@ function showOrderSuccess(
     <br><br>
 
     📞 প্রয়োজন হলে
-    <strong>০১৭৩৫-৫৩৩১৯১</strong>
+    <strong>
+      ০১৭৩৫-৫৩৩১৯১
+    </strong>
     নম্বরে যোগাযোগ করুন।
 
   `;
 
-  box.classList.add("show");
+
+  box.classList.add(
+    "show"
+  );
+
 }
+
 
 /* =========================
    Website Order Submit
-   ========================= */
+========================= */
 
-async function submitOrder() {
+async function submitOrder(){
 
-  if (!cart.length) {
+  if(!cart.length){
 
     showToast(
       "আগে কার্টে পণ্য যোগ করুন"
     );
 
     return;
+
   }
+
 
   const name =
     document
@@ -2339,6 +3445,7 @@ async function submitOrder() {
       .value
       .trim();
 
+
   const phone =
     document
       .getElementById(
@@ -2346,6 +3453,7 @@ async function submitOrder() {
       )
       .value
       .trim();
+
 
   const address =
     document
@@ -2355,6 +3463,7 @@ async function submitOrder() {
       .value
       .trim();
 
+
   const note =
     document
       .getElementById(
@@ -2363,18 +3472,21 @@ async function submitOrder() {
       .value
       .trim();
 
-  if (
+
+  if(
     !name ||
     !phone ||
     !address
-  ) {
+  ){
 
     showToast(
       "নাম, মোবাইল ও সম্পূর্ণ ঠিকানা দিন"
     );
 
     return;
+
   }
+
 
   const phoneDigits =
     phone.replace(
@@ -2382,92 +3494,110 @@ async function submitOrder() {
       ""
     );
 
-  if (
+
+  if(
     phoneDigits.length < 10
-  ) {
+  ){
 
     showToast(
       "সঠিক মোবাইল নম্বর দিন"
     );
 
     return;
+
   }
+
 
   const totals =
     cartTotals();
 
+
   const deliveryCharge =
     DELIVERY_CHARGE;
+
 
   const grandTotal =
     totals.sale +
     deliveryCharge;
 
+
   const orderNumber =
     generateOrderNumber();
 
-  /* অর্ডারের প্রতিটি পণ্যের পূর্ণ তথ্য */
+
   const orderItems =
-    cart.map(item => {
+    cart.map(
+      item => {
 
-      const p =
-        productById(item.id);
+        const p =
+          productById(
+            item.id
+          );
 
-      const original =
-        Number(
-          p.originalPrice ??
-          p.original ??
-          0
-        );
 
-      const sale =
-        Number(
-          p.salePrice ??
-          p.sale ??
-          0
-        );
+        const original =
+          Number(
+            p.originalPrice ??
+            p.original ??
+            0
+          );
 
-      return {
 
-        productId:
-          p.id,
+        const sale =
+          Number(
+            p.salePrice ??
+            p.sale ??
+            0
+          );
 
-        name:
-          p.name || "",
 
-        code:
-          p.code || "",
+        return {
 
-        imageUrl:
-          productImage(p),
+          productId:
+            p.id,
 
-        quantity:
-          item.qty,
+          name:
+            p.name || "",
 
-        originalPrice:
-          original,
+          code:
+            p.code || "",
 
-        salePrice:
-          sale,
+          imageUrl:
+            productImage(p),
 
-        lineOriginal:
-          original * item.qty,
+          quantity:
+            item.qty,
 
-        lineDiscount:
-          (original - sale) *
-          item.qty,
+          originalPrice:
+            original,
 
-        lineTotal:
-          sale * item.qty
+          salePrice:
+            sale,
 
-      };
+          lineOriginal:
+            original *
+            item.qty,
 
-    });
+          lineDiscount:
+            (
+              original -
+              sale
+            ) *
+            item.qty,
+
+          lineTotal:
+            sale *
+            item.qty
+
+        };
+
+      }
+    );
+
 
   const orderData = {
 
     orderNumber:
-
       orderNumber,
 
     orderSource:
@@ -2476,11 +3606,11 @@ async function submitOrder() {
     currency:
       "BDT",
 
-    /* Customer */
+
     customerName:
       name,
 
-       customerPhone:
+    customerPhone:
       phone,
 
     customerAddress:
@@ -2488,6 +3618,7 @@ async function submitOrder() {
 
     customerNote:
       note || "",
+
 
     customer: {
 
@@ -2505,14 +3636,14 @@ async function submitOrder() {
 
     },
 
-    /* Products */
+
     items:
       orderItems,
 
     products:
       orderItems,
 
-    /* হিসাব */
+
     originalTotal:
       totals.original,
 
@@ -2531,15 +3662,15 @@ async function submitOrder() {
     grandTotal:
       grandTotal,
 
-    /* Order Status */
+
     status:
       "new",
 
     statusLabel:
       "নতুন অর্ডার",
 
-    /* Tracking */
-    tracking: [
+
+    tracking:[
 
       {
 
@@ -2550,11 +3681,13 @@ async function submitOrder() {
           "নতুন অর্ডার",
 
         at:
-          new Date().toISOString()
+          new Date()
+          .toISOString()
 
       }
 
     ],
+
 
     createdAt:
       serverTimestamp(),
@@ -2564,23 +3697,26 @@ async function submitOrder() {
 
   };
 
+
   const button =
     document.getElementById(
       "orderSubmitBtn"
     );
 
-  try {
 
-    if (button) {
+  try{
 
-      button.disabled = true;
+    if(button){
+
+      button.disabled =
+        true;
 
       button.textContent =
         "⏳ অর্ডার সংরক্ষণ হচ্ছে...";
 
     }
 
-    /* Firestore orders collection */
+
     const orderRef =
       await addDoc(
         collection(
@@ -2590,65 +3726,75 @@ async function submitOrder() {
         orderData
       );
 
+
     console.log(
       "Order saved:",
       orderRef.id
     );
 
-    /* কার্ট খালি */
+
     cart = [];
 
     saveCart();
 
     renderCart();
 
-    /* ফর্ম খালি */
+
     document.getElementById(
       "customerName"
     ).value = "";
+
 
     document.getElementById(
       "customerPhone"
     ).value = "";
 
+
     document.getElementById(
       "customerAddress"
     ).value = "";
+
 
     document.getElementById(
       "customerNote"
     ).value = "";
 
-    /* সফলতার মেসেজ */
+
     showOrderSuccess(
       orderNumber
     );
+
 
     showToast(
       "✅ অর্ডার সফলভাবে গ্রহণ করা হয়েছে"
     );
 
-  } catch (error) {
+
+  }catch(error){
 
     console.error(
       "Order Submit Error:",
       error
     );
 
+
     showToast(
       "❌ অর্ডার করা যায়নি। আবার চেষ্টা করুন।"
     );
+
 
     alert(
       "অর্ডার সংরক্ষণ করা যায়নি।\n\n" +
       "Firebase Firestore Rules পরীক্ষা করুন।"
     );
 
-  } finally {
 
-    if (button) {
+  }finally{
 
-      button.disabled = false;
+    if(button){
+
+      button.disabled =
+        false;
 
       button.textContent =
         "✅ অর্ডার নিশ্চিত করুন";
@@ -2656,11 +3802,13 @@ async function submitOrder() {
     }
 
   }
+
 }
+
 
 /* =========================
    Global Functions
-   ========================= */
+========================= */
 
 window.openCart =
   openCart;
@@ -2710,102 +3858,122 @@ window.shareProduct =
 window.submitOrder =
   submitOrder;
 
+
 /* =========================
    শুরু
-   ========================= */
+========================= */
 
 loadProducts();
 
 </script>
 
+
 <!-- অতিরিক্ত Share / Order CSS -->
+
 <style>
 
-.share-trigger {
-  border: 0;
-  background: #eef4ff;
-  color: var(--blue);
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-weight: 800;
-  cursor: pointer;
+.share-trigger{
+  border:0;
+  background:#eef4ff;
+  color:var(--blue);
+  padding:10px 12px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer
 }
 
-.share-trigger:hover {
-  background: #dfeaff;
+
+.share-trigger:hover{
+  background:#dfeaff
 }
 
-.order-btn {
-  width: 100%;
-  border: 0;
-  border-radius: 10px;
-  background: var(--green);
-  color: #fff;
-  padding: 13px;
-  margin-top: 12px;
-  font-weight: 900;
-  cursor: pointer;
-  font-size: 16px;
+
+/* Order button */
+
+.order-btn{
+  width:100%;
+  border:0;
+  border-radius:10px;
+  background:var(--green);
+  color:#fff;
+  padding:13px;
+  margin-top:12px;
+  font-weight:900;
+  cursor:pointer;
+  font-size:16px;
+  min-height:50px
 }
 
-.order-btn:hover {
-  opacity: .92;
+
+.order-btn:hover{
+  opacity:.92
 }
 
-.order-btn:disabled {
-  background: #9ca3af;
-  cursor: not-allowed;
+
+.order-btn:disabled{
+  background:#9ca3af;
+  cursor:not-allowed
 }
 
-.detail-share {
-  border: 0;
-  border-radius: 10px;
-  padding: 14px 12px;
-  background: #0a5bc4;
-  color: #fff;
-  font-weight: 900;
-  cursor: pointer;
-  font-size: 16px;
+
+.detail-share{
+  border:0;
+  border-radius:10px;
+  padding:14px 12px;
+  background:#0a5bc4;
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  font-size:16px
 }
 
-.order-success {
-  display: none;
-  margin-top: 12px;
-  padding: 15px;
-  border: 1px solid #bbf7d0;
-  background: #f0fdf4;
-  border-radius: 10px;
-  color: #166534;
+
+.order-success{
+  display:none;
+  margin-top:12px;
+  padding:15px;
+  border:1px solid #bbf7d0;
+  background:#f0fdf4;
+  border-radius:10px;
+  color:#166534
 }
 
-.order-success.show {
-  display: block;
+
+.order-success.show{
+  display:block
 }
 
-.delivery-fixed {
-  padding: 11px 12px;
-  background: #fff;
-  border: 1px solid #d8dee8;
-  border-radius: 9px;
-  color: var(--blue);
+
+.delivery-fixed{
+  padding:11px 12px;
+  background:#fff;
+  border:1px solid #d8dee8;
+  border-radius:9px;
+  color:var(--blue)
 }
 
-@media(max-width:700px) {
 
-  .detail-actions {
-    grid-template-columns: 1fr;
+@media(max-width:700px){
+
+  .detail-actions{
+    grid-template-columns:1fr
   }
 
 }
 
 </style>
 
+
 <script>
+
 /* =========================
    PWA Service Worker
-   ========================= */
+========================= */
 
-if ("serviceWorker" in navigator) {
+if(
+  "serviceWorker"
+  in navigator
+){
 
   window.addEventListener(
     "load",
@@ -2816,27 +3984,32 @@ if ("serviceWorker" in navigator) {
           "/swapnochura/sw.js"
         )
 
-        .then(() => {
+        .then(
+          () => {
 
-          console.log(
-            "স্বপ্নচূড়া App Ready"
-          );
+            console.log(
+              "স্বপ্নচূড়া App Ready"
+            );
 
-        })
+          }
+        )
 
-        .catch(error => {
+        .catch(
+          error => {
 
-          console.error(
-            "PWA Service Worker Error:",
-            error
-          );
+            console.error(
+              "PWA Service Worker Error:",
+              error
+            );
 
-        });
+          }
+        );
 
     }
   );
 
 }
+
 </script>
 
 </body>
