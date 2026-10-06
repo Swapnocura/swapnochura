@@ -999,7 +999,7 @@ footer{
 
 }
 
-@media(max-width:850px){
+.finalMenuBtn{}\n#finalMenuBtn{display:none}\n@media(max-width:850px){\n#finalMenuBtn{display:block}
 
   .links{
     display:none
@@ -1175,6 +1175,47 @@ footer{
 
 }
 
+
+/* ===== FINAL VERSION FEATURE LAYER ===== */
+.final-feature-bar{
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr;
+  gap:10px;
+  margin:0 auto 28px;
+  max-width:1180px;
+}
+.final-feature-bar input,.final-feature-bar select{
+  width:100%;padding:12px 13px;border:1px solid #d8dee8;border-radius:11px;background:#fff;outline:none;
+}
+.final-feature-card{
+  background:#fff;border:1px solid var(--border);border-radius:15px;padding:14px;box-shadow:var(--shadow);
+}
+.final-feature-card h3{margin:0 0 7px;color:var(--blue);font-size:16px}
+.final-actions{display:flex;gap:8px;flex-wrap:wrap}
+.final-btn{border:0;border-radius:9px;padding:10px 12px;font-weight:800;cursor:pointer}
+.final-btn.blue{background:var(--blue);color:#fff}.final-btn.green{background:var(--green);color:#fff}
+.final-btn.red{background:var(--red);color:#fff}.final-btn.gray{background:#eef2f7;color:#24324a}
+.final-tracking{max-width:1180px;margin:0 auto 30px;padding:18px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}
+.final-tracking-row{display:grid;grid-template-columns:1fr auto;gap:9px}
+.final-tracking input{padding:12px;border:1px solid #d8dee8;border-radius:10px}
+.final-track-result{margin-top:14px}
+.final-step{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #edf0f4}
+.final-step:last-child{border-bottom:0}
+.final-dot{width:11px;height:11px;border-radius:50%;background:var(--green);margin-top:7px;flex:0 0 auto}
+.final-wishlist-btn{position:absolute;right:10px;top:10px;border:0;border-radius:50%;width:38px;height:38px;background:#fff;box-shadow:0 3px 12px #0002;cursor:pointer;font-size:19px;z-index:3}
+.product{position:relative}
+.final-payment-box{margin-top:12px;padding:12px;border:1px solid #dce5f2;border-radius:11px;background:#f8fbff}
+.final-payment-box label{display:block;font-weight:800;font-size:14px;margin:7px 0 5px}
+.final-payment-box input,.final-payment-box select{width:100%;padding:10px;border:1px solid #d5dce7;border-radius:8px;background:#fff}
+.final-account-modal{position:fixed;inset:0;background:#0008;display:none;align-items:center;justify-content:center;padding:15px;z-index:5000}
+.final-account-modal.show{display:flex}
+.final-account-box{background:#fff;width:min(500px,100%);border-radius:18px;padding:20px;max-height:90vh;overflow:auto}
+.final-account-box h2{margin-top:0;color:var(--blue)}
+.final-account-box input{width:100%;padding:11px;margin:6px 0;border:1px solid #d8dee8;border-radius:9px}
+.final-account-list{margin-top:12px}.final-account-order{padding:10px;border:1px solid #e5e8ef;border-radius:10px;margin:8px 0}
+@media(max-width:850px){.final-feature-bar{grid-template-columns:1fr}.final-tracking{margin-left:15px;margin-right:15px}}
+@media(max-width:520px){.final-tracking-row{grid-template-columns:1fr}.final-btn{width:100%}}
+
 </style>
 </head>
 
@@ -1227,6 +1268,25 @@ type="button"
 onclick="shareWebsite()">
 
 🔗 শেয়ার
+
+</button>
+
+<button
+class="final-btn gray"
+id="finalAccountBtn"
+type="button">
+
+👤 Account
+
+</button>
+
+<button
+class="final-btn gray"
+id="finalMenuBtn"
+type="button"
+aria-label="Menu">
+
+☰
 
 </button>
 
@@ -1357,12 +1417,49 @@ Firestore থেকে পণ্যের নাম, দাম, স্টক ও
 
 <div style="height:28px"></div>
 
+<div class="final-feature-bar">
+
+  <div class="final-feature-card">
+    <h3>🔎 পণ্য খুঁজুন</h3>
+    <input id="finalProductSearch" type="search" placeholder="পণ্যের নাম / কোড লিখুন">
+  </div>
+
+  <div class="final-feature-card">
+    <h3>❤️ Wishlist</h3>
+    <div class="final-actions">
+      <button class="final-btn gray" id="finalWishlistBtn" type="button">Wishlist দেখুন</button>
+    </div>
+  </div>
+
+  <div class="final-feature-card">
+    <h3>📱 দ্রুত যোগাযোগ</h3>
+    <div class="final-actions">
+      <button class="final-btn green" id="finalWhatsappBtn" type="button">WhatsApp</button>
+    </div>
+  </div>
+
+</div>
+
 <div
 class="products"
 id="productGrid">
 </div>
 
 </section>
+
+<div class="final-tracking">
+
+  <h3 style="margin:0;color:var(--blue)">📦 অর্ডার ট্র্যাক করুন</h3>
+  <p style="margin:4px 0 12px;color:var(--muted)">আপনার Order Number লিখে বর্তমান Status ও Tracking History দেখুন।</p>
+
+  <div class="final-tracking-row">
+    <input id="finalTrackingInput" type="text" placeholder="যেমন: SW-20261006-123456-123">
+    <button class="final-btn blue" id="finalTrackingBtn" type="button">Track Order</button>
+  </div>
+
+  <div id="finalTrackResult" class="final-track-result"></div>
+
+</div>
 
 
 <section id="about">
@@ -1655,6 +1752,28 @@ placeholder="অতিরিক্ত মন্তব্য (ঐচ্ছিক)
 </div>
 
 
+<div class="final-payment-box">
+
+  <label for="finalPaymentMethod">💳 Payment Method</label>
+  <select id="finalPaymentMethod">
+    <option value="cod">Cash on Delivery</option>
+    <option value="bkash">bKash</option>
+    <option value="nagad">Nagad</option>
+    <option value="rocket">Rocket</option>
+  </select>
+
+  <label for="finalTransactionId">Transaction ID (অনলাইন পেমেন্ট হলে)</label>
+  <input id="finalTransactionId" type="text" placeholder="bKash/Nagad/Rocket Transaction ID">
+
+  <label for="finalCouponCode">🎟️ Coupon / Promo Code</label>
+  <div style="display:flex;gap:7px">
+    <input id="finalCouponCode" type="text" placeholder="Coupon code" style="flex:1">
+    <button type="button" class="final-btn gray" id="finalApplyCoupon">Apply</button>
+  </div>
+  <div id="finalCouponStatus" style="font-size:13px;margin-top:6px"></div>
+
+</div>
+
 <button
 class="order-btn"
 id="orderSubmitBtn"
@@ -1685,6 +1804,36 @@ class="order-success">
 
 </aside>
 
+</div>
+
+
+<div id="finalAccountModal" class="final-account-modal">
+  <div class="final-account-box">
+    <div style="display:flex;justify-content:space-between;gap:10px">
+      <h2>👤 Customer Account</h2>
+      <button class="final-btn gray" id="finalAccountClose" type="button">✕</button>
+    </div>
+
+    <div id="finalAccountLoggedOut">
+      <p style="color:#667085">Email/password দিয়ে account খুলে Order History ও profile ব্যবহার করতে পারবেন।</p>
+      <input id="finalAuthEmail" type="email" placeholder="Email">
+      <input id="finalAuthPassword" type="password" placeholder="Password (কমপক্ষে 6 অক্ষর)">
+      <div class="final-actions">
+        <button class="final-btn blue" id="finalSignupBtn" type="button">Create Account</button>
+        <button class="final-btn gray" id="finalLoginBtn" type="button">Login</button>
+      </div>
+      <div id="finalAuthMsg" style="margin-top:8px"></div>
+    </div>
+
+    <div id="finalAccountLoggedIn" style="display:none">
+      <div id="finalAccountUser" style="font-weight:800"></div>
+      <div class="final-actions" style="margin-top:10px">
+        <button class="final-btn gray" id="finalHistoryBtn" type="button">📋 Order History</button>
+        <button class="final-btn red" id="finalLogoutBtn" type="button">Logout</button>
+      </div>
+      <div id="finalAccountHistory" class="final-account-list"></div>
+    </div>
+  </div>
 </div>
 
 
@@ -1773,6 +1922,9 @@ null;
 
 let detailQty =
 1;
+
+window.__swapnochuraCoupon = null;
+let finalWishlist = JSON.parse(localStorage.getItem("swapnochuraWishlist") || "[]");
 
 
 /* =========================
@@ -2777,6 +2929,8 @@ function renderCart(){
   const totals =
     cartTotals();
 
+  window.__swapnochuraSubtotal = totals.sale;
+
 
   const deliveryCharge =
     getDeliveryCharge();
@@ -3516,9 +3670,16 @@ async function submitOrder(){
     DELIVERY_CHARGE;
 
 
+  const couponDiscount =
+    Number(window.__swapnochuraCoupon?.discount || 0);
+
   const grandTotal =
-    totals.sale +
-    deliveryCharge;
+    Math.max(
+      0,
+      totals.sale +
+      deliveryCharge -
+      couponDiscount
+    );
 
 
   const orderNumber =
@@ -3551,6 +3712,14 @@ async function submitOrder(){
           );
 
 
+        const cost =
+          Number(
+            p.costPrice ??
+            p.cost ??
+            0
+          );
+
+
         return {
 
           productId:
@@ -3574,6 +3743,9 @@ async function submitOrder(){
           salePrice:
             sale,
 
+          costPrice:
+            cost,
+
           lineOriginal:
             original *
             item.qty,
@@ -3587,6 +3759,14 @@ async function submitOrder(){
 
           lineTotal:
             sale *
+            item.qty,
+
+          lineCost:
+            cost *
+            item.qty,
+
+          lineProfit:
+            (sale - cost) *
             item.qty
 
         };
@@ -3618,6 +3798,9 @@ async function submitOrder(){
 
     customerNote:
       note || "",
+
+    customerEmail:
+      window.__swapnochuraCustomerEmail || "",
 
 
     customer: {
@@ -3658,6 +3841,23 @@ async function submitOrder(){
 
     deliveryCharge:
       deliveryCharge,
+
+    couponCode:
+      window.__swapnochuraCoupon?.code || "",
+
+    couponDiscount:
+      couponDiscount,
+
+    paymentMethod:
+      document.getElementById("finalPaymentMethod")?.value || "cod",
+
+    transactionId:
+      document.getElementById("finalTransactionId")?.value.trim() || "",
+
+    paymentStatus:
+      (document.getElementById("finalPaymentMethod")?.value || "cod") === "cod"
+        ? "cod"
+        : "pending",
 
     grandTotal:
       grandTotal,
@@ -3758,6 +3958,14 @@ async function submitOrder(){
     document.getElementById(
       "customerNote"
     ).value = "";
+
+    if(document.getElementById("finalTransactionId"))
+      document.getElementById("finalTransactionId").value = "";
+    if(document.getElementById("finalCouponCode"))
+      document.getElementById("finalCouponCode").value = "";
+    window.__swapnochuraCoupon = null;
+    if(document.getElementById("finalCouponStatus"))
+      document.getElementById("finalCouponStatus").textContent = "";
 
 
     showOrderSuccess(
@@ -3981,7 +4189,7 @@ if(
 
       navigator.serviceWorker
         .register(
-          "/swapnochura/sw.js"
+          "/sw.js"
         )
 
         .then(
@@ -4010,6 +4218,153 @@ if(
 
 }
 
+</script>
+
+
+<script type="module">
+import { getApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+  getFirestore, collection, query, where, getDocs, doc, getDoc, orderBy, limit
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import {
+  getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, signOut
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+
+const finalDb = getFirestore(getApp());
+const finalAuth = getAuth(getApp());
+
+const esc = v => String(v ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+const taka = v => "৳" + Number(v||0).toLocaleString("bn-BD");
+
+function wishlistSave(){ localStorage.setItem("swapnochuraWishlist", JSON.stringify(finalWishlist)); }
+
+function addWishlistButtons(){
+  document.querySelectorAll("#productGrid .product").forEach(card=>{
+    if(card.querySelector(".final-wishlist-btn")) return;
+    const idMatch = card.getAttribute("onclick")?.match(/openProductDetail\('([^']+)'/);
+    if(!idMatch) return;
+    const id=idMatch[1];
+    const b=document.createElement("button");
+    b.className="final-wishlist-btn";
+    b.type="button";
+    b.textContent=finalWishlist.includes(id)?"❤️":"♡";
+    b.title="Wishlist";
+    b.onclick=(e)=>{
+      e.stopPropagation();
+      const i=finalWishlist.indexOf(id);
+      if(i>=0) finalWishlist.splice(i,1); else finalWishlist.push(id);
+      wishlistSave(); b.textContent=finalWishlist.includes(id)?"❤️":"♡";
+      if(window.showToast) window.showToast(finalWishlist.includes(id)?"❤️ Wishlist-এ যোগ হয়েছে":"Wishlist থেকে সরানো হয়েছে");
+    };
+    card.appendChild(b);
+  });
+}
+
+const productObserver = new MutationObserver(addWishlistButtons);
+productObserver.observe(document.getElementById("productGrid"),{childList:true,subtree:true});
+
+document.getElementById("finalProductSearch")?.addEventListener("input", e=>{
+  const q=e.target.value.trim().toLowerCase();
+  document.querySelectorAll("#productGrid .product").forEach(card=>{
+    card.style.display = !q || card.innerText.toLowerCase().includes(q) ? "" : "none";
+  });
+});
+
+document.getElementById("finalWishlistBtn")?.addEventListener("click",()=>{
+  document.getElementById("finalProductSearch").value="";
+  document.querySelectorAll("#productGrid .product").forEach(card=>{
+    const id=card.getAttribute("onclick")?.match(/openProductDetail\('([^']+)'/)?.[1];
+    card.style.display = id && finalWishlist.includes(id) ? "" : "none";
+  });
+  document.getElementById("products")?.scrollIntoView({behavior:"smooth"});
+});
+
+document.getElementById("finalWhatsappBtn")?.addEventListener("click",()=>{
+  const url="https://wa.me/8801735533191?text="+encodeURIComponent("আসসালামু আলাইকুম, স্বপ্নচূড়া থেকে পণ্য সম্পর্কে জানতে চাই।");
+  window.open(url,"_blank","noopener");
+});
+
+document.getElementById("finalTrackingBtn")?.addEventListener("click", async ()=>{
+  const key=document.getElementById("finalTrackingInput").value.trim();
+  const out=document.getElementById("finalTrackResult");
+  if(!key){out.innerHTML="<div style='color:#c62828'>Order Number দিন।</div>";return;}
+  out.innerHTML="⏳ খোঁজা হচ্ছে...";
+  try{
+    let snap=await getDocs(query(collection(finalDb,"orders"),where("orderNumber","==",key),limit(1)));
+    if(snap.empty) snap=await getDocs(query(collection(finalDb,"orders"),where("id","==",key),limit(1)));
+    if(snap.empty){out.innerHTML="<div style='color:#c62828'>❌ এই Order Number পাওয়া যায়নি।</div>";return;}
+    const o={id:snap.docs[0].id,...snap.docs[0].data()};
+    const history=Array.isArray(o.tracking)?o.tracking:[{status:o.status||"new",label:o.statusLabel||o.status||"নতুন অর্ডার",at:o.updatedAt||o.createdAt}];
+    out.innerHTML=`<div style="padding:12px;background:#f8fbff;border-radius:11px">
+      <b>Order #${esc(o.orderNumber||o.id)}</b><br>
+      Status: <strong>${esc(o.statusLabel||o.status||"new")}</strong><br>
+      মোট: <strong>${taka(o.grandTotal ?? o.total ?? o.subtotal)}</strong>
+      <div style="margin-top:8px">${history.map(x=>`<div class="final-step"><span class="final-dot"></span><div><b>${esc(x.label||x.status)}</b><br><small>${x.at?.toDate ? x.at.toDate().toLocaleString("bn-BD") : esc(x.at||"")}</small></div></div>`).join("")}</div>
+    </div>`;
+  }catch(e){console.error(e);out.innerHTML="<div style='color:#c62828'>❌ Tracking লোড করা যায়নি।</div>";}
+});
+
+document.getElementById("finalApplyCoupon")?.addEventListener("click", async ()=>{
+  const code=document.getElementById("finalCouponCode").value.trim().toUpperCase();
+  const msg=document.getElementById("finalCouponStatus");
+  if(!code){msg.textContent="Coupon code দিন।";return;}
+  msg.textContent="⏳ যাচাই হচ্ছে...";
+  try{
+    const snap=await getDocs(query(collection(finalDb,"coupons"),where("code","==",code),limit(1)));
+    if(snap.empty){window.__swapnochuraCoupon=null;msg.textContent="❌ Coupon পাওয়া যায়নি।";return;}
+    const c={id:snap.docs[0].id,...snap.docs[0].data()};
+    const active=c.active!==false;
+    const expires=c.expiresAt?.toDate ? c.expiresAt.toDate() : (c.expiresAt?new Date(c.expiresAt):null);
+    if(!active || (expires && expires < new Date())){window.__swapnochuraCoupon=null;msg.textContent="❌ Coupon আর কার্যকর নেই।";return;}
+    let discount=Number(c.discountAmount||0);
+    if(c.discountPercent) discount=Math.round((Number(window.__swapnochuraSubtotal||0)*Number(c.discountPercent))/100);
+    window.__swapnochuraCoupon={code,discount};
+    msg.style.color="#147a3f"; msg.textContent="✅ Coupon প্রয়োগ হয়েছে: "+taka(discount);
+  }catch(e){console.error(e);msg.textContent="❌ Coupon যাচাই করা যায়নি।";}
+});
+
+const accountModal=document.getElementById("finalAccountModal");
+document.getElementById("finalAccountBtn")?.addEventListener("click",()=>accountModal?.classList.add("show"));
+document.getElementById("finalAccountClose")?.addEventListener("click",()=>accountModal?.classList.remove("show"));
+document.getElementById("finalSignupBtn")?.addEventListener("click",async()=>{
+  const email=document.getElementById("finalAuthEmail").value.trim(), pass=document.getElementById("finalAuthPassword").value;
+  const m=document.getElementById("finalAuthMsg"); m.textContent="⏳";
+  try{await createUserWithEmailAndPassword(finalAuth,email,pass);m.textContent="✅ Account তৈরি হয়েছে।";}catch(e){m.textContent="❌ "+(e.message||"Account তৈরি করা যায়নি।");}
+});
+document.getElementById("finalLoginBtn")?.addEventListener("click",async()=>{
+  const email=document.getElementById("finalAuthEmail").value.trim(), pass=document.getElementById("finalAuthPassword").value;
+  const m=document.getElementById("finalAuthMsg"); m.textContent="⏳";
+  try{await signInWithEmailAndPassword(finalAuth,email,pass);m.textContent="✅ Login সফল।";}catch(e){m.textContent="❌ "+(e.message||"Login করা যায়নি।");}
+});
+document.getElementById("finalLogoutBtn")?.addEventListener("click",()=>signOut(finalAuth));
+
+async function loadAccountHistory(user){
+  const out=document.getElementById("finalAccountHistory"); out.innerHTML="⏳ Order History লোড হচ্ছে...";
+  try{
+    const snap=await getDocs(query(collection(finalDb,"orders"),where("customerEmail","==",user.email),limit(50)));
+    if(snap.empty){out.innerHTML="<div class='small'>এখনো কোনো Order নেই।</div>";return;}
+    const arr=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>String(b.createdAt?.seconds||0).localeCompare(String(a.createdAt?.seconds||0)));
+    out.innerHTML=arr.map(o=>`<div class="final-account-order"><b>#${esc(o.orderNumber||o.id)}</b><br>Status: ${esc(o.statusLabel||o.status||"new")}<br>মোট: ${taka(o.grandTotal??o.total??o.subtotal)}</div>`).join("");
+  }catch(e){out.innerHTML="<div style='color:#c62828'>Order History লোড করা যায়নি।</div>";}
+}
+onAuthStateChanged(finalAuth,user=>{
+  document.getElementById("finalAccountLoggedOut").style.display=user?"none":"block";
+  document.getElementById("finalAccountLoggedIn").style.display=user?"block":"none";
+  if(user){window.__swapnochuraCustomerEmail=user.email;document.getElementById("finalAccountUser").textContent="Logged in: "+user.email;loadAccountHistory(user);} else {window.__swapnochuraCustomerEmail="";}
+});
+
+document.getElementById("finalHistoryBtn")?.addEventListener("click",()=>finalAuth.currentUser && loadAccountHistory(finalAuth.currentUser));
+
+/* Mobile hamburger */
+document.getElementById("finalMenuBtn")?.addEventListener("click",()=>{
+  const links=document.querySelector(".links");
+  if(!links)return;
+  const open=links.style.display==="flex";
+  links.style.display=open?"none":"flex";
+  links.style.position="absolute"; links.style.top="100%"; links.style.left="0"; links.style.right="0";
+  links.style.background="#fff"; links.style.padding="12px"; links.style.flexDirection="column"; links.style.alignItems="stretch"; links.style.boxShadow="0 8px 20px #0002";
+});
 </script>
 
 </body>
