@@ -1,8 +1,8 @@
-const CACHE_NAME = "swapnochura-v1";
+const CACHE_NAME = "swapnochura-v2";
 const APP_SHELL = [
-  "/swapnochura/",
-  "/swapnochura/index.html",
-  "/swapnochura/manifest.webmanifest"
+  "/",
+  "/index.html",
+  "/manifest.webmanifest"
 ];
 
 self.addEventListener("install", event => {
