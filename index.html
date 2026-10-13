@@ -1249,6 +1249,8 @@ padding-right:15px
 <a href="#products">পণ্য</a>
 <a href="#about">আমাদের সম্পর্কে</a>
 <a href="#contact">যোগাযোগ</a>
+<a href="admin.html">🔐 Admin Panel</a>
+<a href="#products">🛍️ Customer Website</a>
 
 <button class="website-share" type="button" onclick="shareWebsite()">
 🔗 শেয়ার
@@ -1263,7 +1265,7 @@ padding-right:15px
 👤 Account
 </button>
 
-<button class="final-btn gray" id="finalMenuBtn" type="button">
+<button class="final-btn gray" id="finalMenuBtn" type="button" aria-expanded="false" aria-controls="mainLinks" aria-label="মেনু খুলুন">
 ☰
 </button>
 
@@ -3919,8 +3921,9 @@ loadAccountHistory(auth.currentUser);
 document.getElementById("finalMenuBtn")
 .addEventListener("click",function(){
 
-document.getElementById("mainLinks")
-.classList.toggle("open");
+const menu=document.getElementById("mainLinks");
+const isOpen=menu.classList.toggle("open");
+document.getElementById("finalMenuBtn").setAttribute("aria-expanded",String(isOpen));
 
 });
 
@@ -3930,8 +3933,8 @@ document.querySelectorAll("#mainLinks a")
 
 a.addEventListener("click",()=>{
 
-document.getElementById("mainLinks")
-.classList.remove("open");
+document.getElementById("mainLinks").classList.remove("open");
+document.getElementById("finalMenuBtn").setAttribute("aria-expanded","false");
 
 });
 
@@ -3943,6 +3946,7 @@ document.getElementById("mainLinks")
 ========================= */
 
 window.openCart=openCart;
+window.directOrder=directOrder;
 window.closeCart=closeCart;
 window.addToCart=addToCart;
 window.changeQty=changeQty;
