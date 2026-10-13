@@ -150,7 +150,7 @@ background:var(--red);
 margin-left:5px
 }
 
-#finalMenuBtn{display:none; font-size:22px; min-width:42px; padding:8px 10px}
+#finalMenuBtn{display:none; font-size:22px; min-width:42px; padding:8px 10px; flex:0 0 42px; margin-left:0; order:99}
 
 .hero{
 min-height:650px;
@@ -1096,7 +1096,7 @@ transform:translateX(-50%) translateY(0)
 
 @media(max-width:850px){
 
-#finalMenuBtn{display:block; flex-shrink:0; font-size:22px; min-width:42px; padding:8px 10px}
+#finalMenuBtn{display:flex !important; align-items:center; justify-content:center; flex-shrink:0; font-size:22px; min-width:42px; width:42px; padding:8px 6px; margin-left:auto; order:99; position:relative; z-index:25; color:#073b8f; background:#eef2f7; border:0; border-radius:9px}
 
 .links{
 display:none;
@@ -1176,7 +1176,7 @@ height:40px
 }
 
 .navin{gap:5px}
-#finalAccountBtn{padding:7px 8px; font-size:11px; white-space:nowrap}
+#finalAccountBtn{padding:7px 8px; font-size:11px; white-space:nowrap; flex-shrink:1}
 
 .website-share{
 font-size:11px;
@@ -1229,6 +1229,17 @@ padding-right:15px
 
 }
 
+
+@media(max-width:520px){
+  .navin{display:flex; flex-wrap:nowrap; gap:5px; padding:9px 8px}
+  .brand{font-size:16px; gap:5px; flex:0 1 auto; min-width:0}
+  .brand span{white-space:nowrap}
+  .brandlogo{width:32px;height:32px}
+  #finalAccountBtn{display:none}
+  .cart-trigger{flex:0 0 auto; margin-left:auto; padding:7px 8px; font-size:11px}
+  #finalMenuBtn{display:flex !important; flex:0 0 42px; margin-left:0; order:99}
+}
+
 </style>
 </head>
 
@@ -1255,9 +1266,6 @@ padding-right:15px
 <a href="#about">আমাদের সম্পর্কে</a>
 <a href="#contact">যোগাযোগ</a>
 
-<button class="website-share" type="button" onclick="shareWebsite()">
-🔗 শেয়ার
-</button>
 <a href="#products">🗂️ ক্যাটাগরি</a>
 <a href="#products">🏷️ ব্র্যান্ড</a>
 <a href="#products">🛍️ সব পণ্য</a>
