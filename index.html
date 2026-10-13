@@ -358,6 +358,18 @@ cursor:pointer;
 margin-top:auto
 }
 
+.direct-order{
+width:100%;
+border:1px solid var(--blue);
+border-radius:10px;
+background:#fff;
+color:var(--blue);
+padding:10px 14px;
+font-weight:800;
+cursor:pointer;
+margin-top:8px
+}
+.direct-order:disabled{background:#f3f4f6;color:#9ca3af;border-color:#d1d5db;cursor:not-allowed}
 .add-cart:disabled{
 background:#9ca3af;
 cursor:not-allowed
@@ -1621,6 +1633,10 @@ Nagad
 Rocket
 </option>
 
+<option value="online_gateway">
+Online Payment (Gateway) — সেটআপ প্রয়োজন
+</option>
+
 </select>
 
 <div id="finalPaymentInfo"></div>
@@ -2146,6 +2162,14 @@ ${stock?"":"disabled"}>
 
 </button>
 
+<button
+class="direct-order"
+type="button"
+onclick="event.stopPropagation();directOrder('${esc(p.id)}')"
+${stock?"":"disabled"}>
+⚡ ${stock?"অর্ডার করুন":"স্টক নেই"}
+</button>
+
 </div>
 
 </article>
@@ -2186,6 +2210,24 @@ saveCart();
 renderCart();
 
 showToast("🛒 কার্টে যোগ করা হয়েছে");
+
+}
+
+/* Direct order: select only the chosen product and open checkout. */
+function directOrder(id){
+
+const p=productById(id);
+
+if(!p||!productStock(p)){
+showToast("এই পণ্যটি বর্তমানে স্টকে নেই");
+return;
+}
+
+cart=[{id,qty:1}];
+saveCart();
+renderCart();
+openCart();
+showToast("⚡ পণ্যটি অর্ডার ফর্মে নেওয়া হয়েছে");
 
 }
 
@@ -2835,6 +2877,16 @@ return;
 
 }
 
+if(method==="online_gateway"){
+box.style.display="block";
+box.innerHTML=`
+<strong>💳 Online Payment Gateway</strong><br>
+অনলাইন গেটওয়ে অপশন যোগ করা হয়েছে, তবে এখনো পেমেন্ট গেটওয়ে সংযুক্ত করা হয়নি।
+SSLCommerz/aamarPay-এর মার্চেন্ট অ্যাকাউন্ট ও নিরাপদ সার্ভার-সাইড সেটআপ সম্পন্ন না হওয়া পর্যন্ত এই মাধ্যমে পেমেন্ট নেওয়া যাবে না।
+<br><small>আপাতত Cash on Delivery অথবা বিকাশ/নগদ/রকেট ব্যবহার করুন।</small>`;
+return;
+}
+
 const label=
 method==="bkash"
 ?"bKash"
@@ -2986,6 +3038,11 @@ couponDiscount
 const paymentMethod=
 document.getElementById("finalPaymentMethod")
 .value;
+
+if(paymentMethod==="online_gateway"){
+showToast("অনলাইন গেটওয়ে এখনো সেটআপ করা হয়নি। আপাতত অন্য পেমেন্ট মাধ্যম বেছে নিন।");
+return;
+}
 
 if(paymentMethod!=="cod"){
 

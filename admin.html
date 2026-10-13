@@ -574,6 +574,17 @@ hr{
 .final-admin-badge.pending{background:#fff7df;color:#996900}.final-admin-badge.verified{background:#eaf8ef;color:#147a3f}.final-admin-badge.rejected{background:#fff0f0;color:#b4232e}
 @media(max-width:800px){.final-admin-grid{grid-template-columns:repeat(2,1fr)}}
 
+
+/* Mobile-friendly admin menu and password settings */
+.admin-brand-row{display:flex;align-items:center;gap:10px;min-width:0}
+.admin-menu-toggle{display:none;min-width:44px;font-size:20px;padding:8px 12px}
+.admin-quick-menu{position:sticky;top:0;z-index:1000;background:#fff;border:1px solid #e5e8ef;border-radius:12px;padding:10px;margin:8px auto;max-width:1100px;box-shadow:0 6px 20px #17203312;gap:8px;flex-wrap:wrap}
+.admin-quick-menu:not([hidden]){display:flex}
+.admin-quick-menu a{color:#173b75;text-decoration:none;font-weight:700;padding:10px 12px;border-radius:9px;background:#f4f7fc}
+.admin-quick-menu a:focus,.admin-quick-menu a:hover{background:#e7efff}
+.admin-security-card{margin:16px auto;scroll-margin-top:16px}
+@media(max-width:700px){#appHeader .header-inner{gap:8px;align-items:center}.admin-brand-row{flex:1}.admin-brand-row h1{font-size:16px;line-height:1.25;margin:0}.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center}#logoutBtn{white-space:nowrap}.admin-quick-menu{margin:8px 12px;flex-direction:column}.admin-quick-menu a{width:100%}}
+
 </style>
 </head>
 
@@ -583,7 +594,10 @@ hr{
 
   <div class="header-inner">
 
-    <h1>🔐 স্বপ্নচূড়া Admin Panel</h1>
+    <div class="admin-brand-row">
+      <button class="secondary admin-menu-toggle" id="adminMenuToggle" type="button" aria-expanded="false" aria-controls="adminQuickMenu" aria-label="মেনু খুলুন">☰</button>
+      <h1>🔐 স্বপ্নচূড়া Admin Panel</h1>
+    </div>
 
     <button class="secondary" id="logoutBtn">
       Logout
@@ -593,6 +607,13 @@ hr{
 
 </header>
 
+<nav id="adminQuickMenu" class="admin-quick-menu" aria-label="Admin quick menu" hidden>
+  <a href="#adminApp" data-admin-jump="adminApp">🏠 Dashboard</a>
+  <a href="#salesDashboard" data-admin-jump="salesDashboard">📊 Sales Report</a>
+  <a href="#productSection" data-admin-jump="productSection">📦 Products</a>
+  <a href="#orderSection" data-admin-jump="orderSection">🧾 Orders</a>
+  <a href="#adminSecuritySettings" data-admin-jump="adminSecuritySettings">🔐 Password Settings</a>
+</nav>
 
 <div id="loginScreen" class="container">
 
@@ -741,7 +762,7 @@ hr{
   </div>
 
 
-  <div class="sales-dashboard card">
+  <div class="sales-dashboard card" id="salesDashboard">
     <div class="section-title">
       <div>
         <h2>📊 বেচাকেনার হিসাব</h2>
@@ -815,7 +836,7 @@ hr{
     <div class="final-admin-stat">🎟️ Active Coupons <b id="finalCouponCount">০</b><span class="final-admin-mini">Coupon collection</span></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="productSection">
     <div class="section-title">
       <h2>🎟️ Coupon / Promo Code</h2>
       <button class="secondary" id="finalCouponRefresh" type="button">↻ Refresh</button>
@@ -833,7 +854,7 @@ hr{
   </div>
 
 
-  <div class="card">
+  <div class="card" id="orderSection">
 
     <div class="section-title">
 
@@ -1262,6 +1283,18 @@ hr{
 </div>
 
 
+<section id="adminSecuritySettings" class="card admin-security-card" style="display:none">
+  <h2>🔐 Admin Password পরিবর্তন</h2>
+  <p class="small">Firebase Authentication-এর বর্তমান Admin account-এর password পরিবর্তন হবে। বর্তমান password দিয়ে পুনরায় যাচাই করতে হবে।</p>
+  <form id="adminPasswordForm" class="form-grid">
+    <div><label for="adminCurrentPassword">বর্তমান Password</label><input id="adminCurrentPassword" type="password" autocomplete="current-password" required></div>
+    <div><label for="adminNewPassword">নতুন Password (কমপক্ষে ৬ অক্ষর)</label><input id="adminNewPassword" type="password" minlength="6" autocomplete="new-password" required></div>
+    <div><label for="adminConfirmPassword">নতুন Password আবার লিখুন</label><input id="adminConfirmPassword" type="password" minlength="6" autocomplete="new-password" required></div>
+    <div class="actions"><button class="primary" type="submit">Password পরিবর্তন করুন</button><button class="secondary" id="hideAdminSecurity" type="button">বন্ধ করুন</button></div>
+  </form>
+  <p id="adminPasswordMessage" class="small" role="status"></p>
+</section>
+
 <div
   id="toast"
   class="toast"
@@ -1462,6 +1495,45 @@ function hideLoginMessages(){
 
 }
 
+
+// Admin mobile menu + secure password change
+(()=>{
+  const toggle=document.getElementById("adminMenuToggle");
+  const menu=document.getElementById("adminQuickMenu");
+  const security=document.getElementById("adminSecuritySettings");
+  if(toggle&&menu){
+    toggle.addEventListener("click",()=>{const opening=menu.hidden;menu.hidden=!opening;toggle.setAttribute("aria-expanded",String(opening));});
+    menu.querySelectorAll("[data-admin-jump]").forEach(link=>link.addEventListener("click",e=>{
+      e.preventDefault();const targetId=link.getAttribute("data-admin-jump");
+      if(targetId==="adminSecuritySettings"){if(security)security.style.display="block";}
+      else {const target=document.getElementById(targetId);if(target)target.scrollIntoView({behavior:"smooth",block:"start"});}
+      menu.hidden=true;toggle.setAttribute("aria-expanded","false");
+    }));
+  }
+  document.getElementById("hideAdminSecurity")?.addEventListener("click",()=>{if(security)security.style.display="none";});
+  document.getElementById("adminPasswordForm")?.addEventListener("submit",async e=>{
+    e.preventDefault();const message=document.getElementById("adminPasswordMessage");
+    const current=document.getElementById("adminCurrentPassword").value;
+    const next=document.getElementById("adminNewPassword").value;
+    const confirm=document.getElementById("adminConfirmPassword").value;
+    const user=auth&&auth.currentUser;
+    if(!user||!user.email){message.textContent="আগে Admin হিসেবে Login করুন।";return;}
+    if(next.length<6){message.textContent="নতুন password কমপক্ষে ৬ অক্ষরের হতে হবে।";return;}
+    if(next!==confirm){message.textContent="নতুন দুইটি password মিলছে না।";return;}
+    if(next===current){message.textContent="নতুন password বর্তমান password থেকে আলাদা দিন।";return;}
+    try{
+      message.textContent="Password পরিবর্তন হচ্ছে...";
+      const credential=firebase.auth.EmailAuthProvider.credential(user.email,current);
+      await user.reauthenticateWithCredential(credential);
+      await user.updatePassword(next);
+      document.getElementById("adminPasswordForm").reset();
+      message.textContent="✅ Password সফলভাবে পরিবর্তন হয়েছে। নতুন password নিরাপদে রাখুন।";
+    }catch(err){
+      console.error("Admin password update failed",err);
+      message.textContent=err.code==="auth/wrong-password"||err.code==="auth/invalid-credential"?"বর্তমান password সঠিক নয়।":"Password পরিবর্তন হয়নি: "+(err.message||"আবার চেষ্টা করুন।");
+    }
+  });
+})();
 
 /* =========================================
    START FIREBASE
