@@ -150,7 +150,7 @@ background:var(--red);
 margin-left:5px
 }
 
-#finalMenuBtn{display:none}
+#finalMenuBtn{display:none; font-size:22px; min-width:42px; padding:8px 10px}
 
 .hero{
 min-height:650px;
@@ -1096,7 +1096,7 @@ transform:translateX(-50%) translateY(0)
 
 @media(max-width:850px){
 
-#finalMenuBtn{display:block}
+#finalMenuBtn{display:block; flex-shrink:0; font-size:22px; min-width:42px; padding:8px 10px}
 
 .links{
 display:none;
@@ -1175,6 +1175,9 @@ width:40px;
 height:40px
 }
 
+.navin{gap:5px}
+#finalAccountBtn{padding:7px 8px; font-size:11px; white-space:nowrap}
+
 .website-share{
 font-size:11px;
 padding:8px
@@ -1182,7 +1185,9 @@ padding:8px
 
 .cart-trigger{
 font-size:12px;
-padding:8px
+padding:7px 8px;
+white-space:nowrap;
+flex-shrink:0
 }
 
 }
@@ -1253,23 +1258,27 @@ padding-right:15px
 <button class="website-share" type="button" onclick="shareWebsite()">
 🔗 শেয়ার
 </button>
+<a href="#products">🗂️ ক্যাটাগরি</a>
+<a href="#products">🏷️ ব্র্যান্ড</a>
+<a href="#products">🛍️ সব পণ্য</a>
+<a href="#products">🔥 জনপ্রিয় পণ্য</a>
+<a href="#products">❤️ Wishlist</a>
+<a href="#contact">☎️ যোগাযোগ</a>
+<button class="website-share" type="button" onclick="openCart(); document.getElementById('mainLinks').classList.remove('open'); document.getElementById('finalMenuBtn').setAttribute('aria-expanded','false');">🛒 কার্ট খুলুন</button>
+<button class="website-share" type="button" onclick="shareWebsite()">📤 ওয়েবসাইট শেয়ার করুন</button>
 </div>
-
-<button class="website-share" type="button" onclick="shareWebsite()">
-🔗
-</button>
 
 <button class="final-btn gray" id="finalAccountBtn" type="button">
 👤 Account
 </button>
 
-<button class="final-btn gray" id="finalMenuBtn" type="button" aria-expanded="false" aria-controls="mainLinks" aria-label="মেনু খুলুন">
-☰
-</button>
-
 <button class="cart-trigger" type="button" onclick="openCart()">
 🛒 কার্ট
 <span id="cartCount" class="cart-count">০</span>
+</button>
+
+<button class="final-btn gray" id="finalMenuBtn" type="button" aria-expanded="false" aria-controls="mainLinks" aria-label="মেনু খুলুন">
+☰
 </button>
 
 </div>
