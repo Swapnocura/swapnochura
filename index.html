@@ -1242,8 +1242,8 @@ padding-right:15px
   #mainLinks.links{display:none !important; position:absolute; top:100%; left:0; right:0; width:100%; max-height:75vh; overflow-y:auto; box-sizing:border-box; background:#fff; padding:12px; flex-direction:column; align-items:stretch; gap:0; z-index:1000; box-shadow:0 8px 20px #0003}
   #mainLinks.links.open{display:flex !important; visibility:visible; opacity:1}
   #mainLinks a,#mainLinks button{display:block; width:100%; box-sizing:border-box; text-align:left; padding:13px 12px; border-bottom:1px solid #eee; border-radius:0}
-  #finalAccountBtn{display:none !important}
-  .cart-trigger{display:flex; align-items:center; flex:0 0 auto; margin-left:auto; padding:7px 8px; font-size:11px; white-space:nowrap}
+  #finalAccountBtn{display:flex !important; align-items:center; flex:0 0 auto; margin-left:auto; padding:7px 8px; font-size:11px; white-space:nowrap}
+  .cart-trigger{display:flex; align-items:center; flex:0 0 auto; margin-left:0; padding:7px 8px; font-size:11px; white-space:nowrap}
   #finalMenuBtn{display:flex !important; visibility:visible; opacity:1; align-items:center; justify-content:center; flex:0 0 42px; width:42px; min-width:42px; height:40px; margin-left:0; order:99; position:relative; z-index:1001; padding:6px; color:#073b8f; background:#eef2f7; border:0; border-radius:9px}
 }
 
@@ -1252,8 +1252,8 @@ padding-right:15px
   .brand{font-size:16px; gap:5px; flex:0 1 auto; min-width:0}
   .brand span{white-space:nowrap}
   .brandlogo{width:32px;height:32px}
-  #finalAccountBtn{display:none}
-  .cart-trigger{flex:0 0 auto; margin-left:auto; padding:7px 8px; font-size:11px}
+  #finalAccountBtn{display:flex !important; align-items:center; flex:0 0 auto; padding:7px 8px; font-size:11px; white-space:nowrap}
+  .cart-trigger{flex:0 0 auto; margin-left:0; padding:7px 8px; font-size:11px}
   #finalMenuBtn{display:flex !important; visibility:visible; opacity:1; flex:0 0 42px; margin-left:0; order:99}
 }
 
@@ -1330,7 +1330,8 @@ padding-right:15px
 <button class="website-share" type="button" id="menuAccountBtn">👤 অ্যাকাউন্ট লগইন / রেজিস্টার</button>
 <button class="website-share" type="button" onclick="openCart(); document.getElementById('mainLinks').classList.remove('open'); document.getElementById('finalMenuBtn').setAttribute('aria-expanded','false');">🛒 কার্ট খুলুন</button>
 <button class="website-share" type="button" onclick="shareWebsite()">📤 ওয়েবসাইট শেয়ার করুন</button>
-<button class="website-share" id="installAppBtn" type="button" onclick="installWebsiteApp()">📲 অ্যাপ ইনস্টল করুন</button>
+<button class="website-share" id="installAppBtn" type="button" onclick="installWebsiteApp()">📲 অ্যাপ ইনস্টল</button>
+<button class="website-share" id="homeShortcutBtn" type="button" onclick="installHomeShortcut()">🏠 হোম শর্টকাট</button>
 </div>
 
 <button class="final-btn gray" id="finalAccountBtn" type="button">
@@ -4074,9 +4075,15 @@ window.installWebsiteApp = async function(){
     deferredInstallPrompt.prompt();
     await deferredInstallPrompt.userChoice;
     deferredInstallPrompt = null;
-    return;
   }
-  alert("এই ওয়েবসাইটে সরাসরি APK ফাইল ডাউনলোড করা নেই। ফোনে অ্যাপের মতো ইনস্টল করতে Chrome-এর ⋮ মেনু খুলে ‘Install app’ বা ‘Add to Home screen’ চাপুন। ইনস্টল প্রম্পট পাওয়া গেলে বোতামটি সেটি খুলবে।");
+};
+window.installHomeShortcut = async function(){
+  // Browsers expose the same native PWA install prompt for app install and home-screen shortcut.
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+  }
 };
 </script>
 
