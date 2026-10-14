@@ -579,13 +579,13 @@ hr{
 
 /* Mobile-friendly admin menu and password settings */
 .admin-brand-row{display:flex;align-items:center;gap:10px;min-width:0}
-.admin-menu-toggle{display:none;min-width:44px;font-size:20px;padding:8px 12px}
+.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:44px;font-size:20px;padding:8px 12px;flex-shrink:0}
 .admin-quick-menu{position:sticky;top:0;z-index:1000;background:#fff;border:1px solid #e5e8ef;border-radius:12px;padding:10px;margin:8px auto;max-width:1100px;box-shadow:0 6px 20px #17203312;gap:8px;flex-wrap:wrap}
 .admin-quick-menu:not([hidden]){display:flex}
 .admin-quick-menu a{color:#173b75;text-decoration:none;font-weight:700;padding:10px 12px;border-radius:9px;background:#f4f7fc}
 .admin-quick-menu a:focus,.admin-quick-menu a:hover{background:#e7efff}
 .admin-security-card{margin:16px auto;scroll-margin-top:16px}
-@media(max-width:700px){#appHeader .header-inner{gap:8px;align-items:center}.admin-brand-row{flex:1}.admin-brand-row h1{font-size:16px;line-height:1.25;margin:0}.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center}#logoutBtn{white-space:nowrap}.admin-quick-menu{margin:8px 12px;flex-direction:column}.admin-quick-menu a{width:100%}}
+@media(max-width:700px){#appHeader .header-inner{gap:8px;align-items:center}.admin-brand-row{flex:1;min-width:0}.admin-brand-row h1{font-size:16px;line-height:1.25;margin:0}.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center}#logoutBtn{white-space:nowrap}.admin-quick-menu{margin:8px 12px;flex-direction:column}.admin-quick-menu a{width:100%}}
 
 </style>
 </head>
@@ -1514,14 +1514,15 @@ function hideLoginMessages(){
   const security=document.getElementById("adminSecuritySettings");
   const views={home:["adminDashboardIntro","adminStats","adminSummary"],sales:["salesDashboard"],products:["productSection"],orders:["customerOrdersSection"],coupon:["couponSection"],settings:["adminSecuritySettings"]};
   function showView(view){
+    if(!views[view]) view="home";
     const allowed=new Set(views[view]||views.home);
     document.querySelectorAll("[data-admin-view]").forEach(el=>{el.style.display=allowed.has(el.id)?"":"none";});
     const intro=document.getElementById("adminDashboardIntro");
     const stats=document.getElementById("adminStats");
     const summary=document.getElementById("adminSummary");
-    if(intro)intro.style.display=allowed.has("adminDashboardIntro")?"":"none";
-    if(stats)stats.style.display=allowed.has("adminStats")?"":"none";
-    if(summary)summary.style.display=allowed.has("adminSummary")?"":"none";
+    if(intro)intro.style.display=allowed.has("adminDashboardIntro")?"block":"none";
+    if(stats)stats.style.display=allowed.has("adminStats")?"grid":"none";
+    if(summary)summary.style.display=allowed.has("adminSummary")?"grid":"none";
     if(security&&view==="settings")security.style.display="block";
     if(view!=="settings"&&security)security.style.display="none";
     if(view==="newOrders"){
@@ -1620,6 +1621,10 @@ function startFirebase(){
 
             await loadOrders();
             if(window.showAdminView) window.showAdminView("home");
+            const adminMenu=document.getElementById("adminQuickMenu");
+            const adminMenuToggle=document.getElementById("adminMenuToggle");
+            if(adminMenu)adminMenu.hidden=true;
+            if(adminMenuToggle)adminMenuToggle.setAttribute("aria-expanded","false");
 
           }
 
