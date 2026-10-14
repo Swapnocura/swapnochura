@@ -581,11 +581,11 @@ hr{
 .admin-brand-row{display:flex;align-items:center;gap:10px;min-width:0}
 .admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:44px;font-size:20px;padding:8px 12px;flex-shrink:0}
 .admin-quick-menu{position:sticky;top:0;z-index:1000;background:#fff;border:1px solid #e5e8ef;border-radius:12px;padding:10px;margin:8px auto;max-width:1100px;box-shadow:0 6px 20px #17203312;gap:8px;flex-wrap:wrap}
-.admin-quick-menu:not([hidden]){display:flex}
-.admin-quick-menu a{color:#173b75;text-decoration:none;font-weight:700;padding:10px 12px;border-radius:9px;background:#f4f7fc}
+.admin-quick-menu:not([hidden]){display:flex;flex-direction:column;align-items:stretch}
+.admin-quick-menu a{display:block;width:100%;box-sizing:border-box;color:#173b75;text-decoration:none;font-weight:700;padding:10px 12px;border-radius:9px;background:#f4f7fc}
 .admin-quick-menu a:focus,.admin-quick-menu a:hover{background:#e7efff}
 .admin-security-card{margin:16px auto;scroll-margin-top:16px}
-@media(max-width:700px){#appHeader .header-inner{gap:8px;align-items:center}.admin-brand-row{flex:1;min-width:0}.admin-brand-row h1{font-size:16px;line-height:1.25;margin:0}.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center}#logoutBtn{white-space:nowrap}.admin-quick-menu{margin:8px 12px;flex-direction:column}.admin-quick-menu a{width:100%}}
+@media(max-width:700px){#appHeader .header-inner{gap:8px;align-items:center}.admin-brand-row{flex:1;min-width:0}.admin-brand-row h1{font-size:16px;line-height:1.25;margin:0}.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center}#logoutBtn{white-space:nowrap}.admin-quick-menu{margin:8px 12px;flex-direction:column;align-items:stretch}.admin-quick-menu a{width:100%}}
 
 </style>
 </head>
@@ -1545,6 +1545,53 @@ function hideLoginMessages(){
   }
   document.querySelectorAll("[data-stat-view]").forEach(card=>card.addEventListener("click",()=>showView(card.getAttribute("data-stat-view"))));
   document.getElementById("hideAdminSecurity")?.addEventListener("click",()=>showView("home"));
+
+  // Keep the custom display username on this browser and show it on login.
+  const usernameKey="swapnochura_admin_display_username";
+  const usernameInput=document.getElementById("adminNewUsername");
+  const loginUsername=document.getElementById("loginDisplayUsername");
+  function refreshDisplayUsername(){
+    const saved=(localStorage.getItem(usernameKey)||"").trim();
+    if(loginUsername) loginUsername.textContent=saved ? ("Admin: "+saved) : "";
+    if(usernameInput && !usernameInput.value) usernameInput.value=saved;
+  }
+  refreshDisplayUsername();
+  document.getElementById("adminUsernameForm")?.addEventListener("submit",e=>{
+    e.preventDefault();
+    const value=(usernameInput?.value||"").trim();
+    const message=document.getElementById("adminUsernameMessage");
+    if(!value){if(message)message.textContent="একটি Username লিখুন।";return;}
+    localStorage.setItem(usernameKey,value);
+    refreshDisplayUsername();
+    if(message)message.textContent="✅ Username সংরক্ষণ হয়েছে এবং লগইন পেজে দেখাবে।";
+  });
+
+  document.getElementById("adminPasswordForm")?.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const message=document.getElementById("adminPasswordMessage");
+    const current=document.getElementById("adminCurrentPassword").value;
+    const next=document.getElementById("adminNewPassword").value;
+    const confirm=document.getElementById("adminConfirmPassword").value;
+    const user=window.auth?.currentUser;
+    const say=t=>{if(message)message.textContent=t;};
+    if(!user || !user.email){say("আগে Admin হিসেবে লগইন করুন।");return;}
+    if(next.length<6){say("নতুন Password কমপক্ষে ৬ অক্ষরের হতে হবে।");return;}
+    if(next!==confirm){say("নতুন Password দুবার একইভাবে লিখুন।");return;}
+    if(next===current){say("নতুন Password আগের Password থেকে আলাদা দিন।");return;}
+    try{
+      const credential=firebase.auth.EmailAuthProvider.credential(user.email,current);
+      await user.reauthenticateWithCredential(credential);
+      await user.updatePassword(next);
+      document.getElementById("adminCurrentPassword").value="";
+      document.getElementById("adminNewPassword").value="";
+      document.getElementById("adminConfirmPassword").value="";
+      say("✅ Firebase Admin Password সফলভাবে পরিবর্তন হয়েছে।");
+    }catch(err){
+      console.error("Admin password update failed",err);
+      const messages={"auth/wrong-password":"বর্তমান Password সঠিক নয়।","auth/invalid-credential":"বর্তমান Password সঠিক নয়।","auth/weak-password":"নতুন Password আরও শক্তিশালী দিন।","auth/requires-recent-login":"নিরাপত্তার জন্য Logout করে আবার Login করে চেষ্টা করুন।"};
+      say("❌ "+(messages[err.code]||err.message||"Password পরিবর্তন করা যায়নি। Firebase Authentication সেটিংস পরীক্ষা করুন।"));
+    }
+  });
 })();
 
 /* =========================================
@@ -1573,6 +1620,7 @@ function startFirebase(){
 
     auth =
       firebase.auth();
+    window.auth = auth;
 
     db =
       firebase.firestore();
