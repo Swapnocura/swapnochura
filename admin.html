@@ -219,12 +219,14 @@ button:disabled{
 }
 
 .stat{
+  border:0;cursor:pointer;text-align:left;font:inherit;color:inherit;width:100%;
   background:#fff;
   border-radius:15px;
   padding:17px;
   box-shadow:0 3px 15px #1720330d;
 }
 
+.stat-clickable:hover,.stat-clickable:focus{outline:2px solid #7aa7ff;transform:translateY(-1px)}
 .stat b{
   display:block;
   font-size:27px;
@@ -577,15 +579,13 @@ hr{
 
 /* Mobile-friendly admin menu and password settings */
 .admin-brand-row{display:flex;align-items:center;gap:10px;min-width:0}
-.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:44px;font-size:20px;padding:8px 12px;flex-shrink:0}
+.admin-menu-toggle{display:none;min-width:44px;font-size:20px;padding:8px 12px}
 .admin-quick-menu{position:sticky;top:0;z-index:1000;background:#fff;border:1px solid #e5e8ef;border-radius:12px;padding:10px;margin:8px auto;max-width:1100px;box-shadow:0 6px 20px #17203312;gap:8px;flex-wrap:wrap}
 .admin-quick-menu:not([hidden]){display:flex}
 .admin-quick-menu a{color:#173b75;text-decoration:none;font-weight:700;padding:10px 12px;border-radius:9px;background:#f4f7fc}
 .admin-quick-menu a:focus,.admin-quick-menu a:hover{background:#e7efff}
 .admin-security-card{margin:16px auto;scroll-margin-top:16px}
-@media(max-width:700px){#appHeader .header-inner{gap:8px;align-items:center}.admin-brand-row{flex:1}.admin-brand-row h1{font-size:16px;line-height:1.25;margin:0}#logoutBtn{white-space:nowrap}.admin-quick-menu{margin:8px 12px;flex-direction:column}.admin-quick-menu a{width:100%}}
-.admin-menu-managed-hidden{display:none!important}
-.admin-menu-settings-title{width:100%;font-weight:800;color:#475467;padding:6px 10px 0}
+@media(max-width:700px){#appHeader .header-inner{gap:8px;align-items:center}.admin-brand-row{flex:1}.admin-brand-row h1{font-size:16px;line-height:1.25;margin:0}.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center}#logoutBtn{white-space:nowrap}.admin-quick-menu{margin:8px 12px;flex-direction:column}.admin-quick-menu a{width:100%}}
 
 </style>
 </head>
@@ -609,16 +609,14 @@ hr{
 
 </header>
 
-<nav id="adminQuickMenu" class="admin-quick-menu" aria-label="Admin menu" hidden>
-  <a href="#adminApp" data-admin-jump="adminApp">🏠 Admin Home / Dashboard</a>
-  <a href="#salesDashboard" data-admin-jump="salesDashboard">📊 Sales Report</a>
-  <a href="#productSection" data-admin-jump="productSection" data-show-managed="productSection">📦 Product Management</a>
-  <a href="#customerOrdersSection" data-admin-jump="customerOrdersSection" data-show-managed="customerOrdersSection">🛒 Customer Orders</a>
-  <a href="index.html#account">👤 Customer Account / Login</a>
+<nav id="adminQuickMenu" class="admin-quick-menu" aria-label="Admin quick menu" hidden>
+  <a href="#adminApp" data-admin-jump="home">🏠 Admin Home</a>
+  <a href="#salesDashboard" data-admin-jump="sales">📊 Sales Report</a>
+  <a href="#productSection" data-admin-jump="products">📦 Product Management</a>
+  <a href="#customerOrdersSection" data-admin-jump="orders">🧾 Customer Orders</a>
+  <a href="#couponSection" data-admin-jump="coupon">🎟️ Coupon / Promo</a>
+  <a href="#adminSecuritySettings" data-admin-jump="settings">👤 Username / Password সেটিংস</a>
   <a href="index.html">🛍️ Customer Website</a>
-  <div class="admin-menu-settings-title">⚙️ Settings</div>
-  <a href="#adminSecuritySettings" data-admin-jump="adminSecuritySettings">👤 Username পরিবর্তন</a>
-  <a href="#adminSecuritySettings" data-admin-jump="adminSecuritySettings">🔐 Password পরিবর্তন</a>
 </nav>
 
 <div id="loginScreen" class="container">
@@ -629,9 +627,8 @@ hr{
       🔐 স্বপ্নচূড়া Admin Panel
     </h2>
 
-    <p class="small">
-      শুধু অনুমোদিত Admin account ব্যবহার করুন।
-    </p>
+    <p class="small">শুধু অনুমোদিত Admin account ব্যবহার করুন।</p>
+    <p class="small" id="loginDisplayUsername" style="font-weight:700"></p>
 
     <label for="email">
       Email
@@ -681,7 +678,7 @@ hr{
 
 <div id="adminApp" class="container" style="display:none">
 
-  <div class="card">
+  <div class="card" id="adminDashboardIntro">
 
     <div class="topbar">
 
@@ -723,9 +720,9 @@ hr{
   </div>
 
 
-  <div class="stats">
+  <div class="stats" id="adminStats">
 
-    <div class="stat">
+    <button class="stat stat-clickable" type="button" data-stat-view="products" aria-label="Product তালিকা দেখুন">
 
       মোট Product
 
@@ -733,7 +730,7 @@ hr{
         0
       </b>
 
-    </div>
+    </button>
 
     <div class="stat">
 
@@ -745,7 +742,7 @@ hr{
 
     </div>
 
-    <div class="stat">
+    <button class="stat stat-clickable" type="button" data-stat-view="orders" aria-label="সব Order দেখুন">
 
       মোট Order
 
@@ -753,9 +750,9 @@ hr{
         0
       </b>
 
-    </div>
+    </button>
 
-    <div class="stat">
+    <button class="stat stat-clickable" type="button" data-stat-view="newOrders" aria-label="শুধু নতুন Order দেখুন">
 
       নতুন Order
 
@@ -763,12 +760,12 @@ hr{
         0
       </b>
 
-    </div>
+    </button>
 
   </div>
 
 
-  <div class="sales-dashboard card" id="salesDashboard">
+  <div class="sales-dashboard card" id="salesDashboard" data-admin-view="sales">
     <div class="section-title">
       <div>
         <h2>📊 বেচাকেনার হিসাব</h2>
@@ -835,14 +832,14 @@ hr{
     <div class="sales-muted" style="margin-top:12px">নোট: বাতিল/Rejected Order বিক্রির হিসাবে ধরা হবে না। নতুন Order-এ Cost Price snapshot সংরক্ষণ হবে; পুরোনো Order-এ Product-এর বর্তমান Cost Price দিয়ে হিসাব করা হবে।</div>
   </div>
 
-  <div class="final-admin-grid">
+  <div class="final-admin-grid" id="adminSummary">
     <div class="final-admin-stat">💰 Sales Value <b id="finalSalesValue">৳০</b><span class="final-admin-mini">Delivered/confirmed orders</span></div>
     <div class="final-admin-stat">📦 Pending Orders <b id="finalPendingOrders">০</b><span class="final-admin-mini">New + processing</span></div>
     <div class="final-admin-stat">💳 Online Payment <b id="finalOnlinePayments">৳০</b><span class="final-admin-mini">Verified online payments</span></div>
     <div class="final-admin-stat">🎟️ Active Coupons <b id="finalCouponCount">০</b><span class="final-admin-mini">Coupon collection</span></div>
   </div>
 
-  <div class="card" id="couponSection">
+  <div class="card" id="couponSection" data-admin-view="coupon">
     <div class="section-title">
       <h2>🎟️ Coupon / Promo Code</h2>
       <button class="secondary" id="finalCouponRefresh" type="button">↻ Refresh</button>
@@ -860,7 +857,7 @@ hr{
   </div>
 
 
-  <div class="card" id="orderSection">
+  <div class="card" id="productSection" data-admin-view="products">
 
     <div class="section-title">
 
@@ -950,7 +947,7 @@ hr{
   </div>
 
 
-  <div class="card">
+  <div class="card" id="customerOrdersSection" data-admin-view="orders">
 
     <div class="section-title">
 
@@ -1289,13 +1286,12 @@ hr{
 </div>
 
 
-<section id="adminSecuritySettings" class="card admin-security-card" style="display:none">
-  <h2>👤 Admin Username / Email পরিবর্তন</h2>
-  <p class="small">এখানে Admin login username হিসেবে ব্যবহৃত email পরিবর্তন করা যাবে। নিরাপত্তার জন্য বর্তমান password দিতে হবে।</p>
+<section id="adminSecuritySettings" class="card admin-security-card" data-admin-view="settings" style="display:none">
+  <h2>👤 নিজের পছন্দমতো Admin Username</h2>
+  <p class="small">এখানে যেকোনো নাম দিতে পারবেন। এটি লগইন পেজে দেখাবে; লগইনের ইমেইল পরিবর্তন হবে না।</p>
   <form id="adminUsernameForm" class="form-grid">
-    <div><label for="adminUsernameCurrentPassword">বর্তমান Password</label><input id="adminUsernameCurrentPassword" type="password" autocomplete="current-password" required></div>
-    <div><label for="adminNewUsername">নতুন Username / Email</label><input id="adminNewUsername" type="email" autocomplete="email" required></div>
-    <div class="actions"><button class="primary" type="submit">Username পরিবর্তন করুন</button></div>
+    <div><label for="adminNewUsername">আপনার পছন্দের Username</label><input id="adminNewUsername" type="text" maxlength="60" autocomplete="nickname" placeholder="যেমন: Swapnochura Admin" required></div>
+    <div class="actions"><button class="primary" type="submit">Username সংরক্ষণ করুন</button></div>
   </form>
   <p id="adminUsernameMessage" class="small" role="status"></p>
   <hr>
@@ -1511,71 +1507,43 @@ function hideLoginMessages(){
 }
 
 
-// Admin menu navigation: reveal and load the selected management screen.
+// Admin menu: open one selected view at a time; close menu after selection.
 (()=>{
   const toggle=document.getElementById("adminMenuToggle");
   const menu=document.getElementById("adminQuickMenu");
   const security=document.getElementById("adminSecuritySettings");
-  let productCard=null;
-  let ordersCard=null;
-  document.querySelectorAll("#adminApp .card").forEach(card=>{
-    const heading=(card.querySelector("h2")?.textContent||"").trim();
-    if(heading.includes("Product Management")){
-      productCard=card;
-      card.id="productSection";
-      card.classList.add("admin-menu-managed-hidden");
+  const views={home:["adminDashboardIntro","adminStats","adminSummary"],sales:["salesDashboard"],products:["productSection"],orders:["customerOrdersSection"],coupon:["couponSection"],settings:["adminSecuritySettings"]};
+  function showView(view){
+    const allowed=new Set(views[view]||views.home);
+    document.querySelectorAll("[data-admin-view]").forEach(el=>{el.style.display=allowed.has(el.id)?"":"none";});
+    const intro=document.getElementById("adminDashboardIntro");
+    const stats=document.getElementById("adminStats");
+    const summary=document.getElementById("adminSummary");
+    if(intro)intro.style.display=allowed.has("adminDashboardIntro")?"":"none";
+    if(stats)stats.style.display=allowed.has("adminStats")?"":"none";
+    if(summary)summary.style.display=allowed.has("adminSummary")?"":"none";
+    if(security&&view==="settings")security.style.display="block";
+    if(view!=="settings"&&security)security.style.display="none";
+    if(view==="newOrders"){
+      showView("orders");
+      const filter=document.getElementById("orderFilter");if(filter)filter.value="new";
+      renderOrders();
+    }else if(view==="orders"){
+      const filter=document.getElementById("orderFilter");if(filter)filter.value="all";
+      renderOrders();
     }
-    if(heading.includes("Customer Orders")){
-      ordersCard=card;
-      card.id="customerOrdersSection";
-      card.classList.add("admin-menu-managed-hidden");
-    }
-  });
+    const target=(view==="home")?document.getElementById("adminDashboardIntro"):document.getElementById((views[view]||[])[0]);
+    target?.scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  window.showAdminView=showView;
   if(toggle&&menu){
-    toggle.addEventListener("click",()=>{
-      const opening=menu.hidden;
-      menu.hidden=!opening;
-      toggle.setAttribute("aria-expanded",String(opening));
-    });
-    menu.querySelectorAll("[data-admin-jump]").forEach(link=>link.addEventListener("click",async e=>{
-      e.preventDefault();
-      const targetId=link.getAttribute("data-admin-jump");
-      const target=document.getElementById(targetId);
-      if(targetId==="adminSecuritySettings"){
-        if(security) security.style.display="block";
-      } else if(link.dataset.showManaged && target){
-        target.classList.remove("admin-menu-managed-hidden");
-        if(targetId==="productSection" && typeof loadProducts==="function") await loadProducts();
-        if(targetId==="customerOrdersSection"){
-          const filter=document.getElementById("orderFilter");
-          if(filter){filter.value="all";}
-          if(typeof loadOrders==="function") await loadOrders();
-          if(typeof renderOrders==="function") renderOrders();
-        }
-      }
-      if(target) target.scrollIntoView({behavior:"smooth",block:"start"});
-      menu.hidden=true;
-      toggle.setAttribute("aria-expanded","false");
+    toggle.addEventListener("click",()=>{const opening=menu.hidden;menu.hidden=!opening;toggle.setAttribute("aria-expanded",String(opening));});
+    menu.querySelectorAll("[data-admin-jump]").forEach(link=>link.addEventListener("click",e=>{
+      e.preventDefault();showView(link.getAttribute("data-admin-jump"));menu.hidden=true;toggle.setAttribute("aria-expanded","false");
     }));
   }
-  document.getElementById("hideAdminSecurity")?.addEventListener("click",()=>{if(security)security.style.display="none";});
-  document.getElementById("adminUsernameForm")?.addEventListener("submit",async e=>{
-    e.preventDefault();
-    const message=document.getElementById("adminUsernameMessage");
-    const current=document.getElementById("adminUsernameCurrentPassword").value;
-    const next=(document.getElementById("adminNewUsername").value||"").trim();
-    const user=auth&&auth.currentUser;
-    if(!user||!user.email){message.textContent="আগে Admin হিসেবে Login করুন।";return;}
-    if(!next||!next.includes("@")){message.textContent="সঠিক email/username দিন।";return;}
-    if(next.toLowerCase()===user.email.toLowerCase()){message.textContent="নতুন username বর্তমান username-এর মতোই।";return;}
-    try{
-      message.textContent="Username পরিবর্তন হচ্ছে...";
-      const credential=firebase.auth.EmailAuthProvider.credential(user.email,current);
-      await user.reauthenticateWithCredential(credential);
-      await user.updateEmail(next);
-      message.textContent="Username/ইমেইল সফলভাবে পরিবর্তন হয়েছে।";
-    }catch(error){message.textContent=error.message||"Username পরিবর্তন করা যায়নি।";}
-  });
+  document.querySelectorAll("[data-stat-view]").forEach(card=>card.addEventListener("click",()=>showView(card.getAttribute("data-stat-view"))));
+  document.getElementById("hideAdminSecurity")?.addEventListener("click",()=>showView("home"));
 })();
 
 /* =========================================
@@ -1651,6 +1619,7 @@ function startFirebase(){
             await loadProducts();
 
             await loadOrders();
+            if(window.showAdminView) window.showAdminView("home");
 
           }
 
