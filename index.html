@@ -1258,8 +1258,21 @@ padding-right:15px
 }
 
 
-/* Header alignment and live clock */
-.brand { margin-left:auto; order:10; flex-shrink:0; }
+/* Header alignment, live clock and left-to-right bouncing brand */
+.navin { position:relative; }
+.brand {
+  margin-left:0;
+  order:10;
+  flex-shrink:0;
+  width:max-content;
+  max-width:none;
+  animation: swapnoBrandBounce 12s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes swapnoBrandBounce {
+  from { transform:translateX(0); }
+  to { transform:translateX(max(0px, calc(100vw - 100% - 24px))); }
+}
 .brand-title-wrap { display:flex; flex-direction:column; align-items:flex-end; line-height:1.2; }
 .brand-title { white-space:nowrap; }
 .live-date-time { font-size:11px; font-weight:700; color:#526078; margin-top:4px; white-space:nowrap; direction:rtl; }
@@ -1268,7 +1281,7 @@ padding-right:15px
 #finalMenuBtn { order:22; margin-left:8px; }
 #mainLinks { right:0; left:auto; }
 @media(max-width:850px){
-  .brand { margin-left:auto; order:10; }
+  .brand { margin-left:0; order:10; }
   #finalAccountBtn { order:20; }
   .cart-trigger { order:21; margin-left:auto; }
   #finalMenuBtn { order:22; margin-left:0; }
@@ -1279,6 +1292,7 @@ padding-right:15px
   .brand-title { font-size:15px; }
   .live-date-time { font-size:8px; }
 }
+@media(prefers-reduced-motion:reduce){ .brand { animation:none; } }
 
 </style>
 </head>
