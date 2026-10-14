@@ -1326,10 +1326,11 @@ padding-right:15px
 <a href="#products">🔥 জনপ্রিয় পণ্য</a>
 <a href="#products">❤️ Wishlist</a>
 <a href="#contact">☎️ যোগাযোগ</a>
+<a href="#order-tracking" id="menuOrderTrackingLink">📦 অর্ডার ট্র্যাকিং</a>
 <button class="website-share" type="button" id="menuAccountBtn">👤 অ্যাকাউন্ট লগইন / রেজিস্টার</button>
 <button class="website-share" type="button" onclick="openCart(); document.getElementById('mainLinks').classList.remove('open'); document.getElementById('finalMenuBtn').setAttribute('aria-expanded','false');">🛒 কার্ট খুলুন</button>
 <button class="website-share" type="button" onclick="shareWebsite()">📤 ওয়েবসাইট শেয়ার করুন</button>
-<button class="website-share" id="installAppBtn" type="button" onclick="installWebsiteApp()">📲 অ্যাপ ইনস্টল / শর্টকাট যোগ করুন</button>
+<button class="website-share" id="installAppBtn" type="button" onclick="installWebsiteApp()">📲 অ্যাপ ইনস্টল করুন</button>
 </div>
 
 <button class="final-btn gray" id="finalAccountBtn" type="button">
@@ -1462,7 +1463,7 @@ WhatsApp
 
 </section>
 
-<div class="final-tracking">
+<div class="final-tracking" id="order-tracking">
 
 <h3 style="margin:0;color:var(--blue)">
 📦 অর্ডার ট্র্যাক করুন
@@ -4075,7 +4076,7 @@ window.installWebsiteApp = async function(){
     deferredInstallPrompt = null;
     return;
   }
-  alert("ইনস্টল অপশন না এলে Chrome-এর উপরের ⋮ মেনু চাপুন, তারপর ‘Install app’ অথবা ‘Add to Home screen’ নির্বাচন করুন। সাইটটি HTTPS-এ খুলুন এবং একবার রিফ্রেশ করুন।");
+  alert("এই ওয়েবসাইটে সরাসরি APK ফাইল ডাউনলোড করা নেই। ফোনে অ্যাপের মতো ইনস্টল করতে Chrome-এর ⋮ মেনু খুলে ‘Install app’ বা ‘Add to Home screen’ চাপুন। ইনস্টল প্রম্পট পাওয়া গেলে বোতামটি সেটি খুলবে।");
 };
 </script>
 
