@@ -631,14 +631,16 @@ hr{
     <p class="small" id="loginDisplayUsername" style="font-weight:700"></p>
 
     <label for="email">
-      Email
+      Username
     </label>
 
     <input
       id="email"
-      type="email"
-      value="mdrazibulislam240@gmail.com"
+      type="text"
+      value="swapnochura"
       autocomplete="username"
+      spellcheck="false"
+      aria-label="Admin Username"
     >
 
     <label for="password">
@@ -667,8 +669,8 @@ hr{
 
     <div id="loginSuccess"></div>
 
-    <div id="firebaseStatus">
-      ⏳ Firebase সংযোগ পরীক্ষা হচ্ছে...
+    <div class="actions" style="justify-content:center;margin-top:12px">
+      <button class="secondary" id="forgotPasswordBtn" type="button">Forgot Password?</button>
     </div>
 
   </div>
@@ -1430,6 +1432,8 @@ function setFirebaseStatus(
   const el =
     $("firebaseStatus");
 
+  if(!el) return;
+
   el.textContent =
     message;
 
@@ -1551,8 +1555,8 @@ function hideLoginMessages(){
   const usernameInput=document.getElementById("adminNewUsername");
   const loginUsername=document.getElementById("loginDisplayUsername");
   function refreshDisplayUsername(){
-    const saved=(localStorage.getItem(usernameKey)||"").trim();
-    if(loginUsername) loginUsername.textContent=saved ? ("Admin: "+saved) : "";
+    const saved=(localStorage.getItem(usernameKey)||"swapnochura Admin").trim();
+    if(loginUsername) loginUsername.textContent="Admin: "+saved;
     if(usernameInput && !usernameInput.value) usernameInput.value=saved;
   }
   refreshDisplayUsername();
@@ -1626,10 +1630,7 @@ function startFirebase(){
       firebase.firestore();
 
 
-    setFirebaseStatus(
-      "✅ Firebase সংযোগ সফল হয়েছে। এখন Admin password দিয়ে Login করুন।",
-      "ok"
-    );
+    // Do not show Firebase connection success text on the login page.
 
 
     auth.onAuthStateChanged(
@@ -1744,6 +1745,35 @@ function startFirebase(){
 
 
 /* =========================================
+   FORGOT PASSWORD
+========================================= */
+
+$("forgotPasswordBtn")?.addEventListener("click", async () => {
+  hideLoginMessages();
+  if(!auth){
+    showLoginError("Firebase এখনো প্রস্তুত হয়নি। একটু পরে আবার চেষ্টা করুন।");
+    return;
+  }
+  const btn = $("forgotPasswordBtn");
+  btn.disabled = true;
+  try{
+    await auth.sendPasswordResetEmail(ADMIN_EMAIL);
+    showLoginSuccess("✅ Admin account-এর ইমেইলে Password reset link পাঠানো হয়েছে। Inbox/Spam চেক করুন।");
+  }catch(error){
+    console.error("Password reset error:", error);
+    const messages = {
+      "auth/user-not-found":"এই Admin account Firebase Authentication-এ পাওয়া যায়নি।",
+      "auth/invalid-email":"Admin account-এর ইমেইল ঠিক নেই।",
+      "auth/too-many-requests":"অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পরে আবার চেষ্টা করুন।",
+      "auth/network-request-failed":"ইন্টারনেট সংযোগ পরীক্ষা করে আবার চেষ্টা করুন।"
+    };
+    showLoginError("❌ "+(messages[error.code] || "Password reset email পাঠানো যায়নি। Firebase Authentication সেটিংস পরীক্ষা করুন।"));
+  }finally{
+    btn.disabled = false;
+  }
+});
+
+/* =========================================
    LOGIN
 ========================================= */
 
@@ -1766,10 +1796,12 @@ $("loginBtn")
     }
 
 
-    const email =
+    const username =
       $("email")
       .value
       .trim();
+
+    const email = ADMIN_EMAIL;
 
 
     const password =
@@ -1828,22 +1860,13 @@ $("loginBtn")
 
 
       if(
-        error.code ===
-        "auth/invalid-credential"
+        error.code === "auth/invalid-credential" ||
+        error.code === "auth/invalid-login-credentials" ||
+        error.code === "auth/wrong-password"
       ){
 
         msg =
           "❌ Email অথবা Password সঠিক নয়।";
-
-      }
-
-      else if(
-        error.code ===
-        "auth/wrong-password"
-      ){
-
-        msg =
-          "❌ Password সঠিক নয়।";
 
       }
 
