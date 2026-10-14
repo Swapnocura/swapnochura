@@ -577,13 +577,15 @@ hr{
 
 /* Mobile-friendly admin menu and password settings */
 .admin-brand-row{display:flex;align-items:center;gap:10px;min-width:0}
-.admin-menu-toggle{display:none;min-width:44px;font-size:20px;padding:8px 12px}
+.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center;min-width:44px;font-size:20px;padding:8px 12px;flex-shrink:0}
 .admin-quick-menu{position:sticky;top:0;z-index:1000;background:#fff;border:1px solid #e5e8ef;border-radius:12px;padding:10px;margin:8px auto;max-width:1100px;box-shadow:0 6px 20px #17203312;gap:8px;flex-wrap:wrap}
 .admin-quick-menu:not([hidden]){display:flex}
 .admin-quick-menu a{color:#173b75;text-decoration:none;font-weight:700;padding:10px 12px;border-radius:9px;background:#f4f7fc}
 .admin-quick-menu a:focus,.admin-quick-menu a:hover{background:#e7efff}
 .admin-security-card{margin:16px auto;scroll-margin-top:16px}
-@media(max-width:700px){#appHeader .header-inner{gap:8px;align-items:center}.admin-brand-row{flex:1}.admin-brand-row h1{font-size:16px;line-height:1.25;margin:0}.admin-menu-toggle{display:inline-flex;align-items:center;justify-content:center}#logoutBtn{white-space:nowrap}.admin-quick-menu{margin:8px 12px;flex-direction:column}.admin-quick-menu a{width:100%}}
+@media(max-width:700px){#appHeader .header-inner{gap:8px;align-items:center}.admin-brand-row{flex:1}.admin-brand-row h1{font-size:16px;line-height:1.25;margin:0}#logoutBtn{white-space:nowrap}.admin-quick-menu{margin:8px 12px;flex-direction:column}.admin-quick-menu a{width:100%}}
+.admin-menu-managed-hidden{display:none!important}
+.admin-menu-settings-title{width:100%;font-weight:800;color:#475467;padding:6px 10px 0}
 
 </style>
 </head>
@@ -607,14 +609,16 @@ hr{
 
 </header>
 
-<nav id="adminQuickMenu" class="admin-quick-menu" aria-label="Admin quick menu" hidden>
-  <a href="#adminApp" data-admin-jump="adminApp">🏠 Dashboard</a>
+<nav id="adminQuickMenu" class="admin-quick-menu" aria-label="Admin menu" hidden>
+  <a href="#adminApp" data-admin-jump="adminApp">🏠 Admin Home / Dashboard</a>
   <a href="#salesDashboard" data-admin-jump="salesDashboard">📊 Sales Report</a>
-  <a href="#productSection" data-admin-jump="productSection">📦 Products</a>
-  <a href="#orderSection" data-admin-jump="orderSection">🧾 Orders</a>
+  <a href="#productSection" data-admin-jump="productSection" data-show-managed="productSection">📦 Product Management</a>
+  <a href="#customerOrdersSection" data-admin-jump="customerOrdersSection" data-show-managed="customerOrdersSection">🛒 Customer Orders</a>
+  <a href="index.html#account">👤 Customer Account / Login</a>
+  <a href="index.html">🛍️ Customer Website</a>
+  <div class="admin-menu-settings-title">⚙️ Settings</div>
   <a href="#adminSecuritySettings" data-admin-jump="adminSecuritySettings">👤 Username পরিবর্তন</a>
   <a href="#adminSecuritySettings" data-admin-jump="adminSecuritySettings">🔐 Password পরিবর্তন</a>
-  <a href="index.html">🛍️ Customer Website</a>
 </nav>
 
 <div id="loginScreen" class="container">
@@ -1512,12 +1516,25 @@ function hideLoginMessages(){
   const toggle=document.getElementById("adminMenuToggle");
   const menu=document.getElementById("adminQuickMenu");
   const security=document.getElementById("adminSecuritySettings");
+  // Keep Product Management and Customer Orders out of the admin home view; open them from ☰.
+  const productSection=document.getElementById("orderSection");
+  let customerOrdersSection=null;
+  document.querySelectorAll("#adminApp .card").forEach(card=>{
+    const heading=(card.querySelector("h2")?.textContent||"").trim();
+    if(heading.includes("Product Management")){card.id="productSection";card.classList.add("admin-menu-managed-hidden");}
+    if(heading.includes("Customer Orders")){customerOrdersSection=card;customerOrdersSection.id="customerOrdersSection";customerOrdersSection.classList.add("admin-menu-managed-hidden");}
+  });
+  if(productSection && !document.getElementById("productSection")){productSection.id="productSection";}
   if(toggle&&menu){
     toggle.addEventListener("click",()=>{const opening=menu.hidden;menu.hidden=!opening;toggle.setAttribute("aria-expanded",String(opening));});
     menu.querySelectorAll("[data-admin-jump]").forEach(link=>link.addEventListener("click",e=>{
       e.preventDefault();const targetId=link.getAttribute("data-admin-jump");
-      if(targetId==="adminSecuritySettings"){if(security)security.style.display="block";}
-      else {const target=document.getElementById(targetId);if(target)target.scrollIntoView({behavior:"smooth",block:"start"});}
+      if(targetId==="adminSecuritySettings"){if(security)security.style.display="block";security?.scrollIntoView({behavior:"smooth",block:"start"});}
+      else {
+        const target=document.getElementById(targetId);
+        if(link.dataset.showManaged && target) target.classList.remove("admin-menu-managed-hidden");
+        if(target) target.scrollIntoView({behavior:"smooth",block:"start"});
+      }
       menu.hidden=true;toggle.setAttribute("aria-expanded","false");
     }));
   }
